@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@id/dl_tv_nagetive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_corner_bottom_left_selector"
+            android:gravity="center"
+            android:textSize="16sp"
+            tools:text="取消" />
+
+
+        <include layout="@layout/dl_divider_item_v" />
+
+        <TextView
+            android:id="@id/dl_tv_positive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_corner_bottom_right_selector"
+            android:gravity="center"
+            android:textSize="16sp"
+            tools:text="确定" />
+    </LinearLayout>
+</FrameLayout>

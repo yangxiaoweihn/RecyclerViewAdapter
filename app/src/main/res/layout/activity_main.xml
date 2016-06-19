@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ws.dyt.recyclerviewadapter.MainActivity">
+
+    <Button
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toSingleSimpleItem"
+        android:text="单简单类型" />
+
+    <Button
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toMultiSimpleItem"
+        android:text="多简单类型" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toMultiSimpleItemV2"
+        android:text="多简单类型V2" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toMultiSimpleItemV2AdapteSigleSimple"
+        android:text="多简单类型适配单类型" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toMultiSimpleItemV2AdapteSigleSimpleGird"
+        android:textAllCaps="false"
+        android:text="多简单类型适配单类型Grid" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toMultiSimpleItemV2AdapteSigleSimpleStaggered"
+        android:textAllCaps="false"
+        android:text="多简单类型适配单类型Staggered" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toSectionSingle"
+        android:textAllCaps="false"
+        android:text="section纵向线性单item" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toSectionGrid"
+        android:textAllCaps="false"
+        android:text="section单item Grid" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toSectionNoFooter"
+        android:textAllCaps="false"
+        android:text="section无Footer" />
+
+</LinearLayout>

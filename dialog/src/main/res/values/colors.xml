@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#fff</color>
+    <color name="dl_item_pressed">#f0f0f0</color>
+    <color name="dl_item_divider">#dcdcdc</color>
+
+    <!--<color name="dl_font_normal">15sp</color>-->
+</resources>
