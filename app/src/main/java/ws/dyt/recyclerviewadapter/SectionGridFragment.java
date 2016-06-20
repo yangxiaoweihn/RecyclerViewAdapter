@@ -3,7 +3,6 @@ package ws.dyt.recyclerviewadapter;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import ws.dyt.library.Delegate;
-import ws.dyt.library.adapter.SectionAdapter;
+import ws.dyt.library.adapter.SectionMultiAdapter;
+import ws.dyt.library.adapter.deprecated.SectionAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 
@@ -37,38 +37,30 @@ public class SectionGridFragment extends BaseFragment {
 
     private List<List<String>> generate(){
         List<List<String>> data = new ArrayList<>();
-        data.add(new ArrayList(Arrays.asList(new String[]{"AAA"})));
-        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"AAA", "A01", "A02"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE", "E01", "E02", "E03"})));
         data.add(new ArrayList(Arrays.asList(new String[]{"FFF", "GGG"})));
-//        return new String[]{
-//                "AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "JJJ", "KKK", "LLL", "QQQ", "WWW",
-//                "EEE", "RRR", "TTT", "YYY", "UUU", "III", "OOO", "PPP", "ZZZ", "XXX", "NNN", "MMM", "###"};
+        data.add(new ArrayList(Arrays.asList(new String[]{"HHH"})));
         return data;
     }
 
-    SectionAdapter adapter;
+    SectionMultiAdapter<String> adapter;
     private void init(){
         final List<List<String>> list = generate();
 
         GridLayoutManager llm = new GridLayoutManager(getContext(), 3);
-//        llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new SectionAdapter<String>(getContext(), list, 0) {
+        adapter = new SectionMultiAdapter<String>(getContext(), list, true, true) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
                 holder.setText(R.id.tv_text, "组--"+group);
             }
 
             @Override
-            public void convertSectionData(BaseViewHolder holder, int group, int position) {
-                Log.e(TAG, "convert_data: "+group+" , index: "+position);
-                holder.setText(R.id.tv_text, getItem(group, position));
-            }
-
-            @Override
-            public void convertSectionData(BaseViewHolder holder, int position) {
-//                holder.setText(R.id.tv_text, getItem(position));
+            public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData) {
+                Log.e(TAG, "convert_data: "+group+" , index: "+positionOfGroup);
+                holder.setText(R.id.tv_text, getItem(group, positionOfGroup));
             }
 
             @Override
@@ -100,7 +92,7 @@ public class SectionGridFragment extends BaseFragment {
     }
 
     @Override
-    public SectionAdapter getAdapter() {
+    public SectionMultiAdapter<String> getAdapter() {
         return adapter;
     }
 }

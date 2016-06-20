@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter.history;
+package ws.dyt.library.adapter.deprecated;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

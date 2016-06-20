@@ -1,9 +1,11 @@
-package ws.dyt.recyclerviewadapter;
+package ws.dyt.recyclerviewadapter.main;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import ws.dyt.recyclerviewadapter.R;
 
 /**
  * Created by yangxiaowei

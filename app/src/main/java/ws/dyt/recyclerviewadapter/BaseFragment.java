@@ -19,9 +19,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ws.dyt.library.adapter.SectionMultiAdapter;
 import ws.dyt.library.adapter.base.BaseAdapter;
 import ws.dyt.library.adapter.base.BaseHFAdapter;
-import ws.dyt.library.adapter.SectionAdapter;
+import ws.dyt.library.adapter.deprecated.SectionAdapter;
 
 /**
  * Created by yangxiaowei on 16/6/9.
@@ -215,30 +216,30 @@ abstract public class BaseFragment extends Fragment{
         });
 
         BaseHFAdapter adapter = getAdapter();
-        if (adapter instanceof SectionAdapter) {
-            SectionAdapter sectionAdapter = (SectionAdapter) adapter;
-            sectionAdapter.setOnItemClickListener(new SectionAdapter.OnItemClickListener() {
+        if (adapter instanceof SectionMultiAdapter) {
+            SectionMultiAdapter sectionAdapter = (SectionMultiAdapter) adapter;
+            sectionAdapter.setOnItemClickListener(new SectionMultiAdapter.OnItemClickListener() {
                 @Override
                 public void onClick(int group, int positionOfGroup, int positionOfData, @SectionAdapter.ItemTypeWhere int type) {
                     String a = "";
                     switch (type) {
                         case 0: {
-                            a = "H";
+                            a = "H-> group: " + group + " , index: " + positionOfGroup;
                             break;
                         }
                         case 1: {
-                            a = "D";
+                            a = "D-> group: " + group + " , index: " + positionOfGroup + " , " + positionOfData;
                             break;
                         }
                         case 2: {
-                            a = "F";
+                            a = "F-> group: " + group + " , index: " + positionOfGroup;
                             break;
                         }
                         default: {
                             break;
                         }
                     }
-                    Toast.makeText(getContext(), "" + a + " : " + group + " , " + positionOfGroup + " , " + positionOfData, Toast.LENGTH_SHORT).show();
+                    tost(a);
                 }
             });
         }
@@ -246,9 +247,12 @@ abstract public class BaseFragment extends Fragment{
 
 
     private void toast(int position){
-        Toast.makeText(getContext(), ""+position, Toast.LENGTH_SHORT).show();
+        this.tost("" + position);
     }
 
+    private void tost(String des) {
+        Toast.makeText(getContext(), des, Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.operate, menu);

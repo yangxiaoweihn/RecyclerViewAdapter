@@ -6,7 +6,7 @@
 <TextView
     android:layout_width="match_parent"
     android:gravity="center_vertical|right"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/item_data_height_common"
     android:id="@+id/tv_text"
     android:paddingRight="16dp"
     android:paddingLeft="16dp"/>

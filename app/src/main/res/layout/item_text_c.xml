@@ -11,7 +11,7 @@
         tools:text="---"
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/item_data_height_common"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" />

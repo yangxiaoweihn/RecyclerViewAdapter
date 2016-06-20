@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.SectionAdapter;
+import ws.dyt.library.adapter.SectionMultiAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 
@@ -35,16 +35,14 @@ public class SectionLinearFragment extends BaseFragment {
 
     private List<List<String>> generate(){
         List<List<String>> data = new ArrayList<>();
-        data.add(new ArrayList(Arrays.asList(new String[]{"AAA"})));
-        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"AAA", "A01", "A02"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE", "E01", "E02", "E03"})));
         data.add(new ArrayList(Arrays.asList(new String[]{"FFF", "GGG"})));
-//        return new String[]{
-//                "AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "JJJ", "KKK", "LLL", "QQQ", "WWW",
-//                "EEE", "RRR", "TTT", "YYY", "UUU", "III", "OOO", "PPP", "ZZZ", "XXX", "NNN", "MMM", "###"};
+        data.add(new ArrayList(Arrays.asList(new String[]{"HHH"})));
         return data;
     }
 
-    SectionAdapter adapter;
+    SectionMultiAdapter<String> adapter;
     private void init(){
         final List<List<String>> list = generate();
 
@@ -52,28 +50,15 @@ public class SectionLinearFragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new SectionAdapter<String>(getContext(), list, 0) {
+        adapter = new SectionMultiAdapter<String>(getContext(), list, true, true) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
 
             }
 
             @Override
-            public void convertSectionData(BaseViewHolder holder, int group, int position) {
-//                for (int i = 0; i < list.size(); i++) {
-//                    List<String> d = list.get(i);
-//                    for (int j = 0; j < d.size(); j++) {
-//                        if (group == i && j == position) {
-//                            holder.setText(R.id.tv_text, d.get(j));
-//                            return;
-//                        }
-//                    }
-//                }
-            }
-
-            @Override
-            public void convertSectionData(BaseViewHolder holder, int position) {
-                holder.setText(R.id.tv_text, getItem(position));
+            public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData) {
+                holder.setText(R.id.tv_text, getItem(positionOfData));
             }
 
             @Override
@@ -98,16 +83,12 @@ public class SectionLinearFragment extends BaseFragment {
                 Log.e(TAG, "layout_footer-> group: "+group);
                 return R.layout.item_section_footer;
             }
-            //            @Override
-//            public void convert(BaseViewHolder holder, int position) {
-//                holder.setText(R.id.tv_text, position+"  "+getItem(position));
-//            }
         };
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public SectionAdapter getAdapter() {
+    public SectionMultiAdapter getAdapter() {
         return adapter;
     }
 }

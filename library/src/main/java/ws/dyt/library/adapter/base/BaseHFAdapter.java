@@ -37,7 +37,7 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
         this.datas = datas;
     }
 
-    public BaseHFAdapter(Context context, List<List<T>> sectionDatas, int a) {
+    public BaseHFAdapter(Context context, List<List<T>> sectionDatas, int unused) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         if (null == sectionDatas || sectionDatas.isEmpty()) {

@@ -2,7 +2,6 @@ package ws.dyt.library.adapter;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,14 +17,17 @@ import ws.dyt.library.viewholder.BaseViewHolder;
  *
  * 扩展 data_item 数据域结构，每一个data_item 结构都包括 头部、数据、尾部，结构如下
  * item_data {section_header - section_data - section_footer}
- * 其中 header footer 个数一致
+ * 其中 header footer 可有可无
  */
 abstract
-public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiItemViewType {
-    public SectionAdapter(Context context, List<T> datas) {
+public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionMultiItemViewType {
+    public SectionMultiAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
 
+
+    private boolean isSupportHeader;
+    private boolean isSupportFooter;
     //封装组右边界，已包括header、footer，右开区间
     private int[] dataSectionRangeIndex;
 
@@ -33,22 +35,44 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
      *
      * @param context
      * @param sectionDatas 确保该参数中数据区域列表不能为空（确保都是真实的数据）
-     * @param aa
+     * @param isSupportHeader
+     * @param isSupportFooter
      */
-    public SectionAdapter(Context context, List<List<T>> sectionDatas, int aa) {
-        super(context, sectionDatas, aa);
+    public SectionMultiAdapter(Context context, List<List<T>> sectionDatas, boolean isSupportHeader, boolean isSupportFooter) {
+        super(context, sectionDatas, -1);
+        this.isSupportHeader = isSupportHeader;
+        this.isSupportFooter = isSupportFooter;
         if (null == sectionDatas || sectionDatas.isEmpty()) {
             return;
         }
 
         dataSectionRangeIndex = new int[sectionDatas.size()];
+        int offset = calSectionItemOffset(isSupportHeader, isSupportFooter);
         int sum = 0;
         for (int group = 0; group < sectionDatas.size(); group++) {
             List<T> e = sectionDatas.get(group);
             sum += e.size();
-            sum += 2;
+            sum += offset;
             dataSectionRangeIndex[group] = sum;
         }
+    }
+
+    /**
+     * 初始化数据项偏移
+     * @param isSupportHeader
+     * @param isSupportFooter
+     * @return
+     */
+    private int calSectionItemOffset(boolean isSupportHeader, boolean isSupportFooter) {
+        int offset;
+        if (isSupportHeader && isSupportFooter) {
+            offset = 2;
+        }else if (!isSupportHeader && !isSupportFooter) {
+            offset = 0;
+        }else {
+            offset = 1;
+        }
+        return offset;
     }
 
     @Override
@@ -57,25 +81,25 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
     }
 
     private int getSectionHeaderItemCount() {
-        return dataSectionRangeIndex.length;
+        return isSupportHeader ? dataSectionRangeIndex.length : 0;
     }
 
     private int getSectionFooterItemCount() {
-        return dataSectionRangeIndex.length;
+        return isSupportFooter ? dataSectionRangeIndex.length : 0;
     }
 
     final
     public T getItem(int group, int positionOfGroup) {
-        return this.getItem(getDataIndex(group, positionOfGroup));
+        return this.getItem(calDataIndex(group, positionOfGroup));
     }
 
     /**
-     * 转化到数据列表索引
+     * 转化到数据列表索引 （组数据都被转化到一个list中）
      * @param group
      * @param positionOfGroup
      * @return
      */
-    private int getDataIndex(int group, int positionOfGroup) {
+    private int calDataIndex(int group, int positionOfGroup) {
         int len = dataSectionRangeIndex.length;
         for (int i = 0; i < len; i++) {
             if (group == i) {
@@ -83,11 +107,28 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
                 int rangeLeft = i > 0 ? dataSectionRangeIndex[i - 1] : 0;
 
                 //index = 左边界 - (section的header、footer总和) + 减法偏移量 + section数据索引
-                int index = rangeLeft - (group * 2 + 1) + 1 + positionOfGroup;
+                int index = rangeLeft - calSectionItemByThisGroup(group) + 1 + positionOfGroup;
                 return index;
             }
         }
         return 0;
+    }
+
+    /**
+     * 计算当前组之前有几个非数据项  即{section_header - section_footer}的数量
+     * @param group
+     * @return
+     */
+    private int calSectionItemByThisGroup(int group) {
+        int c = 0;
+        if (isSupportHeader && isSupportFooter) {
+            c = group * 2 + 1;
+        }else if (isSupportHeader) {
+            c = group * 2 - 1;
+        }else if (isSupportFooter) {
+            c = group;
+        }
+        return c;
     }
 
     @Override
@@ -130,13 +171,11 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
             this.positionOfGroup = positionOfGroup;
             this.positionOfData = positionOfData;
         }
-
-
     }
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ItemType.ITEM_HEADER, ItemType.ITEM_DATA, ItemType.ITEM_FOOTER})
-    public @interface ItemTypeWhere {}
-    public interface ItemType {
+    @interface ItemTypeWhere {}
+    interface ItemType {
         int ITEM_HEADER      = 0;
         int ITEM_DATA        = 1;
         int ITEM_FOOTER      = 2;
@@ -158,13 +197,32 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
                 //child为每一个section中的索引，包括header和footer,
                 // section结构为  section_header -> section_data -> setion_footer
                 int child = position - rangeLeft;
-                if (child == 0) {
-                    dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_HEADER, group, child);
-                }else if (position + 1 == rangeRight){
-                    dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_FOOTER, group, child);
+
+                if (isSupportHeader && isSupportFooter) {
+                    if (child == 0) {
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_HEADER, group, child);
+                    }else if (position + 1 == rangeRight){
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_FOOTER, group, child);
+                    }else {
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 1, position - calSectionItemByThisGroup(group));
+                    }
+                }else if (isSupportHeader) {
+                    if (child == 0) {
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_HEADER, group, child);
+                    }else {
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 1, position - calSectionItemByThisGroup(group));
+                    }
+                }else if (isSupportFooter) {
+                    if (position + 1 == rangeRight){
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_FOOTER, group, child);
+                    }else {
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 0, position - calSectionItemByThisGroup(group));
+                    }
                 }else {
-                    dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 1, position - (group * 2 + 1));
+                    dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 0, position - calSectionItemByThisGroup(group));
                 }
+
+
                 break;
             }
         }
@@ -175,28 +233,29 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
     @Override
     final
     protected int convertDataSectionItemViewType(int position) {
-        int type = 0;
         DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
-        if (null != info) {
-            int group = info.group;
-            int positionOfGroup = info.positionOfGroup;
-            switch (info.itemType) {
-                case ItemType.ITEM_HEADER:{
-                    type = this.getSectionHeaderItemViewLayout(group/*, positionOfGroup*/);
-                    break;
-                }
-                case ItemType.ITEM_DATA:{
-                    type = getSectionDataItemViewLayout(group, positionOfGroup);
-                    break;
-                }
-                case ItemType.ITEM_FOOTER:{
-                    type = this.getSectionFooterItemViewLayout(group/*, positionOfGroup*/);
-                    break;
-                }
-                default:{
-                    type = super.convertDataSectionItemViewType(position);
-                    break;
-                }
+        if (null == info) {
+            return super.convertDataSectionItemViewType(position);
+        }
+        int type;
+        int group = info.group;
+        int positionOfGroup = info.positionOfGroup;
+        switch (info.itemType) {
+            case ItemType.ITEM_HEADER:{
+                type = this.getSectionHeaderItemViewLayout(group/*, positionOfGroup*/);
+                break;
+            }
+            case ItemType.ITEM_DATA:{
+                type = this.getSectionDataItemViewLayout(group, positionOfGroup);
+                break;
+            }
+            case ItemType.ITEM_FOOTER:{
+                type = this.getSectionFooterItemViewLayout(group/*, positionOfGroup*/);
+                break;
+            }
+            default:{
+                type = super.convertDataSectionItemViewType(position);
+                break;
             }
         }
         return type;
@@ -208,21 +267,10 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
         return new BaseViewHolder(inflater.inflate(viewType, parent, false));
     }
 
-    private int findGroup(int position) {
-        int len = dataSectionRangeIndex.length;
-        for (int group = 0; group < len; group++) {
-            int rangeRight = dataSectionRangeIndex[group];
-            if (position < rangeRight) {
-                return group;
-            }
-        }
-        return -404;
-    }
-
     @Override
     final
     public void convert(BaseViewHolder holder, int position) {
-        DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
+        DataSectionItemWrapper info = getDataSectionItemInfo(position);
         if (null == info) {
             return;
         }
@@ -234,8 +282,7 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
                 break;
             }
             case ItemType.ITEM_DATA:{
-                this.convertSectionData(holder, group, positionOfGroup);
-                this.convertSectionData(holder, info.positionOfData);
+                this.convertSectionData(holder, group, positionOfGroup, info.positionOfData);
                 break;
             }
             case ItemType.ITEM_FOOTER:{
@@ -248,9 +295,7 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
     abstract
     public void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
     abstract
-    public void convertSectionData(BaseViewHolder holder, int group, int position);
-    abstract
-    public void convertSectionData(BaseViewHolder holder, int position);
+    public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData);
     abstract
     public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 

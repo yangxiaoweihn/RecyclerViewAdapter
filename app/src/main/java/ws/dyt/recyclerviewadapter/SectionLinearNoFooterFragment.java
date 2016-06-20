@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.SectionAdapter;
-import ws.dyt.library.adapter.SectionAdapter2;
+import ws.dyt.library.adapter.SectionMultiAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 
@@ -36,16 +35,14 @@ public class SectionLinearNoFooterFragment extends BaseFragment {
 
     private List<List<String>> generate(){
         List<List<String>> data = new ArrayList<>();
-        data.add(new ArrayList(Arrays.asList(new String[]{"AAA"})));
-        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"AAA", "A01", "A02"})));
+        data.add(new ArrayList(Arrays.asList(new String[]{"BBB", "CCC", "DDD", "EEE", "E01", "E02", "E03"})));
         data.add(new ArrayList(Arrays.asList(new String[]{"FFF", "GGG"})));
-//        return new String[]{
-//                "AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "JJJ", "KKK", "LLL", "QQQ", "WWW",
-//                "EEE", "RRR", "TTT", "YYY", "UUU", "III", "OOO", "PPP", "ZZZ", "XXX", "NNN", "MMM", "###"};
+        data.add(new ArrayList(Arrays.asList(new String[]{"HHH"})));
         return data;
     }
 
-    SectionAdapter2 adapter;
+    SectionMultiAdapter<String> adapter;
     private void init(){
         final List<List<String>> list = generate();
 
@@ -53,19 +50,15 @@ public class SectionLinearNoFooterFragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new SectionAdapter2<String>(getContext(), list, 0, false, false) {
+        adapter = new SectionMultiAdapter<String>(getContext(), list, false, false) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
 
             }
 
             @Override
-            public void convertSectionData(BaseViewHolder holder, int group, int position) {
-            }
-
-            @Override
-            public void convertSectionData(BaseViewHolder holder, int position) {
-                holder.setText(R.id.tv_text, getItem(position));
+            public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData) {
+                holder.setText(R.id.tv_text, getItem(positionOfData));
             }
 
             @Override
@@ -95,7 +88,7 @@ public class SectionLinearNoFooterFragment extends BaseFragment {
     }
 
     @Override
-    public SectionAdapter2 getAdapter() {
+    public SectionMultiAdapter<String> getAdapter() {
         return adapter;
     }
 }

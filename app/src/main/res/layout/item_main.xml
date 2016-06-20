@@ -3,15 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#FFDAB9"
+    android:background="#F4A460"
     android:orientation="vertical">
 
     <TextView
         tools:text="---"
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_data_height_common"
-        android:gravity="center_vertical"
+        android:layout_height="48dp"
+        android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#f0f0f0"/>
 </LinearLayout>

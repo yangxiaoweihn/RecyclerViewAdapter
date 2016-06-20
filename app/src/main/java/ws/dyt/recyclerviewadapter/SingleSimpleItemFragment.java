@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ws.dyt.library.adapter.base.BaseHFAdapter;
-import ws.dyt.library.adapter.history.SingleAdapter;
+import ws.dyt.library.adapter.deprecated.SingleAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 
