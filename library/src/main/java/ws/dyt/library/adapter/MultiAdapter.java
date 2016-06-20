@@ -60,8 +60,3 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
         return this.itemLayoutResId;
     }
 }
-
-interface MultiItemViewType {
-    @LayoutRes
-    int getItemViewLayout(int position);
-}

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,11 +208,11 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
         //事件只针对正常数据项
         final BaseViewHolder holder = onCreateHolder(parent, viewType);
-        this.initListener(holder, viewType);
+        this.setItemListener(holder, viewType);
         return holder;
     }
 
-    protected void initListener(final BaseViewHolder holder, final int viewType){
+    protected void setItemListener(final BaseViewHolder holder, final int viewType){
         if (null == holder) {
             return;
         }

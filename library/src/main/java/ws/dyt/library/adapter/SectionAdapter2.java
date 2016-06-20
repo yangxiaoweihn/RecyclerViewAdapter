@@ -2,6 +2,7 @@ package ws.dyt.library.adapter;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.annotation.Retention;
@@ -77,7 +78,7 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
 
     final
     public T getItem(int group, int positionOfGroup) {
-        return getItem(getDataIndex(group, positionOfGroup));
+        return this.getItem(getDataIndex(group, positionOfGroup));
     }
 
     /**
@@ -123,9 +124,9 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
         }
 
         int hAll = getSysHeaderViewCount() + getHeaderViewCount();
-        DataSectionItemWrapper item = getDataSectionItemInfo(position - hAll);
+        DataSectionItemWrapper item = this.getDataSectionItemInfo(position - hAll);
         //是否为数据域中数据项
-        return null != item && DataSectionItemWrapper.ItemType.ITEM_DATA == item.itemType;
+        return null != item && ItemType.ITEM_DATA == item.itemType;
     }
 
     /**
@@ -153,15 +154,14 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
             this.positionOfGroup = positionOfGroup;
             this.positionOfData = positionOfData;
         }
-
-        @Retention(RetentionPolicy.SOURCE)
-        @IntDef({ItemType.ITEM_HEADER, ItemType.ITEM_DATA, ItemType.ITEM_FOOTER})
-        @interface ItemTypeWhere {}
-        interface ItemType {
-            int ITEM_HEADER      = 0;
-            int ITEM_DATA        = 1;
-            int ITEM_FOOTER      = 2;
-        }
+    }
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ItemType.ITEM_HEADER, ItemType.ITEM_DATA, ItemType.ITEM_FOOTER})
+    @interface ItemTypeWhere {}
+    interface ItemType {
+        int ITEM_HEADER      = 0;
+        int ITEM_DATA        = 1;
+        int ITEM_FOOTER      = 2;
     }
 
     /**
@@ -192,26 +192,26 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
 
                 if (isSupportHeader && isSupportFooter) {
                     if (child == 0) {
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_HEADER, group, child);
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_HEADER, group, child);
                     }else if (position + 1 == rangeRight){
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_FOOTER, group, child);
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_FOOTER, group, child);
                     }else {
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_DATA, group, child - 1, position - xxoo(group));
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 1, position - xxoo(group));
                     }
                 }else if (isSupportHeader) {
                     if (child == 0) {
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_HEADER, group, child);
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_HEADER, group, child);
                     }else {
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_DATA, group, child - 1, position - xxoo(group));
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 1, position - xxoo(group));
                     }
                 }else if (isSupportFooter) {
                     if (position + 1 == rangeRight){
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_FOOTER, group, child);
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_FOOTER, group, child);
                     }else {
-                        dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_DATA, group, child - 0, position - xxoo(group));
+                        dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 0, position - xxoo(group));
                     }
                 }else {
-                    dataSectionItemWrapper = new DataSectionItemWrapper(DataSectionItemWrapper.ItemType.ITEM_DATA, group, child - 0, position - xxoo(group));
+                    dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 0, position - xxoo(group));
                 }
 
 
@@ -225,7 +225,7 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
     @Override
     final
     protected int convertDataSectionItemViewType(int position) {
-        DataSectionItemWrapper info = getDataSectionItemInfo(position);
+        DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
         if (null == info) {
             return super.convertDataSectionItemViewType(position);
         }
@@ -233,16 +233,16 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
         int group = info.group;
         int positionOfGroup = info.positionOfGroup;
         switch (info.itemType) {
-            case DataSectionItemWrapper.ItemType.ITEM_HEADER:{
-                type = getSectionHeaderItemViewLayout(group/*, positionOfGroup*/);
+            case ItemType.ITEM_HEADER:{
+                type = this.getSectionHeaderItemViewLayout(group/*, positionOfGroup*/);
                 break;
             }
-            case DataSectionItemWrapper.ItemType.ITEM_DATA:{
-                type = getSectionDataItemViewLayout(group, positionOfGroup);
+            case ItemType.ITEM_DATA:{
+                type = this.getSectionDataItemViewLayout(group, positionOfGroup);
                 break;
             }
-            case DataSectionItemWrapper.ItemType.ITEM_FOOTER:{
-                type = getSectionFooterItemViewLayout(group/*, positionOfGroup*/);
+            case ItemType.ITEM_FOOTER:{
+                type = this.getSectionFooterItemViewLayout(group/*, positionOfGroup*/);
                 break;
             }
             default:{
@@ -269,17 +269,17 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
         int group = info.group;
         int positionOfGroup = info.positionOfGroup;
         switch (info.itemType) {
-            case DataSectionItemWrapper.ItemType.ITEM_HEADER:{
-                convertSectionHeader(holder, group/*, positionOfGroup*/);
+            case ItemType.ITEM_HEADER:{
+                this.convertSectionHeader(holder, group/*, positionOfGroup*/);
                 break;
             }
-            case DataSectionItemWrapper.ItemType.ITEM_DATA:{
-                convertSectionData(holder, group, positionOfGroup);
-                convertSectionData(holder, info.positionOfData);
+            case ItemType.ITEM_DATA:{
+                this.convertSectionData(holder, group, positionOfGroup);
+                this.convertSectionData(holder, info.positionOfData);
                 break;
             }
-            case DataSectionItemWrapper.ItemType.ITEM_FOOTER:{
-                convertSectionFooter(holder, group/*, positionOfGroup*/);
+            case ItemType.ITEM_FOOTER:{
+                this.convertSectionFooter(holder, group/*, positionOfGroup*/);
                 break;
             }
         }
@@ -294,6 +294,64 @@ public class SectionAdapter2<T> extends BaseHFAdapter<T> implements SectionMulti
     abstract
     public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 
+    @Override
+    final
+    protected void setItemListener(final BaseViewHolder holder, int viewType) {
+        if (null == holder || null == holder.itemView) {
+            return;
+        }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null  == onItemClickListener) {
+                    return;
+                }
+                int hAll = getHeaderViewCount() + getSysHeaderViewCount();
+                int position = holder.getAdapterPosition() - hAll;
+
+                DataSectionItemWrapper info = getDataSectionItemInfo(position);
+
+                int group = info.group;
+                onItemClickListener.onClick(group, info.positionOfGroup, info.positionOfData, info.itemType);
+            }
+        });
+
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (null == onItemLongClickListener) {
+                    return false;
+                }
+                int hAll = getHeaderViewCount() + getSysHeaderViewCount();
+                int position = holder.getAdapterPosition() - hAll;
+
+                DataSectionItemWrapper info = getDataSectionItemInfo(position);
+
+                int group = info.group;
+                onItemLongClickListener.onItemLongClick(group, info.positionOfGroup, info.positionOfData, info.itemType);
+                return true;
+            }
+        });
+
+    }
+
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+    public interface OnItemClickListener{
+        void onClick(int group, int positionOfGroup, int positionOfData, @ItemTypeWhere int type);
+    }
+
+    private OnItemLongClickListener onItemLongClickListener;
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int group, int positionOfGroup, int positionOfData, @ItemTypeWhere int type);
+    }
 }
 

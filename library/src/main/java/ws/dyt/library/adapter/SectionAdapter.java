@@ -66,7 +66,7 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
 
     final
     public T getItem(int group, int positionOfGroup) {
-        return getItem(getDataIndex(group, positionOfGroup));
+        return this.getItem(getDataIndex(group, positionOfGroup));
     }
 
     /**
@@ -100,7 +100,7 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
         }
 
         int hAll = getSysHeaderViewCount() + getHeaderViewCount();
-        DataSectionItemWrapper item = getDataSectionItemInfo(position - hAll);
+        DataSectionItemWrapper item = this.getDataSectionItemInfo(position - hAll);
         //是否为数据域中数据项
         return null != item && ItemType.ITEM_DATA == item.itemType;
     }
@@ -208,10 +208,56 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
         return new BaseViewHolder(inflater.inflate(viewType, parent, false));
     }
 
+    private int findGroup(int position) {
+        int len = dataSectionRangeIndex.length;
+        for (int group = 0; group < len; group++) {
+            int rangeRight = dataSectionRangeIndex[group];
+            if (position < rangeRight) {
+                return group;
+            }
+        }
+        return -404;
+    }
+
     @Override
     final
-    protected void initListener(final BaseViewHolder holder, int viewType) {
-        if (null == holder) {
+    public void convert(BaseViewHolder holder, int position) {
+        DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
+        if (null == info) {
+            return;
+        }
+        int group = info.group;
+        int positionOfGroup = info.positionOfGroup;
+        switch (info.itemType) {
+            case ItemType.ITEM_HEADER:{
+                this.convertSectionHeader(holder, group/*, positionOfGroup*/);
+                break;
+            }
+            case ItemType.ITEM_DATA:{
+                this.convertSectionData(holder, group, positionOfGroup);
+                this.convertSectionData(holder, info.positionOfData);
+                break;
+            }
+            case ItemType.ITEM_FOOTER:{
+                this.convertSectionFooter(holder, group/*, positionOfGroup*/);
+                break;
+            }
+        }
+    }
+
+    abstract
+    public void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
+    abstract
+    public void convertSectionData(BaseViewHolder holder, int group, int position);
+    abstract
+    public void convertSectionData(BaseViewHolder holder, int position);
+    abstract
+    public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
+
+    @Override
+    final
+    protected void setItemListener(final BaseViewHolder holder, int viewType) {
+        if (null == holder || null == holder.itemView) {
             return;
         }
 
@@ -267,61 +313,5 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
     public interface OnItemLongClickListener {
         void onItemLongClick(int group, int positionOfGroup, int positionOfData, @ItemTypeWhere int type);
     }
-
-    private int findGroup(int position) {
-        int len = dataSectionRangeIndex.length;
-        for (int group = 0; group < len; group++) {
-            int rangeRight = dataSectionRangeIndex[group];
-            if (position < rangeRight) {
-                return group;
-            }
-        }
-        return -404;
-    }
-
-    @Override
-    final
-    public void convert(BaseViewHolder holder, int position) {
-        DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
-        if (null == info) {
-            return;
-        }
-        int group = info.group;
-        int positionOfGroup = info.positionOfGroup;
-        switch (info.itemType) {
-            case ItemType.ITEM_HEADER:{
-                this.convertSectionHeader(holder, group/*, positionOfGroup*/);
-                break;
-            }
-            case ItemType.ITEM_DATA:{
-                this.convertSectionData(holder, group, positionOfGroup);
-                convertSectionData(holder, info.positionOfData);
-                break;
-            }
-            case ItemType.ITEM_FOOTER:{
-                this.convertSectionFooter(holder, group/*, positionOfGroup*/);
-                break;
-            }
-        }
-    }
-
-    abstract
-    public void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
-    abstract
-    public void convertSectionData(BaseViewHolder holder, int group, int position);
-    abstract
-    public void convertSectionData(BaseViewHolder holder, int position);
-    abstract
-    public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 }
 
-interface SectionMultiItemViewType {
-    @LayoutRes
-    int getSectionDataItemViewLayout(int group, int position);
-
-    @LayoutRes
-    int getSectionHeaderItemViewLayout(int group/*, int position*/);
-
-    @LayoutRes
-    int getSectionFooterItemViewLayout(int group/*, int position*/);
-}
