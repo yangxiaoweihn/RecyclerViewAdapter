@@ -50,7 +50,7 @@ public class SectionLinearNoFooterFragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new SectionMultiAdapter<String>(getContext(), list, false, false) {
+        adapter = new SectionMultiAdapter<String>(getContext(), list, true, false) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
 

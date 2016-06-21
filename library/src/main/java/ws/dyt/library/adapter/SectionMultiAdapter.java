@@ -2,6 +2,7 @@ package ws.dyt.library.adapter;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,6 +56,7 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
             sum += offset;
             dataSectionRangeIndex[group] = sum;
         }
+
     }
 
     /**
@@ -67,7 +69,7 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
         int offset;
         if (isSupportHeader && isSupportFooter) {
             offset = 2;
-        }else if (!isSupportHeader && !isSupportFooter) {
+        } else if (!isSupportHeader && !isSupportFooter) {
             offset = 0;
         }else {
             offset = 1;
@@ -108,6 +110,8 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
 
                 //index = 左边界 - (section的header、footer总和) + 减法偏移量 + section数据索引
                 int index = rangeLeft - calSectionItemByThisGroup(group) + 1 + positionOfGroup;
+
+                Log.e("PPPPP", group+" , index: "+positionOfGroup+" , real: "+index);
                 return index;
             }
         }
@@ -124,7 +128,7 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
         if (isSupportHeader && isSupportFooter) {
             c = group * 2 + 1;
         }else if (isSupportHeader) {
-            c = group * 2 - 1;
+            c = group * 1 + 1;
         }else if (isSupportFooter) {
             c = group;
         }
@@ -146,19 +150,27 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
         return null != item && ItemType.ITEM_DATA == item.itemType;
     }
 
+    private static class DataWrapper {
+        //所在组
+        public int group;
+        //在组中的位置(包括组header和footer)
+        public int positionOfGroup;
+        //组内真实数据在数据表中的真实位置
+        public int positionOfData;
+
+        public DataWrapper(int group, int positionOfGroup, int positionOfData) {
+            this.group = group;
+            this.positionOfGroup = positionOfGroup;
+            this.positionOfData = positionOfData;
+        }
+    }
     /**
      * 数据域包装器 item_data {section_header - section_data - section_footer}
      */
-    private static class DataSectionItemWrapper {
-        //所在组
-        int group;
-        //在组中的位置(包括组header和footer)
-        int positionOfGroup;
-        //组内真实数据在数据表中的真实位置
-        int positionOfData;
+    public static class DataSectionItemWrapper extends DataWrapper{
         //组内item类型
         @ItemTypeWhere
-        int itemType;
+        public int itemType;
 
 
         public DataSectionItemWrapper(@ItemTypeWhere int itemType, int group, int positionOfGroup) {
@@ -166,25 +178,37 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
         }
 
         public DataSectionItemWrapper(@ItemTypeWhere int itemType, int group, int positionOfGroup, int positionOfData) {
+            super(group, positionOfGroup, positionOfData);
             this.itemType = itemType;
-            this.group = group;
-            this.positionOfGroup = positionOfGroup;
-            this.positionOfData = positionOfData;
         }
     }
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ItemType.ITEM_HEADER, ItemType.ITEM_DATA, ItemType.ITEM_FOOTER})
     @interface ItemTypeWhere {}
-    interface ItemType {
-        int ITEM_HEADER      = 0;
-        int ITEM_DATA        = 1;
-        int ITEM_FOOTER      = 2;
+    public interface ItemType {
+        int ITEM_HEADER      = -1;
+        int ITEM_DATA        = -1 + ITEM_HEADER;
+        int ITEM_FOOTER      = -1 + ITEM_DATA;
     }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            ItemTypeSummary.HEADER_SYS,
+            ItemTypeSummary.HEADER_USR,
+            ItemTypeSummary.DATA,
+            ItemTypeSummary.FOOTER_USR,
+            ItemTypeSummary.FOOTER_SYS,
+            ItemTypeSectionSummary.ITEM_HEADER,
+            ItemTypeSectionSummary.ITEM_DATA,
+            ItemTypeSectionSummary.ITEM_FOOTER
+    })
+    public @interface ItemTypeSectionSummaryWhere{}
+    public interface ItemTypeSectionSummary extends ItemTypeSummary , ItemType{}
 
     /**
      * 获取section域每个item的信息
      * section结构为  section_header -> section_data -> setion_footer
-     * @param position
+     * @param position  除去 item_header_sys 和 item_header_usr
      * @return
      */
     private DataSectionItemWrapper getDataSectionItemInfo(int position) {
@@ -221,12 +245,41 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
                 }else {
                     dataSectionItemWrapper = new DataSectionItemWrapper(ItemType.ITEM_DATA, group, child - 0, position - calSectionItemByThisGroup(group));
                 }
-
-
                 break;
             }
         }
         return dataSectionItemWrapper;
+    }
+
+
+    public static class DataItemWrapper extends DataWrapper {
+        @ItemTypeSectionSummaryWhere
+        public int itemType;
+
+        public DataItemWrapper(@ItemTypeSectionSummaryWhere int itemType) {
+            this(itemType, 0, 0, 0);
+        }
+
+        public DataItemWrapper(@ItemTypeSectionSummaryWhere int itemType, int group, int positionOfGroup, int positionOfData) {
+            super(group, positionOfGroup, positionOfData);
+            this.itemType = itemType;
+        }
+    }
+    
+    /**
+     * 针对非线性布局管理器，在decoration时可能需要更详细的分组信息
+     * @param position
+     * @return
+     */
+    public DataItemWrapper getItemInfo(int position) {
+        @ItemTypeSummaryWhere int type = super.getItemTypeByPosition(position);
+        //系统提供非data部分
+        if (ItemTypeSummary.DATA != type) {
+            return new DataItemWrapper(type);
+        }
+        position -= (getHeaderViewCount() + getSysHeaderViewCount());
+        DataSectionItemWrapper wrapper = getDataSectionItemInfo(position);
+        return new DataItemWrapper(wrapper.itemType, wrapper.group, wrapper.positionOfGroup, wrapper.positionOfData);
     }
 
 
@@ -282,6 +335,7 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
                 break;
             }
             case ItemType.ITEM_DATA:{
+                Log.e("GGGG", ""+group+" , "+positionOfGroup+" , "+info.positionOfData);
                 this.convertSectionData(holder, group, positionOfGroup, info.positionOfData);
                 break;
             }
@@ -340,6 +394,28 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
             }
         });
 
+    }
+
+    @Override
+    @ItemTypeSectionSummaryWhere
+    public int getItemTypeByPosition(int position) {
+        @ItemTypeSummaryWhere int type = super.getItemTypeByPosition(position);
+        if (ItemTypeSummary.DATA != type) {
+            return type;
+        }
+
+        position -= (getHeaderViewCount() + getSysHeaderViewCount());
+        DataSectionItemWrapper wrapper = getDataSectionItemInfo(position);
+
+        if (ItemType.ITEM_HEADER == wrapper.itemType) {
+            return ItemTypeSectionSummary.ITEM_HEADER;
+        }
+
+        if (ItemType.ITEM_FOOTER == wrapper.itemType) {
+            return ItemTypeSectionSummary.ITEM_FOOTER;
+        }
+
+        return ItemTypeSectionSummary.ITEM_DATA;
     }
 
     private OnItemClickListener onItemClickListener;

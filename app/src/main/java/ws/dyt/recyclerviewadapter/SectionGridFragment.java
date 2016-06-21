@@ -14,6 +14,7 @@ import java.util.List;
 
 import ws.dyt.library.Delegate;
 import ws.dyt.library.adapter.SectionMultiAdapter;
+import ws.dyt.library.adapter.decoration.DividerItemDecoration;
 import ws.dyt.library.adapter.deprecated.SectionAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
@@ -51,7 +52,9 @@ public class SectionGridFragment extends BaseFragment {
         GridLayoutManager llm = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new SectionMultiAdapter<String>(getContext(), list, true, true) {
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, getResources().getDrawable(R.drawable.divider_v)));
+
+        adapter = new SectionMultiAdapter<String>(getContext(), list, false, false) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
                 holder.setText(R.id.tv_text, "组--"+group);
@@ -59,8 +62,9 @@ public class SectionGridFragment extends BaseFragment {
 
             @Override
             public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData) {
-                Log.e(TAG, "convert_data: "+group+" , index: "+positionOfGroup);
-                holder.setText(R.id.tv_text, getItem(group, positionOfGroup));
+                Log.e(TAG, "convert_data: " + group + " , index: " + positionOfGroup + " , positionOfData: "+positionOfData);
+//                holder.setText(R.id.tv_text, getItem(group, positionOfGroup));
+                holder.setText(R.id.tv_text, getItem(positionOfData));
             }
 
             @Override

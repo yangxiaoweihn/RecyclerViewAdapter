@@ -25,6 +25,7 @@ import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.SectionGridFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearNoFooterFragment;
+import ws.dyt.recyclerviewadapter.SectionSkinGridFragment;
 import ws.dyt.recyclerviewadapter.SingleSimpleItemFragment;
 
 /**
@@ -86,6 +87,7 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("section纵向线性单item", SectionLinearFragment.class));
         data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
         data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
+        data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
         return data;
     }
 

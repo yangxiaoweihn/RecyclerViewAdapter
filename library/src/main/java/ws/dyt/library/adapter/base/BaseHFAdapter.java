@@ -1,6 +1,7 @@
 package ws.dyt.library.adapter.base;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -504,6 +507,50 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
                 ((StaggeredGridLayoutManager.LayoutParams) lp).setFullSpan(true);
             }
         }
+    }
+
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            ItemTypeSummary.HEADER_SYS,
+            ItemTypeSummary.HEADER_USR,
+            ItemTypeSummary.DATA,
+            ItemTypeSummary.FOOTER_USR,
+            ItemTypeSummary.FOOTER_SYS
+    })
+    public @interface ItemTypeSummaryWhere{}
+    public interface ItemTypeSummary {
+        int HEADER_SYS = 0;
+        int HEADER_USR = 1 + HEADER_SYS;
+        int DATA       = 1 + HEADER_USR;
+        int FOOTER_USR = 1 + DATA;
+        int FOOTER_SYS = 1 + FOOTER_USR;
+    }
+
+    /**
+     * 根据item view位置获取对应类型
+     * @param position
+     * @return
+     */
+    @ItemTypeSummaryWhere
+    public int getItemTypeByPosition(int position) {
+        if (isSysHeaderView(position)) {
+            return ItemTypeSummary.HEADER_SYS;
+        }
+
+        if (isHeaderItemView(position)) {
+            return ItemTypeSummary.HEADER_USR;
+        }
+
+        if (isFooterItemView(position)) {
+            return ItemTypeSummary.FOOTER_USR;
+        }
+
+        if (isSysFooterView(position)) {
+            return ItemTypeSummary.FOOTER_SYS;
+        }
+
+        return ItemTypeSummary.DATA;
     }
 
     //##------------------------->>>

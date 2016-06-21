@@ -1,6 +1,8 @@
 package ws.dyt.recyclerviewadapter;
 
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ws.dyt.library.adapter.SectionMultiAdapter;
+import ws.dyt.library.adapter.decoration.DividerItemDecoration;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 
@@ -49,6 +52,8 @@ public class SectionLinearFragment extends BaseFragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, getResources().getDrawable(R.drawable.divider_v)));
 
         adapter = new SectionMultiAdapter<String>(getContext(), list, true, true) {
             @Override
