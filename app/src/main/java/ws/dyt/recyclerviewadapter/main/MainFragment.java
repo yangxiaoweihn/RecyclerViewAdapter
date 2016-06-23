@@ -27,6 +27,8 @@ import ws.dyt.recyclerviewadapter.SectionLinearFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearNoFooterFragment;
 import ws.dyt.recyclerviewadapter.SectionSkinGridFragment;
 import ws.dyt.recyclerviewadapter.SingleSimpleItemFragment;
+import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
+import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 
 /**
  */
@@ -88,6 +90,8 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
         data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
         data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
+        data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
+        data.add(new FragmentEntity("模Bilili, Grid", Bilili_1_ListFragment.class));
         return data;
     }
 

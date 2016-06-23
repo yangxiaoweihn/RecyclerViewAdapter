@@ -30,7 +30,7 @@ import ws.dyt.library.adapter.deprecated.SectionAdapter;
 abstract public class BaseFragment extends Fragment{
     protected LayoutInflater layoutInflater;
     @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
+    public RecyclerView recyclerView;
     @BindView(R.id.section_input)
     ViewGroup mSectionInput;
     @BindView(R.id.et)
@@ -44,6 +44,8 @@ abstract public class BaseFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, rootView);
+
+        mSectionInput.setVisibility(View.GONE);
 
         rootView.findViewById(R.id.btn_add).setOnClickListener(ll);
         rootView.findViewById(R.id.addHeader).setOnClickListener(ll);
@@ -223,15 +225,15 @@ abstract public class BaseFragment extends Fragment{
                 public void onClick(int group, int positionOfGroup, int positionOfData, @SectionAdapter.ItemTypeWhere int type) {
                     String a = "";
                     switch (type) {
-                        case 0: {
+                        case SectionMultiAdapter.ItemType.ITEM_HEADER: {
                             a = "H-> group: " + group + " , index: " + positionOfGroup;
                             break;
                         }
-                        case 1: {
+                        case SectionMultiAdapter.ItemType.ITEM_DATA: {
                             a = "D-> group: " + group + " , index: " + positionOfGroup + " , " + positionOfData;
                             break;
                         }
-                        case 2: {
+                        case SectionMultiAdapter.ItemType.ITEM_FOOTER: {
                             a = "F-> group: " + group + " , index: " + positionOfGroup;
                             break;
                         }
@@ -250,19 +252,7 @@ abstract public class BaseFragment extends Fragment{
         this.tost("" + position);
     }
 
-    private void tost(String des) {
+    public void tost(String des) {
         Toast.makeText(getContext(), des, Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.operate, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (R.id.action_operate == item.getItemId()) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

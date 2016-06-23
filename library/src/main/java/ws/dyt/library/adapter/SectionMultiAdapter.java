@@ -193,17 +193,16 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-            ItemTypeSummary.HEADER_SYS,
-            ItemTypeSummary.HEADER_USR,
-            ItemTypeSummary.DATA,
-            ItemTypeSummary.FOOTER_USR,
-            ItemTypeSummary.FOOTER_SYS,
+            ItemTypeSummaryPrivate.HEADER_SYS,
+            ItemTypeSummaryPrivate.HEADER_USR,
+            ItemTypeSummaryPrivate.FOOTER_USR,
+            ItemTypeSummaryPrivate.FOOTER_SYS,
             ItemTypeSectionSummary.ITEM_HEADER,
             ItemTypeSectionSummary.ITEM_DATA,
             ItemTypeSectionSummary.ITEM_FOOTER
     })
     public @interface ItemTypeSectionSummaryWhere{}
-    public interface ItemTypeSectionSummary extends ItemTypeSummary , ItemType{}
+    public interface ItemTypeSectionSummary extends ItemTypeSummaryPrivate , ItemType{}
 
     /**
      * 获取section域每个item的信息
@@ -265,17 +264,19 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
             this.itemType = itemType;
         }
     }
-    
+
     /**
      * 针对非线性布局管理器，在decoration时可能需要更详细的分组信息
      * @param position
      * @return
      */
+//    @SuppressWarnings("unchecked")
     public DataItemWrapper getItemInfo(int position) {
         @ItemTypeSummaryWhere int type = super.getItemTypeByPosition(position);
         //系统提供非data部分
         if (ItemTypeSummary.DATA != type) {
-            return new DataItemWrapper(type);
+            @ItemTypeSectionSummaryWhere int e = type;
+            return new DataItemWrapper(e);
         }
         position -= (getHeaderViewCount() + getSysHeaderViewCount());
         DataSectionItemWrapper wrapper = getDataSectionItemInfo(position);
@@ -355,7 +356,7 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
 
     @Override
     final
-    protected void setItemListener(final BaseViewHolder holder, int viewType) {
+    protected void initItemListener(final BaseViewHolder holder, int viewType) {
         if (null == holder || null == holder.itemView) {
             return;
         }
@@ -400,8 +401,9 @@ public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionM
     @ItemTypeSectionSummaryWhere
     public int getItemTypeByPosition(int position) {
         @ItemTypeSummaryWhere int type = super.getItemTypeByPosition(position);
+        @ItemTypeSectionSummaryWhere int e = type;
         if (ItemTypeSummary.DATA != type) {
-            return type;
+            return e;
         }
 
         position -= (getHeaderViewCount() + getSysHeaderViewCount());

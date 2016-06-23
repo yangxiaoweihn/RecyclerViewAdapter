@@ -19,6 +19,7 @@ import ws.dyt.library.Delegate;
 import ws.dyt.library.adapter.SectionMultiAdapter;
 import ws.dyt.library.adapter.deprecated.SectionAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.recyclerviewadapter.utils.Data;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 
 
@@ -39,94 +40,11 @@ public class SectionSkinGridFragment extends BaseFragment {
         return rootView;
     }
 
-    private List<List<SkinData>> generate(){
-        List<List<SkinData>> data = new ArrayList<>();
-        data.add(new ArrayList(Arrays.asList(
-                new SkinData[]{new SkinData("Hamburger", R.drawable.xy), new SkinData("SUPER MARIO", R.drawable.xy)})));
-        data.add(
-                new ArrayList(Arrays.asList(new SkinData[]{
-                        new SkinData("默认皮肤", R.drawable.xy),
-                        new SkinData("ios风格", R.drawable.xy),
-                        new SkinData("保卫萝卜3", R.drawable.xy),
-                        new SkinData("欧洲杯", R.drawable.xy),
-                        new SkinData("别字", R.drawable.xy),
-                        new SkinData("素白", R.drawable.xy),
-                        new SkinData("魔兽", R.drawable.xy),
-                        new SkinData("X战警", R.drawable.xy),
-                        new SkinData("彩漆怀旧", R.drawable.xy),
-                        new SkinData("雪碧-击败炎热", R.drawable.xy),
-                        new SkinData("呆萌树懒", R.drawable.xy),
-                        new SkinData("江南水乡", R.drawable.xy),
-                        new SkinData("四驱车", R.drawable.xy),
-                        new SkinData("黄色机甲", R.drawable.xy),
-                        new SkinData("阿狸·照亮路的月亮", R.drawable.xy),
-                        new SkinData("一拳超人", R.drawable.xy),
-                        new SkinData("粉色少女", R.drawable.xy),
-                        new SkinData("草莓", R.drawable.xy),
-                        new SkinData("少女心事", R.drawable.xy),
-                        new SkinData("紫罗兰少女", R.drawable.xy),
-                        new SkinData("Crazy Magic", R.drawable.xy),
-                        new SkinData("蓝色简约", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy),
-                        new SkinData("Brwon BEAR", R.drawable.xy)
-                })));
-        return data;
-    }
 
-    static class SkinData {
-        public String title;
-        public int img;
 
-        public SkinData(String title, int img) {
-            this.title = title;
-            this.img = img;
-        }
-    }
-
-    SectionMultiAdapter<SkinData> adapter;
+    SectionMultiAdapter<Data.SkinData> adapter;
     private void init(){
-        final List<List<SkinData>> list = generate();
+        final List<List<Data.SkinData>> list = Data.generateSection();
 
         GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(llm);
@@ -134,7 +52,7 @@ public class SectionSkinGridFragment extends BaseFragment {
 //        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, getResources().getDrawable(R.drawable.divider_v)));
         recyclerView.addItemDecoration(new SkinItemDecoration(getContext()));
 
-        adapter = new SectionMultiAdapter<SkinData>(getContext(), list, true, false) {
+        adapter = new SectionMultiAdapter<Data.SkinData>(getContext(), list, true, false) {
             @Override
             public void convertSectionHeader(BaseViewHolder holder, int group) {
                 holder.setText(R.id.tv_text, 0 == group ? "最新皮肤，不容错过" : "热门皮肤推荐");
@@ -143,7 +61,7 @@ public class SectionSkinGridFragment extends BaseFragment {
             @Override
             public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData) {
                 Log.e(TAG, "convert_data: "+group+" , index: "+positionOfGroup);
-                SkinData e = getItem(group, positionOfGroup);
+                Data.SkinData e = getItem(group, positionOfGroup);
 //                SkinData e = getItem(positionOfData);
                 holder.setText(R.id.tv_text, e.title).setImageResource(R.id.iv_skin, e.img);
             }
@@ -177,7 +95,7 @@ public class SectionSkinGridFragment extends BaseFragment {
     }
 
     @Override
-    public SectionMultiAdapter<SkinData> getAdapter() {
+    public SectionMultiAdapter<Data.SkinData> getAdapter() {
         return adapter;
     }
 
@@ -192,7 +110,7 @@ public class SectionSkinGridFragment extends BaseFragment {
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
 
-            SectionMultiAdapter<SkinData> adapter = (SectionMultiAdapter<SkinData>) parent.getAdapter();
+            SectionMultiAdapter<Data.SkinData> adapter = (SectionMultiAdapter<Data.SkinData>) parent.getAdapter();
             int position = parent.getChildAdapterPosition(view);
 //            @SectionMultiAdapter.ItemTypeSectionSummaryWhere int type = adapter.getItemTypeByPosition(position);
 //            Log.e("LLL", ""+position+" , "+type);

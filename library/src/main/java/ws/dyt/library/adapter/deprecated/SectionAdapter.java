@@ -254,7 +254,7 @@ public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiI
 
     @Override
     final
-    protected void setItemListener(final BaseViewHolder holder, int viewType) {
+    protected void initItemListener(final BaseViewHolder holder, int viewType) {
         if (null == holder || null == holder.itemView) {
             return;
         }

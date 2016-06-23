@@ -5,6 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,23 +89,23 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     final
-    protected int getSysHeaderViewCount(){
+    public int getSysHeaderViewCount(){
         return sysHeaderViews.size();
     }
 
     final
-    protected int getHeaderViewCount() {
+    public int getHeaderViewCount() {
         return headerViews.size();
     }
 
     final
-    protected int getFooterViewCount() {
+    public int getFooterViewCount() {
         return footerViews.size();
     }
 
     //系统添加footer数量
     final
-    protected int getSysFooterViewCount() {
+    public int getSysFooterViewCount() {
         return null == sysFooterView ? 0 : 1;
     }
 
@@ -185,6 +186,7 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     final
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+        Log.e("Layout", "create: "+viewType);
         //处理系统头部
         View sysHeaderView = getSysFooterViewByHashCode(viewType);
         if (null != sysHeaderView) {
@@ -211,11 +213,11 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
         //事件只针对正常数据项
         final BaseViewHolder holder = onCreateHolder(parent, viewType);
-        this.setItemListener(holder, viewType);
+        this.initItemListener(holder, viewType);
         return holder;
     }
 
-    protected void setItemListener(final BaseViewHolder holder, final int viewType){
+    protected void initItemListener(final BaseViewHolder holder, final int viewType){
         if (null == holder) {
             return;
         }
@@ -441,10 +443,10 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     /**
-     * 用来判断item是否为真实数据项，除了头部、尾部、系统尾部等非真实数据项，结构为：
+     * 用来判断item是否为真实数据项，除了头部、尾部、系统尾部等非真实数据项，结构为:
      * item_header - item_data - item_footer - item_sys_footer
      * @param position
-     * @return
+     * @return true:将保留LayoutManager的设置  false:该item将会横跨整行(对GridLayoutManager,StaggeredLayoutManager将很有用)
      */
     protected boolean isDataItemView(int position) {
         int shc = getSysHeaderViewCount();
@@ -519,12 +521,14 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
             ItemTypeSummary.FOOTER_SYS
     })
     public @interface ItemTypeSummaryWhere{}
-    public interface ItemTypeSummary {
+    protected interface ItemTypeSummaryPrivate {
         int HEADER_SYS = 0;
-        int HEADER_USR = 1 + HEADER_SYS;
-        int DATA       = 1 + HEADER_USR;
-        int FOOTER_USR = 1 + DATA;
-        int FOOTER_SYS = 1 + FOOTER_USR;
+        int HEADER_USR = 1;
+        int FOOTER_USR = 3;
+        int FOOTER_SYS = 4;
+    }
+    public interface ItemTypeSummary extends ItemTypeSummaryPrivate{
+        int DATA       = 2;
     }
 
     /**

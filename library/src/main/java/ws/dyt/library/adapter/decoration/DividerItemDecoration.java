@@ -112,13 +112,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-        public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-            if (mOrientation == VERTICAL_LIST) {
-                outRect.set(0, 0, 0, getDividerHeight());
-            } else {
-                outRect.set(0, 0, getDividerWidth(), 0);
-            }
+    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+        if (mOrientation == VERTICAL_LIST) {
+            outRect.set(0, 0, 0, getDividerHeight());
+        } else {
+            outRect.set(0, 0, getDividerWidth(), 0);
         }
+    }
 
     private int getDividerWidth() {
         return mWidth > 0 ? mWidth : mDivider.getIntrinsicWidth();
