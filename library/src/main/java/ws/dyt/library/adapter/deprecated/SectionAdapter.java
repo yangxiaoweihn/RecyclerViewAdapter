@@ -2,7 +2,6 @@ package ws.dyt.library.adapter.deprecated;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import ws.dyt.library.adapter.SectionMultiItemViewType;
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 /**
@@ -22,7 +21,7 @@ import ws.dyt.library.viewholder.BaseViewHolder;
  * 其中 header footer 个数一致
  */
 abstract
-public class SectionAdapter<T> extends BaseHFAdapter<T> implements SectionMultiItemViewType {
+public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
     public SectionAdapter(Context context, List<T> datas) {
         super(context, datas);
     }

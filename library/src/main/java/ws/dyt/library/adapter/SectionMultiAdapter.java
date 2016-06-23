@@ -10,7 +10,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
 /**
@@ -21,7 +21,7 @@ import ws.dyt.library.viewholder.BaseViewHolder;
  * 其中 header footer 可有可无
  */
 abstract
-public class SectionMultiAdapter<T> extends BaseHFAdapter<T> implements SectionMultiItemViewType {
+public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
     public SectionMultiAdapter(Context context, List<T> datas) {
         super(context, datas);
     }

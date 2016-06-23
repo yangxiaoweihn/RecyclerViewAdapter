@@ -25,7 +25,7 @@ import ws.dyt.library.viewholder.BaseViewHolder;
  * 1. 系统尾部 sys_footer_item 目前只支持设置一个view
  */
 abstract
-public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     protected Context context;
     protected LayoutInflater inflater;
     protected List<View> headerViews = new ArrayList<>();
@@ -35,13 +35,13 @@ public class BaseHFAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     private View sysFooterView;
     protected List<T> datas;
 
-    public BaseHFAdapter(Context context, List<T> datas) {
+    public HeaderFooterAdapter(Context context, List<T> datas) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.datas = datas;
     }
 
-    public BaseHFAdapter(Context context, List<List<T>> sectionDatas, int unused) {
+    public HeaderFooterAdapter(Context context, List<List<T>> sectionDatas, int unused) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         if (null == sectionDatas || sectionDatas.isEmpty()) {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by yangxiaowei on 16/6/8.
  */
-public abstract class BaseAdapter<T> extends BaseHFAdapter<T> implements CRUD<T> {
+public abstract class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
     public static final String TAG = "Adapter";
 
     public BaseAdapter(Context context, List<T> datas) {

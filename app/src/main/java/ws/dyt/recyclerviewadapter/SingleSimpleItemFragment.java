@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.adapter.deprecated.SingleAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 
@@ -58,14 +58,14 @@ public class SingleSimpleItemFragment extends BaseFragment {
 
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new BaseHFAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 Log.e(TAG, "viewType: " + " , position: " + position);
             }
         });
 
-        adapter.setOnItemLongClickListener(new BaseHFAdapter.OnItemLongClickListener() {
+        adapter.setOnItemLongClickListener(new HeaderFooterAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View itemView, int position) {
                 String ss = (String) adapter.getItem(position);

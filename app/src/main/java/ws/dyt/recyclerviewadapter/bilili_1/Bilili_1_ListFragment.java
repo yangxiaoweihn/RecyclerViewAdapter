@@ -1,35 +1,23 @@
 package ws.dyt.recyclerviewadapter.bilili_1;
 
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
-import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
-import ws.dyt.recyclerviewadapter.wandoujia.AdHeader;
-import ws.dyt.recyclerviewadapter.wandoujia.AppEntity;
-import ws.dyt.recyclerviewadapter.wandoujia.ItemAd;
-import ws.dyt.recyclerviewadapter.wandoujia.ItemData;
 import ws.dyt.recyclerviewadapter.wandoujia.Wrapper;
 
 /**
@@ -125,7 +113,7 @@ public class Bilili_1_ListFragment extends BaseFragment {
     }
 
     @Override
-    protected BaseHFAdapter getAdapter() {
+    protected HeaderFooterAdapter getAdapter() {
         return adapter;
     }
 

@@ -2,7 +2,6 @@ package ws.dyt.recyclerviewadapter.main;
 
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleFragment;
 import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleGridFragment;
@@ -26,7 +25,6 @@ import ws.dyt.recyclerviewadapter.SectionGridFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearNoFooterFragment;
 import ws.dyt.recyclerviewadapter.SectionSkinGridFragment;
-import ws.dyt.recyclerviewadapter.SingleSimpleItemFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 
@@ -63,7 +61,7 @@ public class MainFragment extends Fragment {
         recyclerView.setLayoutManager(llm);
         final MultiAdapter<FragmentEntity> adapter = getAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseHFAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 toFragment(adapter.getItem(position).clazz);

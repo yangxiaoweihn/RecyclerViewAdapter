@@ -12,13 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
@@ -142,7 +141,7 @@ public class WandoujianListFragment extends BaseFragment {
     }
 
     @Override
-    protected BaseHFAdapter getAdapter() {
+    protected HeaderFooterAdapter getAdapter() {
         return adapter;
     }
 

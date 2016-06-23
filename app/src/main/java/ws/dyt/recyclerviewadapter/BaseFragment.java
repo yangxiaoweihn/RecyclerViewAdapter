@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.dyt.library.adapter.SectionMultiAdapter;
 import ws.dyt.library.adapter.base.BaseAdapter;
-import ws.dyt.library.adapter.base.BaseHFAdapter;
+import ws.dyt.library.adapter.base.HeaderFooterAdapter;
 import ws.dyt.library.adapter.deprecated.SectionAdapter;
 
 /**
@@ -199,25 +196,25 @@ abstract public class BaseFragment extends Fragment{
     }
 
     abstract
-    protected BaseHFAdapter getAdapter();
+    protected HeaderFooterAdapter getAdapter();
 
 
     private void addListener(){
-        getAdapter().setOnItemClickListener(new BaseHFAdapter.OnItemClickListener() {
+        getAdapter().setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 toast(position);
             }
         });
 
-        getAdapter().setOnItemLongClickListener(new BaseHFAdapter.OnItemLongClickListener() {
+        getAdapter().setOnItemLongClickListener(new HeaderFooterAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View itemView, int position) {
                 toast(position);
             }
         });
 
-        BaseHFAdapter adapter = getAdapter();
+        HeaderFooterAdapter adapter = getAdapter();
         if (adapter instanceof SectionMultiAdapter) {
             SectionMultiAdapter sectionAdapter = (SectionMultiAdapter) adapter;
             sectionAdapter.setOnItemClickListener(new SectionMultiAdapter.OnItemClickListener() {
