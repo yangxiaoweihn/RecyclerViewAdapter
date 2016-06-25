@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.adapter.base.HeaderFooterAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleFragment;
 import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleGridFragment;
 import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleStaggeredGridFragment;
@@ -26,6 +26,7 @@ import ws.dyt.recyclerviewadapter.SectionLinearFragment;
 import ws.dyt.recyclerviewadapter.SectionLinearNoFooterFragment;
 import ws.dyt.recyclerviewadapter.SectionSkinGridFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
+import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
 import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 
 /**
@@ -90,6 +91,7 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
         data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid", Bilili_1_ListFragment.class));
+        data.add(new FragmentEntity("模Bilili, Grid", Bilili_2_ListFragment.class));
         return data;
     }
 

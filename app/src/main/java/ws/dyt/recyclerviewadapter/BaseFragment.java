@@ -16,10 +16,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ws.dyt.library.adapter.SectionMultiAdapter;
-import ws.dyt.library.adapter.base.BaseAdapter;
-import ws.dyt.library.adapter.base.HeaderFooterAdapter;
-import ws.dyt.library.adapter.deprecated.SectionAdapter;
+import ws.dyt.view.adapter.SectionMultiAdapter;
+import ws.dyt.view.adapter.base.BaseAdapter;
+import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.deprecated.SectionAdapter;
 
 /**
  * Created by yangxiaowei on 16/6/9.
@@ -144,12 +144,12 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddHeaderClick(){
         final View header1 = layoutInflater.inflate(R.layout.item_header_1, recyclerView, false);
-        getAdapter().addHeaderView(header1);
+        getAdapter().addHeaderView(header1, true);
 
         header1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                getAdapter().removeHeaderView(header1);
+                getAdapter().removeHeaderView(header1, true);
                 return true;
             }
         });

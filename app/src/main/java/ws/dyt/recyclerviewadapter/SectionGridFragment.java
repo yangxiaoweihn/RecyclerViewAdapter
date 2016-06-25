@@ -12,11 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.Delegate;
-import ws.dyt.library.adapter.SectionMultiAdapter;
-import ws.dyt.library.adapter.decoration.DividerItemDecoration;
-import ws.dyt.library.adapter.deprecated.SectionAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.Delegate;
+import ws.dyt.view.adapter.SectionMultiAdapter;
+import ws.dyt.view.adapter.decoration.DividerItemDecoration;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 
 /**

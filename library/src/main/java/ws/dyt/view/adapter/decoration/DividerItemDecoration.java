@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter.decoration;
+package ws.dyt.view.adapter.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;

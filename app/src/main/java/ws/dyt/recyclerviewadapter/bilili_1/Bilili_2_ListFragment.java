@@ -24,13 +24,15 @@ import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 /**
  * Created by yangxiaowei on 16/6/22.
  *
- * 所有的数据展示看起来都是grid
+ * 一组Grid组数据-》一则广告-》一组Linear组数据
  *
- * 用GridLayoutManager，将分组数据、分组广告数据进行包装转换处理
+ * 前面有几个数据是grid展示，后面数据展示是线性的
+ *
+ * 所以总体用GridLayoutManager，将分组数据、分组广告数据进行包装转换处理
  *
  * 点击只绑定了部分数据，其他未绑定的数据自行处理
  */
-public class Bilili_1_ListFragment extends BaseFragment {
+public class Bilili_2_ListFragment extends BaseFragment {
 
     @Nullable
     @Override
@@ -81,8 +83,8 @@ public class Bilili_1_ListFragment extends BaseFragment {
                 }
 
                 Wrapper1 t = getItem(position - getSysHeaderViewCount() - getHeaderViewCount());
-                return t.type == 2;
-//                return false;
+                //只有动漫类型并且不是第二组（动漫总共两组）的以两列展示
+                return t.type == 2 && t.group != 2;
             }
         };
 
@@ -96,14 +98,15 @@ public class Bilili_1_ListFragment extends BaseFragment {
     }
 
     private void bindItemAd(BaseViewHolder holder, Ad e) {
-        holder.setText(R.id.tv_des, e.title);
+        holder.setText(R.id.tv_des, e.title).setImageResource(R.id.iv_img, R.drawable.bilili_ad_3);
     }
 
     private void bindItemData(BaseViewHolder holder, Series e) {
         holder
                 .setText(R.id.tv_des, e.des)
                 .setText(R.id.tv_count_evaluate, e.count+100+"")
-                .setText(R.id.tv_count_view, "2.8万");
+                .setText(R.id.tv_count_view, "2.8万")
+                .setImageResource(R.id.iv_img, e.imgUrl);
         holder.itemView.setTag(e);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,9 +154,19 @@ public class Bilili_1_ListFragment extends BaseFragment {
 
     private List<Wrapper1> generate() {
         List<Wrapper1> datas = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            //构造广告数据，独占一行
-            if (0 != i && i % 2 == 0) {
+        for (int i = 0; i < 3; i++) {
+            if (0 == i) {
+                //动漫组
+                String group = "Bilili分组 - "+i;
+                datas.add(new Wrapper1(0, i, 0, group));
+
+                //动漫数据，一组6个
+                for (int j = 0; j < 6; j++) {
+                    Log.e("HHH", "j: "+j);
+                    Series app = new Series("【卡哇伊】小萝莉动漫··美女好看么- " + i + "," + j, R.drawable.bilili_1, 0);
+                    datas.add(new Wrapper1(2, i, j, app));
+                }
+            }else if (i == 1) {
                 //广告组
                 String group = "周末放映室 - "+i;
                 datas.add(new Wrapper1(0, i, 0, group));
@@ -161,21 +174,18 @@ public class Bilili_1_ListFragment extends BaseFragment {
                 //广告数据
                 Ad ad = new Ad("Bilili广告 - " + i, "");
                 datas.add(new Wrapper1(1, i, 0, ad));
-            } else {
+            }else {
                 //动漫组
                 String group = "Bilili分组 - "+i;
                 datas.add(new Wrapper1(0, i, 0, group));
 
-                //动漫数据，一组4个
-                for (int j = 0; j < 4; j++) {
-                    Series app = new Series("【卡哇伊】小萝莉动漫··美女好看么- " + i + "," + j, R.drawable.bilili_1, 0);
+                //动漫数据，一组50个
+                for (int j = 0; j < 51; j++) {
+                    Series app = new Series("【卡哇伊】小萝莉动漫··美女好看么- " + i + "," + j, R.drawable.bilili_3, 0);
                     datas.add(new Wrapper1(2, i, j, app));
                 }
             }
         }
-
-        //构造一个缺省数据
-        datas.remove(4);
 
         return datas;
     }
@@ -190,15 +200,14 @@ public class Bilili_1_ListFragment extends BaseFragment {
         public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
             super.getItemOffsets(outRect, itemPosition, parent);
             int aAll = adapter.getSysHeaderViewCount() + adapter.getHeaderViewCount();
-            Log.e("GGGG", "all: "+aAll+" , index: "+itemPosition);
+            Log.e("GGGG", "all: " + aAll + " , index: " + itemPosition);
             if (0 != aAll && itemPosition < aAll) {
 
                 return;
             }
 
-
-
             int index = itemPosition - aAll;
+
             Wrapper1 e = adapter.getItem(index);
 
             outRect.left = padding;
@@ -211,7 +220,11 @@ public class Bilili_1_ListFragment extends BaseFragment {
                 //data
                 outRect.bottom = padding;
 
-                outRect.left = e.index % 2 == 0 ? padding : 0;
+                if (e.group == 0) {
+                    outRect.left = e.index % 2 == 0 ? padding : 0;
+                }else {
+                    outRect.left = padding;
+                }
             }else if (e.type == 0) {
                 outRect.bottom = padding;
                 if (index == 0) {

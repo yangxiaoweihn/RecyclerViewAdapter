@@ -9,11 +9,12 @@
     android:id="@+id/vg_view"
     >
     <!--android:background="#323"-->
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iv_flag"
-        android:src="@mipmap/ic_add"
+        android:textColor="#f00"
+        android:text="ad"
         android:layout_gravity="right|top"/>
     <LinearLayout
         android:padding="10dp"

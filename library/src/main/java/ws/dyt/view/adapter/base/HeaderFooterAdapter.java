@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter.base;
+package ws.dyt.view.adapter.base;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -15,7 +15,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/8.
@@ -341,24 +341,42 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
 
     final
     public void addHeaderView(View view) {
+        this.addHeaderView(view, false);
+    }
+
+    final
+    public void addHeaderView(View view, boolean changeAllVisibleItems) {
         if (null != view && headerViews.contains(view)) {
             headerViews.remove(view);
         }
         headerViews.add(view);
         int shc = getSysHeaderViewCount();
         int index = shc + headerViews.indexOf(view);
-        notifyItemInserted(index);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemInserted(index);
+        }
     }
 
     final
     public void removeHeaderView(View view) {
+        this.removeHeaderView(view, false);
+    }
+
+    final
+    public void removeHeaderView(View view, boolean changeAllVisibleItems) {
         if (null == view || !headerViews.contains(view)) {
             return;
         }
         int shc = getSysHeaderViewCount();
         int index = shc + headerViews.indexOf(view);
         headerViews.remove(view);
-        notifyItemRemoved(index);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemRemoved(index);
+        }
     }
 
     /**
@@ -377,16 +395,33 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         if (null != view && footerViews.contains(view)) {
             footerViews.remove(view);
         }
+        this.addFooterView(view, false);
+    }
+
+    final
+    public void addFooterView(View view, boolean changeAllVisibleItems) {
+        if (null != view && footerViews.contains(view)) {
+            footerViews.remove(view);
+        }
         footerViews.add(view);
         int shc = getSysHeaderViewCount();
         int hc = shc + getHeaderViewCount();
         int dc = getDataSectionItemCount();
         int index = footerViews.indexOf(view);
-        notifyItemInserted(hc + dc + index);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemInserted(hc + dc + index);
+        }
     }
 
     final
     public void removeFooterView(View view) {
+        this.removeFooterView(view, false);
+    }
+
+    final
+    public void removeFooterView(View view, boolean changeAllVisibleItems) {
         if (null == view || !footerViews.contains(view)) {
             return;
         }
@@ -395,7 +430,11 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         int dc = getDataSectionItemCount();
         int index = footerViews.indexOf(view);
         footerViews.remove(view);
-        notifyItemRemoved(hc + dc + index);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemRemoved(hc + dc + index);
+        }
     }
 
     /**

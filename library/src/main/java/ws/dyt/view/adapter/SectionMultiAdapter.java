@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter;
+package ws.dyt.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -10,8 +10,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-import ws.dyt.library.adapter.base.HeaderFooterAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/13.

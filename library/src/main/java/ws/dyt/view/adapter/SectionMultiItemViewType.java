@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter;
+package ws.dyt.view.adapter;
 
 import android.support.annotation.LayoutRes;
 

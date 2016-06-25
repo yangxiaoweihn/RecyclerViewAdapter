@@ -9,12 +9,6 @@
     android:id="@+id/vg_view"
     >
     <!--android:background="#323"-->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/iv_flag"
-        android:src="@mipmap/ic_add"
-        android:layout_gravity="right|top"/>
     <LinearLayout
         android:padding="10dp"
         android:layout_gravity="center_horizontal"
@@ -27,7 +21,7 @@
             android:id="@+id/iv_app_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher_1" />
 
         <TextView
             android:lines="2"

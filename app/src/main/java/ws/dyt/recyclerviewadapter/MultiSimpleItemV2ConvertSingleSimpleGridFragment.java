@@ -1,8 +1,11 @@
 package ws.dyt.recyclerviewadapter;
 
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 
 
 /**
@@ -41,7 +45,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleGridFragment extends BaseFragme
         final String[] datas = generate();
         List<String> list = new ArrayList<>(Arrays.asList(datas));
 
-        GridLayoutManager llm = new GridLayoutManager(getContext(), 3);
+        GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(llm);
 
         adapter = new MultiAdapter<String>(getContext(), list, R.layout.item_text_c) {
@@ -64,11 +68,40 @@ public class MultiSimpleItemV2ConvertSingleSimpleGridFragment extends BaseFragme
                 holder.setText(R.id.tv_text, position+"  "+getItem(position));
             }
         };
+        recyclerView.addItemDecoration(new D());
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public MultiAdapter getAdapter() {
         return adapter;
+    }
+
+
+    class D extends RecyclerView.ItemDecoration {
+        int padding;
+        public D() {
+            padding = UnitUtils.dip2Px(getContext(), 10);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
+            super.getItemOffsets(outRect, itemPosition, parent);
+            int aAll = adapter.getSysHeaderViewCount() + adapter.getHeaderViewCount();
+            Log.e("GGGG", "all: " + aAll + " , index: " + itemPosition);
+            outRect.left = 0;
+            outRect.top = 0;
+            outRect.bottom = 0;
+            outRect.right = 0;
+            if (0 != aAll && itemPosition < aAll) {
+
+                return;
+            }
+            int index = itemPosition - aAll;
+            if (index == 0) {
+                outRect.set(0, padding, 0, 0);
+            }
+
+        }
     }
 }

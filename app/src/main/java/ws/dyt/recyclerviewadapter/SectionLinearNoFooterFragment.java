@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.SectionMultiAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.SectionMultiAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 
 /**

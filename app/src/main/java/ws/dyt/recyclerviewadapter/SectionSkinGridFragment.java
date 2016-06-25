@@ -11,14 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.Delegate;
-import ws.dyt.library.adapter.SectionMultiAdapter;
-import ws.dyt.library.adapter.deprecated.SectionAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.Delegate;
+import ws.dyt.view.adapter.SectionMultiAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.utils.Data;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 

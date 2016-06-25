@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.adapter.base.HeaderFooterAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.ItemWrapper;
+import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.BaseFragment;
-import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.recyclerviewadapter.R;
 
 /**
@@ -37,31 +34,28 @@ public class WandoujianListFragment extends BaseFragment {
     }
 
 
-    MultiAdapter<Wrapper> adapter;
+    MultiAdapter<ItemWrapper> adapter;
 
     private void init() {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<Wrapper>(getContext(), generate()) {
+        adapter = new MultiAdapter<ItemWrapper>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
-                Wrapper e = getItem(position);
+                ItemWrapper e = getItem(position);
                 if (e.type == 0) {
-                    Log.e("Layout", "ad_header: " + R.layout.wdj_ad_header);
                     return R.layout.wdj_ad_header;
                 } else if (e.type == 1) {
-                    Log.e("Layout", "ad_item: " + R.layout.wdj_item_ad);
                     return R.layout.wdj_item_ad;
                 }
-                Log.e("Layout", "data_item : " + R.layout.wdj_item_data);
                 return R.layout.wdj_item_data;
             }
 
             @Override
             public void convert(BaseViewHolder holder, int position) {
-                Wrapper e = getItem(position);
+                ItemWrapper e = getItem(position);
                 if (e.type == 0) {
                     bindHeaderAd(holder, (AdHeader) e.data);
                 } else if (e.type == 1) {
@@ -145,34 +139,34 @@ public class WandoujianListFragment extends BaseFragment {
         return adapter;
     }
 
-    private List<Wrapper> generate() {
-        AdHeader adHeader = new Gson().fromJson(FileUtils.readRawFile(getResources(), R.raw.wdj_header_ad), AdHeader.class);
-        List<ItemData> itemDatas = new ArrayList<>();
+    private List<ItemWrapper> generate() {
+        AdHeader adHeader = new AdHeader("XXXApp", "注册送100元红包\n还有2%加息券", "12.5M");
+        adHeader.AppInstallCount = "23万人安装";
 
-        List<Wrapper> datas = new ArrayList<>();
-        datas.add(new Wrapper(0, adHeader));
+        List<ItemWrapper> datas = new ArrayList<>();
+        datas.add(new ItemWrapper(0, adHeader));
         for (int i = 0; i < 30; i++) {
             //ad
             if (0 != i && i % 5 == 0) {
                 ItemAd itemData = new ItemAd();
                 ArrayList<AppEntity> apps = new ArrayList<>();
                 for (int j = 0; j < 3; j++) {
-                    AppEntity app = new AppEntity("木蚂蚁-" + i + "," + j, "", "4.7M");
+                    AppEntity app = new AppEntity("推广APP-" + i + "," + j, "", "4.7M");
                     apps.add(app);
                 }
                 itemData.datas = apps;
-                datas.add(new Wrapper(1, itemData));
+                datas.add(new ItemWrapper(1, itemData));
             } else {
                 ItemData itemData = new ItemData();
                 itemData.GroupTitle = "测试分组App--" + i;
                 itemData.GroupDes = "";
                 ArrayList<AppEntity> apps = new ArrayList<>();
                 for (int j = 0; j < 3; j++) {
-                    AppEntity app = new AppEntity("木蚂蚁-" + i + "," + j, "", "4.7M");
+                    AppEntity app = new AppEntity("三方APP-" + i + "," + j, "", "4.7M");
                     apps.add(app);
                 }
                 itemData.apps = apps;
-                datas.add(new Wrapper(2, itemData));
+                datas.add(new ItemWrapper(2, itemData));
             }
         }
 

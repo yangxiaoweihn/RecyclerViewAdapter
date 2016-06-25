@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter;
+package ws.dyt.view.adapter;
 
 /**
  * Created by yangxiaowei on 16/6/23.

@@ -1,4 +1,4 @@
-package ws.dyt.library;
+package ws.dyt.view;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

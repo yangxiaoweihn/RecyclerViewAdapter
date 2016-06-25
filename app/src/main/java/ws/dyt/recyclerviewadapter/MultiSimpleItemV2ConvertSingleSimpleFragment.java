@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.MultiAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.utils.Data;
 
 

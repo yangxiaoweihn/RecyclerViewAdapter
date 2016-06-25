@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter.base;
+package ws.dyt.view.adapter.base;
 
 import java.util.List;
 

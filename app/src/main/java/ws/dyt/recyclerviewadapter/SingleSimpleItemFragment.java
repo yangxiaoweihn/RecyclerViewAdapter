@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.base.HeaderFooterAdapter;
-import ws.dyt.library.adapter.deprecated.SingleAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.deprecated.SingleAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 
 /**

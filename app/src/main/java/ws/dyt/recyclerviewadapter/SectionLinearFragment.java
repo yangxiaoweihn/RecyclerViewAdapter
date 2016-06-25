@@ -1,8 +1,6 @@
 package ws.dyt.recyclerviewadapter;
 
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -14,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.library.adapter.SectionMultiAdapter;
-import ws.dyt.library.adapter.decoration.DividerItemDecoration;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.SectionMultiAdapter;
+import ws.dyt.view.adapter.decoration.DividerItemDecoration;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 
 /**

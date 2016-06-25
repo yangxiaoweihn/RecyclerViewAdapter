@@ -1,4 +1,4 @@
-package ws.dyt.library.adapter;
+package ws.dyt.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import ws.dyt.library.adapter.base.BaseAdapter;
-import ws.dyt.library.viewholder.BaseViewHolder;
+import ws.dyt.view.adapter.base.BaseAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/8.
