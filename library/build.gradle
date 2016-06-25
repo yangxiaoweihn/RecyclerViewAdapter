@@ -24,3 +24,30 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.0.0'
 }
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'flowview'
+
+    publishedGroupId = "ws.dyt.view"
+    libraryName = 'FlowView'
+    artifact = 'flowview'
+
+    libraryDescription = "A FlowView on Android"
+    siteUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter"
+    gitUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter.git"
+
+    libraryVersion = "${android.defaultConfig.versionName}"
+    developerId = 'yangxiaoweihn'
+    developerName = 'yangxiaowei'
+    developerEmail = 'hn_yangxiaowei@163.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+}
+
+apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/FlowView/flow-view/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/FlowView/flow-view/install.gradle'
