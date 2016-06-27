@@ -21,11 +21,10 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * Created by yangxiaowei on 16/6/8.
  *
  * 带有头部、尾部的 {@link RecyclerView} 适配器，item结构如下
- * item_sys_header item_header - item_data - item_footer - item_sys_footer
+ * {item_sys_header - item_header - item_data - item_footer - item_sys_footer}
  * 1. 系统尾部 sys_footer_item 目前只支持设置一个view
  */
-abstract
-public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     protected Context context;
     protected LayoutInflater inflater;
     protected List<View> headerViews = new ArrayList<>();
@@ -59,13 +58,11 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      *
      * @return
      */
-    final
-    protected boolean isEmpty() {
+    protected final boolean isEmpty() {
         return null == datas || datas.isEmpty();
     }
 
-    final
-    public T getItem(int position) {
+    public final T getItem(int position) {
         return isEmpty() ? null : datas.get(position);
     }
 
@@ -74,8 +71,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @return
      */
     @Override
-    final
-    public int getItemCount() {
+    public final int getItemCount() {
         return getSysHeaderViewCount() + getHeaderViewCount() + getDataSectionItemCount() + getFooterViewCount() + getSysFooterViewCount();
     }
 
@@ -88,30 +84,25 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         return isEmpty() ? 0 : datas.size();
     }
 
-    final
-    public int getSysHeaderViewCount(){
+    public final int getSysHeaderViewCount(){
         return sysHeaderViews.size();
     }
 
-    final
-    public int getHeaderViewCount() {
+    public final int getHeaderViewCount() {
         return headerViews.size();
     }
 
-    final
-    public int getFooterViewCount() {
+    public final int getFooterViewCount() {
         return footerViews.size();
     }
 
     //系统添加footer数量
-    final
-    public int getSysFooterViewCount() {
+    public final int getSysFooterViewCount() {
         return null == sysFooterView ? 0 : 1;
     }
 
     @Override
-    final
-    public int getItemViewType(int position) {
+    public final int getItemViewType(int position) {
         int shc = getSysHeaderViewCount();
         int hc = getHeaderViewCount();
         int fc = getFooterViewCount();
@@ -184,8 +175,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     @Override
-    final
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public final BaseViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         Log.e("Layout", "create: "+viewType);
         //处理系统头部
         View sysHeaderView = getSysFooterViewByHashCode(viewType);
@@ -245,12 +235,10 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         });
     }
 
-    abstract
-    public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType);
+    public abstract BaseViewHolder onCreateHolder(ViewGroup parent, int viewType);
 
     @Override
-    final
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public final void onBindViewHolder(BaseViewHolder holder, int position) {
         int shc = getSysHeaderViewCount();
         //item_sys_header
         if (0 != shc && position < shc) {
@@ -287,11 +275,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param holder
      * @param position  数据域从0开始，已经除去头部
      */
-    abstract
-    public void convert(BaseViewHolder holder, int position);
+    public abstract void convert(BaseViewHolder holder, int position);
 
-    final
-    public void addSysHeaderView(View view) {
+    public final void addSysHeaderView(View view) {
         if (null != view && sysHeaderViews.contains(view)) {
             sysHeaderViews.remove(view);
         }
@@ -304,8 +290,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * 清除所有sys_header
      * @param view
      */
-    final
-    public void setSysHeaderView(View view) {
+    public final void setSysHeaderView(View view) {
         if (null == view) {
             return;
         }
@@ -319,8 +304,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         notifyItemInserted(index);
     }
 
-    final
-    public void removeSysHeaderView(View view) {
+    public final void removeSysHeaderView(View view) {
         if (null == view || !sysHeaderViews.contains(view)) {
             return;
         }
@@ -339,13 +323,11 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         return position >= 0 && 0 != shc && position < shc;
     }
 
-    final
-    public void addHeaderView(View view) {
+    public final void addHeaderView(View view) {
         this.addHeaderView(view, false);
     }
 
-    final
-    public void addHeaderView(View view, boolean changeAllVisibleItems) {
+    public final void addHeaderView(View view, boolean changeAllVisibleItems) {
         if (null != view && headerViews.contains(view)) {
             headerViews.remove(view);
         }
@@ -359,13 +341,11 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         }
     }
 
-    final
-    public void removeHeaderView(View view) {
+    public final void removeHeaderView(View view) {
         this.removeHeaderView(view, false);
     }
 
-    final
-    public void removeHeaderView(View view, boolean changeAllVisibleItems) {
+    public final void removeHeaderView(View view, boolean changeAllVisibleItems) {
         if (null == view || !headerViews.contains(view)) {
             return;
         }
@@ -390,16 +370,14 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         return position >= 0 && 0 != hc && position < hc;
     }
 
-    final
-    public void addFooterView(View view) {
+    public final void addFooterView(View view) {
         if (null != view && footerViews.contains(view)) {
             footerViews.remove(view);
         }
         this.addFooterView(view, false);
     }
 
-    final
-    public void addFooterView(View view, boolean changeAllVisibleItems) {
+    public final void addFooterView(View view, boolean changeAllVisibleItems) {
         if (null != view && footerViews.contains(view)) {
             footerViews.remove(view);
         }
@@ -415,13 +393,11 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         }
     }
 
-    final
-    public void removeFooterView(View view) {
+    public final void removeFooterView(View view) {
         this.removeFooterView(view, false);
     }
 
-    final
-    public void removeFooterView(View view, boolean changeAllVisibleItems) {
+    public final void removeFooterView(View view, boolean changeAllVisibleItems) {
         if (null == view || !footerViews.contains(view)) {
             return;
         }
@@ -450,8 +426,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         return position >= 0 && fc != 0 && position >= (hc + dc) && position < (hc + dc + fc);
     }
 
-    final
-    public void setSysFooterView(View view) {
+    public final void setSysFooterView(View view) {
         if (null == view) {
             return;
         }
@@ -462,8 +437,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         notifyItemChanged(getItemCount());
     }
 
-    final
-    public void removeSysFooterView(View view) {
+    public final void removeSysFooterView(View view) {
         if (null != this.sysFooterView && null != view && this.sysFooterView == view) {
             this.sysFooterView = null;
             notifyItemRemoved(getItemCount());

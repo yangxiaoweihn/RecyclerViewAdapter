@@ -13,8 +13,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * Created by yangxiaowei on 16/6/9.
  * 单类型适配器
  */
-abstract
-public class SingleAdapter<T> extends BaseAdapter<T> {
+public abstract class SingleAdapter<T> extends BaseAdapter<T> {
     private @LayoutRes int itemLayoutResId;
 
     /**
@@ -28,8 +27,7 @@ public class SingleAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    final
-    public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
+    public final BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         return itemLayoutResId > 0 ? new BaseViewHolder(inflater.inflate(itemLayoutResId, parent, false)) : null;
     }
 

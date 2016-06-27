@@ -18,7 +18,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 final
-public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSetter<BaseViewHolder>{
+public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSetter<BaseViewHolder> {
     public BaseViewHolder(View itemView) {
         super(itemView);
     }

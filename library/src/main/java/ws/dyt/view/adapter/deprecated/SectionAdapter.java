@@ -20,8 +20,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * item_data {section_header - section_data - section_footer}
  * 其中 header footer 个数一致
  */
-abstract
-public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
+public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
     public SectionAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
@@ -64,8 +63,7 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
         return dataSectionRangeIndex.length;
     }
 
-    final
-    public T getItem(int group, int positionOfGroup) {
+    public final T getItem(int group, int positionOfGroup) {
         return this.getItem(getDataIndex(group, positionOfGroup));
     }
 
@@ -91,8 +89,7 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
     }
 
     @Override
-    final
-    protected boolean isDataItemView(int position) {
+    protected final boolean isDataItemView(int position) {
         //非数据域
         boolean b = super.isDataItemView(position);
         if (b == false) {
@@ -173,8 +170,7 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
 
 
     @Override
-    final
-    protected int convertDataSectionItemViewType(int position) {
+    protected final int convertDataSectionItemViewType(int position) {
         int type = 0;
         DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
         if (null != info) {
@@ -203,8 +199,7 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
     }
 
     @Override
-    final
-    public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
+    public final BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(inflater.inflate(viewType, parent, false));
     }
 
@@ -220,8 +215,7 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
     }
 
     @Override
-    final
-    public void convert(BaseViewHolder holder, int position) {
+    public final void convert(BaseViewHolder holder, int position) {
         DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
         if (null == info) {
             return;
@@ -244,16 +238,12 @@ public class SectionAdapter<T> extends HeaderFooterAdapter<T> implements Section
         }
     }
 
-    abstract
-    public void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
-    abstract
-    public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData);
-    abstract
-    public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
+    public abstract void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
+    public abstract void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData);
+    public abstract void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 
     @Override
-    final
-    protected void initItemListener(final BaseViewHolder holder, int viewType) {
+    protected final void initItemListener(final BaseViewHolder holder, int viewType) {
         if (null == holder || null == holder.itemView) {
             return;
         }

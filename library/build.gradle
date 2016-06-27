@@ -16,25 +16,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-annotations:23.4.0'
 }
 
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'flowview'
+    bintrayName = 'recyclerview-adapter'
 
     publishedGroupId = "ws.dyt.view"
-    libraryName = 'FlowView'
-    artifact = 'flowview'
+    libraryName = 'recyclerview-adapter'
+    artifact = 'recyclerview-adapter'
 
-    libraryDescription = "A FlowView on Android"
+    libraryDescription = "An adapter for RecyclerView widget, support single type and multi types, support add head views and footer views, support LinearLayoutManager and GridLayoutManager and StaggeredGridLayoutManager."
     siteUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter"
     gitUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter.git"
 
@@ -48,6 +54,6 @@ ext {
     allLicenses = ["Apache-2.0"]
 
 }
-
-apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/FlowView/flow-view/bintray.gradle'
-apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/FlowView/flow-view/install.gradle'
+//
+apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/install.gradle'

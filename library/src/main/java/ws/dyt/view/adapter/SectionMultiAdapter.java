@@ -20,8 +20,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * item_data {section_header - section_data - section_footer}
  * 其中 header footer 可有可无
  */
-abstract
-public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
+public abstract class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements SectionMultiItemViewType {
     public SectionMultiAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
@@ -90,8 +89,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
         return isSupportFooter ? dataSectionRangeIndex.length : 0;
     }
 
-    final
-    public T getItem(int group, int positionOfGroup) {
+    public final T getItem(int group, int positionOfGroup) {
         return this.getItem(calDataIndex(group, positionOfGroup));
     }
 
@@ -136,8 +134,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
     }
 
     @Override
-    final
-    protected boolean isDataItemView(int position) {
+    protected final boolean isDataItemView(int position) {
         //非数据域
         boolean b = super.isDataItemView(position);
         if (b == false) {
@@ -202,7 +199,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
             ItemTypeSectionSummary.ITEM_FOOTER
     })
     public @interface ItemTypeSectionSummaryWhere{}
-    public interface ItemTypeSectionSummary extends ItemTypeSummaryPrivate , ItemType{}
+    public interface ItemTypeSectionSummary extends ItemTypeSummaryPrivate, ItemType{}
 
     /**
      * 获取section域每个item的信息
@@ -285,8 +282,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
 
 
     @Override
-    final
-    protected int convertDataSectionItemViewType(int position) {
+    protected final int convertDataSectionItemViewType(int position) {
         DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
         if (null == info) {
             return super.convertDataSectionItemViewType(position);
@@ -316,14 +312,12 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
     }
 
     @Override
-    final
-    public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
+    public final BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(inflater.inflate(viewType, parent, false));
     }
 
     @Override
-    final
-    public void convert(BaseViewHolder holder, int position) {
+    public final void convert(BaseViewHolder holder, int position) {
         DataSectionItemWrapper info = getDataSectionItemInfo(position);
         if (null == info) {
             return;
@@ -347,16 +341,13 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
         }
     }
 
-    abstract
-    public void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
-    abstract
-    public void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData);
-    abstract
-    public void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
+
+    public abstract void convertSectionHeader(BaseViewHolder holder, int group/*, int position*/);
+    public abstract void convertSectionData(BaseViewHolder holder, int group, int positionOfGroup, int positionOfData);
+    public abstract void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 
     @Override
-    final
-    protected void initItemListener(final BaseViewHolder holder, int viewType) {
+    protected final void initItemListener(final BaseViewHolder holder, int viewType) {
         if (null == holder || null == holder.itemView) {
             return;
         }
