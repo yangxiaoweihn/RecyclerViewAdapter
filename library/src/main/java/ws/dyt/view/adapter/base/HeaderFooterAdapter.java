@@ -27,6 +27,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     protected Context context;
     protected LayoutInflater inflater;
+    private RecyclerView recyclerView;
     protected List<View> headerViews = new ArrayList<>();
     protected List<View> footerViews = new ArrayList<>();
     //逻辑上设计为系统头部也可以是多个 ，但是实现上系统头部实现为仅有一个
@@ -467,8 +468,6 @@ public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseVi
         int dc = getDataSectionItemCount();
         return position >= 0 && position >= hc && position < (hc + dc);
     }
-
-    private RecyclerView recyclerView;
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
