@@ -9,7 +9,11 @@
     compile 'ws.dyt.view:recyclerview-adapter:1.0'
 ```
 ## 屏幕截图
-![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/FlowView/flow-view/flowviewtest/screenshots/img.png)
+![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/1.png)
+![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/2.png)
+![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/3.png)
+![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/4.png)
+![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/5.png)
     
 ## 使用
 -   与系统提供的Adapter使用方式无异（具体api参看demo）
