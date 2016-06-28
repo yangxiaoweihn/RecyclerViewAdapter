@@ -55,8 +55,5 @@ ext {
 
 }
 
-apply from: "https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/install.gradle"
-apply from: "https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/bintray.gradle"
-
-//apply from: "bintray.gradle"
-//apply from: "install.gradle"
+apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/install.gradle"
+apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/bintray.gradle"

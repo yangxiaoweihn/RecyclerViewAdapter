@@ -196,6 +196,11 @@ public class Bilili_1_ListFragment extends BaseFragment {
                 return;
             }
 
+            int fAll = adapter.getSysFooterViewCount() + adapter.getFooterViewCount();
+            if (0 != fAll && itemPosition > (itemPosition - fAll)) {
+                return;
+            }
+
 
 
             int index = itemPosition - aAll;

@@ -81,17 +81,17 @@ public class MainFragment extends Fragment {
 
     private List<FragmentEntity> generate() {
         List<FragmentEntity> data = new ArrayList<>();
-        data.add(new FragmentEntity("多简单类型V2", MultiSimpleItemV2Fragment.class));
-        data.add(new FragmentEntity("多简单类型适配单类型", MultiSimpleItemV2ConvertSingleSimpleFragment.class));
-        data.add(new FragmentEntity("多简单类型适配单类型Grid", MultiSimpleItemV2ConvertSingleSimpleGridFragment.class));
-        data.add(new FragmentEntity("多简单类型适配单类型Staggered", MultiSimpleItemV2ConvertSingleSimpleStaggeredGridFragment.class));
-        data.add(new FragmentEntity("section纵向线性单item", SectionLinearFragment.class));
-        data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
-        data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
-        data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
+//        data.add(new FragmentEntity("多简单类型V2", MultiSimpleItemV2Fragment.class));
+//        data.add(new FragmentEntity("多简单类型适配单类型", MultiSimpleItemV2ConvertSingleSimpleFragment.class));
+//        data.add(new FragmentEntity("多简单类型适配单类型Grid", MultiSimpleItemV2ConvertSingleSimpleGridFragment.class));
+//        data.add(new FragmentEntity("多简单类型适配单类型Staggered", MultiSimpleItemV2ConvertSingleSimpleStaggeredGridFragment.class));
+//        data.add(new FragmentEntity("section纵向线性单item", SectionLinearFragment.class));
+//        data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
+//        data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
+//        data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
         data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
-        data.add(new FragmentEntity("模Bilili, Grid", Bilili_1_ListFragment.class));
-        data.add(new FragmentEntity("模Bilili, Grid", Bilili_2_ListFragment.class));
+        data.add(new FragmentEntity("模Bilili, Grid——1", Bilili_1_ListFragment.class));
+        data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));
         return data;
     }
 

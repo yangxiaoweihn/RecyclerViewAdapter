@@ -279,12 +279,21 @@ public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseVi
     public abstract void convert(BaseViewHolder holder, int position);
 
     public final void addSysHeaderView(View view) {
+        this.addSysHeaderView(view, false);
+    }
+
+    public final void addSysHeaderView(View view, boolean changeAllVisibleItems) {
         if (null != view && sysHeaderViews.contains(view)) {
             sysHeaderViews.remove(view);
         }
         sysHeaderViews.add(view);
         int index = sysHeaderViews.indexOf(view);
-        notifyItemInserted(index);
+
+        if(changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemInserted(index);
+        }
     }
 
     /**
@@ -292,6 +301,10 @@ public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseVi
      * @param view
      */
     public final void setSysHeaderView(View view) {
+        this.setSysHeaderView(view, false);
+    }
+
+    public final void setSysHeaderView(View view, boolean changeAllVisibleItems) {
         if (null == view) {
             return;
         }
@@ -302,7 +315,11 @@ public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseVi
 
         sysHeaderViews.add(view);
         index = sysHeaderViews.indexOf(view);
-        notifyItemInserted(index);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemInserted(index);
+        }
     }
 
     public final void removeSysHeaderView(View view) {
@@ -312,6 +329,19 @@ public abstract class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseVi
         int index = sysHeaderViews.indexOf(view);
         sysHeaderViews.remove(view);
         notifyItemRemoved(index);
+    }
+
+    public final void removeSysHeaderView(View view, boolean changeAllVisibleItems) {
+        if (null == view || !sysHeaderViews.contains(view)) {
+            return;
+        }
+        int index = sysHeaderViews.indexOf(view);
+        sysHeaderViews.remove(view);
+        if (changeAllVisibleItems) {
+            notifyDataSetChanged();
+        }else {
+            notifyItemRemoved(index);
+        }
     }
 
     /**
