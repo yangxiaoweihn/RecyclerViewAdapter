@@ -25,9 +25,9 @@
     ws.dyt.view.adapter.MultiAdapter
 ```
 ### 类介绍
--   MultiAdapter 继承自 BaseAdapter
-    该类是一个抽象类， 必须实现的方法是convert(BaseViewHolder holder, int position)，该方法由系统提供的onBindViewHolder()方法映射而来。
-    支持单一的item和多种item类型，具体请参看构造方法的说明。
+-   MultiAdapter 继承自 BaseAdapter   
+    该类是一个抽象类， 必须实现的方法是convert(BaseViewHolder holder, int position)，该方法由系统提供的onBindViewHolder()方法映射而来。   
+    支持单一的item和多种item类型，具体请参看构造方法的说明。   
 ```java
     /**
      * 调用该构造方法时需要调用 {@link #getItemViewLayout(int)} 设置item布局
@@ -46,23 +46,20 @@
      */
     public MultiAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
         this(context, datas);
-        this.itemLayoutResId = itemLayoutResId;
     }
     
     /**
      * 提供item对应的布局
      */
-    public int getItemViewLayout(int position) {
-        return this.itemLayoutResId;
-    }
+    public int getItemViewLayout(int position) {}
 ```
--   BaseAdapter 继承自 HeaderFooterAdapter
+-   BaseAdapter 继承自 HeaderFooterAdapter   
     该类主要封装了数据的操作（实现自 ws.dyt.view.adapter.base.CRUD）。
     
--   HeaderFooterAdapter
-    该类是本库的主角，主要封装了头尾控件管理、item监听器、布局管理器处理
-    该类的处理是将适配器的数据项分为5部分进行，分别为：系统头部、头部、数据部分、尾部、系统尾部，以下简称{item_sys_header - item_header - item_data - item_footer - item_sys_footer}
-    除了数据部分（item_data）其他的4部分将会独占一行
+-   HeaderFooterAdapter   
+    该类是本库的主角，主要封装了头尾控件管理、item监听器、布局管理器处理   
+    该类的处理是将适配器的数据项分为5部分进行，分别为：系统头部、头部、数据部分、尾部、系统尾部，以下简称{item_sys_header - item_header - item_data - item_footer - item_sys_footer}   
+    除了数据部分（item_data）其他的4部分将会独占一行   
     部分方法说明：
     1. item数量获取
     ```java
@@ -85,24 +82,23 @@
          * @param position
          * @return true:将保留LayoutManager的设置  false:该item将会横跨整行(对GridLayoutManager,StaggeredLayoutManager将很有用)
          */
-        protected boolean isDataItemView(int position) {
-        }
+        protected boolean isDataItemView(int position) {}
     ```
     3. 添加监听器
     ```java
         MultiAdapter adapter = new MultiAdapter(XXX);
         adapter.setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View itemView, int position) {
-            }
+            public void onItemClick(View itemView, int position) {}
         });
         
         adapter.setOnItemLongClickListener(new HeaderFooterAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(View itemView, int position) {
-            }
+            public void onItemLongClick(View itemView, int position) {}
         });
-```
+    ```
+-   ItemWrapper
+    该类对数据做了简单的封装，在item数据类型比较复杂时使用该类进行数据封装会很有用。
 ## License
 ```xml
         http://www.apache.org/licenses/LICENSE-2.0
