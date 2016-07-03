@@ -37,7 +37,7 @@ ext {
     bintrayName = 'recyclerview-adapter'
 
     publishedGroupId = "ws.dyt.view"
-    libraryName = 'recyclerview-adapter'
+    libraryName = 'RecyclerviewAdapter'
     artifact = 'recyclerview-adapter'
 
     libraryDescription = "An adapter for RecyclerView widget, support single type and multi types, support add head views and footer views, support LinearLayoutManager and GridLayoutManager and StaggeredGridLayoutManager."
