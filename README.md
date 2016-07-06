@@ -6,7 +6,7 @@
     4. 布局管理器的管理 isDataItemView()
 ## 添加依赖
 ```
-    compile 'ws.dyt.view:recyclerview-adapter:1.0'
+    compile 'ws.dyt.view:recyclerview-adapter-hf:1.0'
 ```
 ## 屏幕截图
 ![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/1.png)
