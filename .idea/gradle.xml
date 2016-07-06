@@ -10,14 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/recyclerview-adapter" />
-          </set>
-        </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/recyclerview-adapter" />
+            <option value="$PROJECT_DIR$/recyclerview-adapter-hf" />
           </set>
         </option>
       </GradleProjectSettings>

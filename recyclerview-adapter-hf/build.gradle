@@ -34,11 +34,11 @@ dependencies {
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'recyclerview-adapter'
+    bintrayName = 'recyclerview-adapter-hf'
 
     publishedGroupId = "ws.dyt.view"
-    libraryName = 'RecyclerviewAdapter'
-    artifact = 'recyclerview-adapter'
+    libraryName = 'RecyclerviewAdapterHF'
+    artifact = 'recyclerview-adapter-hf'
 
     libraryDescription = "An adapter for RecyclerView widget, support single type and multi types, support add head views and footer views, support LinearLayoutManager and GridLayoutManager and StaggeredGridLayoutManager."
     siteUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter"
