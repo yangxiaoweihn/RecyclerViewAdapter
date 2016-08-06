@@ -6,6 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.FloatRange;
+import android.support.v7.widget.RecyclerView;
 import android.text.method.MovementMethod;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +56,10 @@ interface ChainSetter<VH> {
     VH setEnabled(int viewId, boolean enabled);
 
     VH setChecked(int viewId, boolean checked);
+
+    VH setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager);
+
+    VH setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration itemDecoration);
 
     VH setOnClickListener(int viewId, View.OnClickListener listener);
 

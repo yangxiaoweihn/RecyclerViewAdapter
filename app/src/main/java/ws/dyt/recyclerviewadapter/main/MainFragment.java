@@ -13,21 +13,14 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import ws.dyt.recyclerviewadapter.R;
+import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
+import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
+import ws.dyt.recyclerviewadapter.test.TestSwipeItemFragment;
+import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 import ws.dyt.view.adapter.MultiAdapter;
 import ws.dyt.view.adapter.base.HeaderFooterAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
-import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleFragment;
-import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleGridFragment;
-import ws.dyt.recyclerviewadapter.MultiSimpleItemV2ConvertSingleSimpleStaggeredGridFragment;
-import ws.dyt.recyclerviewadapter.MultiSimpleItemV2Fragment;
-import ws.dyt.recyclerviewadapter.R;
-import ws.dyt.recyclerviewadapter.SectionGridFragment;
-import ws.dyt.recyclerviewadapter.SectionLinearFragment;
-import ws.dyt.recyclerviewadapter.SectionLinearNoFooterFragment;
-import ws.dyt.recyclerviewadapter.SectionSkinGridFragment;
-import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
-import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
-import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 
 /**
  */
@@ -68,6 +61,7 @@ public class MainFragment extends Fragment {
                 toFragment(adapter.getItem(position).clazz);
             }
         });
+
     }
 
     private MultiAdapter<FragmentEntity> getAdapter() {
@@ -76,6 +70,7 @@ public class MainFragment extends Fragment {
             public void convert(BaseViewHolder holder, int position) {
                 holder.setText(R.id.tv_text, getItem(position).showName);
             }
+
         };
     }
 
@@ -92,6 +87,9 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——1", Bilili_1_ListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));
+
+        data.add(new FragmentEntity("滑动菜单测试", TestSwipeItemFragment.class));
+
         return data;
     }
 

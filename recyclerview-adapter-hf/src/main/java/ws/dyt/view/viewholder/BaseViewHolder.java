@@ -19,8 +19,17 @@ import android.widget.TextView;
 
 final
 public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSetter<BaseViewHolder> {
+    //事件(解决滑动时事件问题)
+    public View eventItemView;
+
     public BaseViewHolder(View itemView) {
         super(itemView);
+        this.eventItemView = itemView;
+    }
+
+    public BaseViewHolder(View itemView, View eventItemView) {
+        super(itemView);
+        this.eventItemView = eventItemView;
     }
 
     private SparseArray<View> childViews = new SparseArray<>();
@@ -187,6 +196,23 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSett
     public BaseViewHolder setChecked(int viewId, boolean checked) {
         Checkable view = getView(viewId);
         view.setChecked(checked);
+        return this;
+    }
+
+    @Override
+    public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager) {
+        RecyclerView view = getView(viewId);
+        view.setAdapter(adapter);
+        view.setLayoutManager(layoutManager);
+        return this;
+    }
+
+    @Override
+    public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration itemDecoration) {
+        RecyclerView view = getView(viewId);
+        view.setAdapter(adapter);
+        view.setLayoutManager(layoutManager);
+        view.addItemDecoration(itemDecoration);
         return this;
     }
 

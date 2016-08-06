@@ -243,7 +243,7 @@ public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implement
     public abstract void convertSectionFooter(BaseViewHolder holder, int group/*, int position*/);
 
     @Override
-    protected final void initItemListener(final BaseViewHolder holder, int viewType) {
+    protected final void initItemListener(final BaseViewHolder holder/*, int viewType*/) {
         if (null == holder || null == holder.itemView) {
             return;
         }
