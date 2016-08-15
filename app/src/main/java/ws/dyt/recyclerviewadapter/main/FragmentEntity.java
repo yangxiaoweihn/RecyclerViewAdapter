@@ -1,7 +1,5 @@
 package ws.dyt.recyclerviewadapter.main;
 
-import android.support.v4.app.Fragment;
-
 /**
  * Created by yangxiaowei on 16/6/20.
  */

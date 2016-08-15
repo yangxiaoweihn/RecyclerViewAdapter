@@ -16,10 +16,14 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
-import ws.dyt.recyclerviewadapter.test.TestSwipeItemFragment;
+import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
+import ws.dyt.recyclerviewadapter.section.SectionGridFragment;
+import ws.dyt.recyclerviewadapter.section.SectionLinearFragment;
+import ws.dyt.recyclerviewadapter.section.SectionLinearNoFooterFragment;
+import ws.dyt.recyclerviewadapter.section.SectionSkinGridFragment;
+import ws.dyt.recyclerviewadapter.swipe.TestSwipeItemFragment;
 import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
-import ws.dyt.view.adapter.MultiAdapter;
-import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -53,9 +57,9 @@ public class MainFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(llm);
-        final MultiAdapter<FragmentEntity> adapter = getAdapter();
+        final SuperAdapter<FragmentEntity> adapter = getAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 toFragment(adapter.getItem(position).clazz);
@@ -64,8 +68,8 @@ public class MainFragment extends Fragment {
 
     }
 
-    private MultiAdapter<FragmentEntity> getAdapter() {
-        return new MultiAdapter<FragmentEntity>(getContext(), generate(), R.layout.item_main) {
+    private SuperAdapter<FragmentEntity> getAdapter() {
+        return new SuperAdapter<FragmentEntity>(getContext(), generate(), R.layout.item_main) {
             @Override
             public void convert(BaseViewHolder holder, int position) {
                 holder.setText(R.id.tv_text, getItem(position).showName);
@@ -89,6 +93,7 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));
 
         data.add(new FragmentEntity("滑动菜单测试", TestSwipeItemFragment.class));
+        data.add(new FragmentEntity("Pinned测试", TestPinnedItemFragment.class));
 
         return data;
     }

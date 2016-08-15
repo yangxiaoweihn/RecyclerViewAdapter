@@ -6,14 +6,15 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import ws.dyt.view.adapter.base.BaseAdapter;
+import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/9.
  * 单类型适配器
  */
-public abstract class SingleAdapter<T> extends BaseAdapter<T> {
+abstract
+public class SingleAdapter<T> extends BaseAdapter<T> {
     private @LayoutRes int itemLayoutResId;
 
     /**

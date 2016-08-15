@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.view.adapter.base.BaseAdapter;
+import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -23,15 +23,16 @@ public class SwipeAdapter<T> extends BaseAdapter<T> implements ICreateMenus, IMe
         super(context, datas);
     }
 
+
     @Override
-    final
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        ViewGroup vg = (ViewGroup) inflater.inflate(viewType, parent, false);
+        View itemView = inflater.inflate(viewType, parent, false);
 
         MenuItem mi = this.onCreateSingleMenuItem(viewType);
         List<MenuItem> mm = this.onCreateMultiMenuItem(viewType);
+        //客户端没有设置菜单支持
         if (null == mi && (null == mm || mm.isEmpty())) {
-            return new BaseViewHolder(inflater.inflate(viewType, parent, false));
+            return new BaseViewHolder(itemView);
         }
 
         List<MenuItem> menuItems = new ArrayList<>();
@@ -44,12 +45,12 @@ public class SwipeAdapter<T> extends BaseAdapter<T> implements ICreateMenus, IMe
         }
 
         final SwipeLayout swipeLayout = new SwipeLayout(context);
-        swipeLayout.setUpView(parent, vg, menuItems);
+        swipeLayout.setUpView(parent, itemView, menuItems);
         swipeLayout.setIsCloseOtherItemsWhenThisWillOpen(this.isCloseOtherItemsWhenThisWillOpen());
 
-        vg.setClickable(true);
+        itemView.setClickable(true);
 
-        BaseViewHolder holder = new BaseViewHolder(swipeLayout, vg);
+        BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
         this.initMenusListener(holder);
         return holder;
     }
@@ -69,6 +70,10 @@ public class SwipeAdapter<T> extends BaseAdapter<T> implements ICreateMenus, IMe
         return false;
     }
 
+    /**
+     * 添加菜单点击监听器
+     * @param holder
+     */
     private void initMenusListener(final BaseViewHolder holder) {
         if (! (holder.itemView instanceof SwipeLayout)) {
             return;

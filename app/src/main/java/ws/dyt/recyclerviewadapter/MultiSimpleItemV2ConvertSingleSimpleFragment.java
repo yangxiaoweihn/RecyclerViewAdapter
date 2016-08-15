@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.utils.Data;
 
@@ -46,7 +46,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleFragment extends BaseFragment {
         }
     }
 
-    MultiAdapter<DataWrapper> adapter;
+    SuperAdapter<DataWrapper> adapter;
     private void init(){
         List<Data.SkinData> list = Data.generate();
         List<List<String>> banner = new ArrayList<>();
@@ -66,7 +66,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleFragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<DataWrapper>(getContext(), data, R.layout.item_text_c) {
+        adapter = new SuperAdapter<DataWrapper>(getContext(), data, R.layout.item_text_c) {
             @Override
             public int getItemViewLayout(int position) {
                 super.getItemViewLayout(position);
@@ -100,7 +100,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleFragment extends BaseFragment {
     }
 
     @Override
-    public MultiAdapter<DataWrapper> getAdapter() {
+    public SuperAdapter<DataWrapper> getAdapter() {
         return adapter;
     }
 

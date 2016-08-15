@@ -9,8 +9,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-import ws.dyt.view.adapter.SectionMultiItemViewType;
-import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.section.SectionMultiItemViewType;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -89,15 +89,8 @@ public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implement
     }
 
     @Override
-    protected final boolean isDataItemView(int position) {
-        //非数据域
-        boolean b = super.isDataItemView(position);
-        if (b == false) {
-            return b;
-        }
-
-        int hAll = getSysHeaderViewCount() + getHeaderViewCount();
-        DataSectionItemWrapper item = this.getDataSectionItemInfo(position - hAll);
+    protected boolean isFullSpanWithItemView(int position) {
+        DataSectionItemWrapper item = this.getDataSectionItemInfo(position);
         //是否为数据域中数据项
         return null != item && ItemType.ITEM_DATA == item.itemType;
     }
@@ -170,7 +163,7 @@ public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implement
 
 
     @Override
-    protected final int convertDataSectionItemViewType(int position) {
+    protected final int mapDataSectionItemViewTypeToItemLayoutId(int position) {
         int type = 0;
         DataSectionItemWrapper info = this.getDataSectionItemInfo(position);
         if (null != info) {
@@ -190,7 +183,7 @@ public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implement
                     break;
                 }
                 default:{
-                    type = super.convertDataSectionItemViewType(position);
+                    type = super.mapDataSectionItemViewTypeToItemLayoutId(position);
                     break;
                 }
             }

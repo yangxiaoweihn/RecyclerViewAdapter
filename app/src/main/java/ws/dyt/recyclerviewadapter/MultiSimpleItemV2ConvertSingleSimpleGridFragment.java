@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 
@@ -40,7 +40,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleGridFragment extends BaseFragme
                 "EEE", "RRR", "TTT", "YYY", "UUU", "III", "OOO", "PPP", "ZZZ", "XXX", "NNN", "MMM", "###"};
     }
 
-    MultiAdapter adapter;
+    SuperAdapter adapter;
     private void init(){
         final String[] datas = generate();
         List<String> list = new ArrayList<>(Arrays.asList(datas));
@@ -48,7 +48,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleGridFragment extends BaseFragme
         GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<String>(getContext(), list, R.layout.item_text_c) {
+        adapter = new SuperAdapter<String>(getContext(), list, R.layout.item_text_c) {
             @Override
             public int getItemViewLayout(int position) {
                 super.getItemViewLayout(position);
@@ -73,7 +73,7 @@ public class MultiSimpleItemV2ConvertSingleSimpleGridFragment extends BaseFragme
     }
 
     @Override
-    public MultiAdapter getAdapter() {
+    public SuperAdapter getAdapter() {
         return adapter;
     }
 

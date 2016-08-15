@@ -13,13 +13,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.MultiAdapter;
-import ws.dyt.view.adapter.base.HeaderFooterAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
+import ws.dyt.view.adapter.ItemWrapper;
+import ws.dyt.view.adapter.SuperAdapter;
+import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/22.
@@ -43,13 +43,13 @@ public class Bilili_2_ListFragment extends BaseFragment {
     }
 
 
-    MultiAdapter<Wrapper1> adapter;
+    SuperAdapter<Wrapper1> adapter;
 
     private void init() {
         GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<Wrapper1>(getContext(), generate()) {
+        adapter = new SuperAdapter<Wrapper1>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
                 Wrapper1 e = getItem(position);
@@ -76,13 +76,8 @@ public class Bilili_2_ListFragment extends BaseFragment {
             }
 
             @Override
-            protected boolean isDataItemView(int position) {
-                boolean b = super.isDataItemView(position);
-                if (b == false) {
-                    return b;
-                }
-
-                Wrapper1 t = getItem(position - getSysHeaderViewCount() - getHeaderViewCount());
+            protected boolean isFullSpanWithItemView(int position) {
+                Wrapper1 t = getItem(position);
                 //只有动漫类型并且不是第二组（动漫总共两组）的以两列展示
                 return t.type == 2 && t.group != 2;
             }

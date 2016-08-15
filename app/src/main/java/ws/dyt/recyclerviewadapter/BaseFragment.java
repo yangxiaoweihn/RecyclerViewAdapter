@@ -16,10 +16,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ws.dyt.view.adapter.SectionMultiAdapter;
-import ws.dyt.view.adapter.base.BaseAdapter;
-import ws.dyt.view.adapter.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.core.base.BaseAdapter;
+import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
 import ws.dyt.view.adapter.deprecated.SectionAdapter;
+import ws.dyt.view.adapter.section.SectionMultiAdapter;
 
 /**
  * Created by yangxiaowei on 16/6/9.
@@ -29,7 +29,7 @@ abstract public class BaseFragment extends Fragment{
     @BindView(R.id.recyclerview)
     public RecyclerView recyclerView;
     @BindView(R.id.section_input)
-    ViewGroup mSectionInput;
+    public ViewGroup mSectionInput;
     @BindView(R.id.et)
     EditText mEt;
 
@@ -170,7 +170,8 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddSysHeaderClick() {
         final View sysHeader = layoutInflater.inflate(R.layout.item_sys_header, recyclerView, false);
-        getAdapter().setSysHeaderView(sysHeader);
+//        getAdapter().setSysHeaderView(sysHeader);
+        getAdapter().addSysHeaderView(sysHeader);
 
         sysHeader.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

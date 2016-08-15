@@ -2,7 +2,10 @@ package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +23,8 @@ import java.util.List;
 
 /**
  * Created by yangxiaowei on 16/8/1.
+ *
+ * 用来承载菜单视图和客户端设置的item视图
  */
 public class SwipeLayout extends FrameLayout implements ICloseMenus{
     public SwipeLayout(Context context) {
@@ -218,7 +223,14 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 helper.cancel();
-                Log.e("DEBUG", "###########");
+
+                RectF f = calcViewScreenLocation(itemView);
+                boolean isIn = f.contains(ev.getRawX(), ev.getRawY());
+
+                if (isIn && delegate.getMenuStatus() == SwipeDragHelperDelegate.MenuStatus.OPEN) {
+                    delegate.closeMenuItem();
+                    return true;
+                }
                 return false;
         }
 
@@ -234,6 +246,11 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
         return helper.shouldInterceptTouchEvent(ev);
     }
 
+    public static RectF calcViewScreenLocation(View view) {
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        return new RectF(location[0], location[1], location[0] + view.getWidth(), location[1] + view.getHeight());
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

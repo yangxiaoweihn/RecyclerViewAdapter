@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ws.dyt.view.adapter.MultiAdapter;
+import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 
@@ -36,7 +36,7 @@ public class MultiSimpleItemV2Fragment extends BaseFragment {
                 "EEE", "RRR", "TTT", "YYY", "UUU", "III", "OOO", "PPP", "ZZZ", "XXX", "NNN", "MMM", "###"};
     }
 
-    MultiAdapter adapter;
+    SuperAdapter adapter;
     private void init(){
         final String[] datas = generate();
         List<String> list = new ArrayList<>(Arrays.asList(datas));
@@ -45,7 +45,7 @@ public class MultiSimpleItemV2Fragment extends BaseFragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<String>(getContext(), list) {
+        adapter = new SuperAdapter<String>(getContext(), list) {
             @Override
             public int getItemViewLayout(int position) {
                 int type = position % 3;
@@ -69,7 +69,7 @@ public class MultiSimpleItemV2Fragment extends BaseFragment {
     }
 
     @Override
-    public MultiAdapter getAdapter() {
+    public SuperAdapter getAdapter() {
         return adapter;
     }
 }

@@ -1,4 +1,7 @@
 <resources>
     <!-- key -->
-    <string name="item_data_index">item_data_index</string>
+    <string name="item_index_in_datasection">item_index_in_datasection</string>
+    
+    <string name="pinned_item_data_type">pinned_item_data_type</string>
+    <string name="pinned_item_status">pinned_item_status</string>
 </resources>

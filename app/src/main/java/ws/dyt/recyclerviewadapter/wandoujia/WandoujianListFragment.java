@@ -13,12 +13,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.MultiAdapter;
-import ws.dyt.view.adapter.base.HeaderFooterAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
+import ws.dyt.view.adapter.ItemWrapper;
+import ws.dyt.view.adapter.SuperAdapter;
+import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/22.
@@ -34,14 +34,14 @@ public class WandoujianListFragment extends BaseFragment {
     }
 
 
-    MultiAdapter<ItemWrapper> adapter;
+    SuperAdapter<ItemWrapper> adapter;
 
     private void init() {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        adapter = new MultiAdapter<ItemWrapper>(getContext(), generate()) {
+        adapter = new SuperAdapter<ItemWrapper>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
                 ItemWrapper e = getItem(position);

@@ -15,7 +15,7 @@
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="sys_header"
+        android:text="系统_header"
         android:textColor="#f00"
         android:textSize="15sp"
         android:textStyle="bold" />
