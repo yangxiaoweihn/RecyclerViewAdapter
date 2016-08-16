@@ -194,7 +194,6 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     final
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        Log.e("Layout", "create: "+viewType);
         //处理系统头部
         View sysHeaderView = getSysFooterViewByHashCode(viewType);
         if (null != sysHeaderView) {

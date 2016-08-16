@@ -1,7 +1,11 @@
 package ws.dyt.view.adapter.pinned;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +16,25 @@ import java.util.List;
 
 import ws.dyt.view.R;
 import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.core.MultiAdapter;
+import ws.dyt.view.adapter.swipe.SwipeAdapter;
 import ws.dyt.view.adapter.swipe.SwipeLayout;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/8/8.
  *
- * 粘性item适配器,继承自{@link MultiAdapter},所以支持{@link MultiAdapter}所支持的所有功能,
+ * 粘性item适配器,继承自{@link SwipeAdapter},所以支持{@link SwipeAdapter}所支持的所有功能,
  * 值得注意的一点是该适配器对数据有要求(因为粘性是根据数据的type决定的),所以数据都需要继承自{@link ItemWrapper}(其实是一个数据分组的概念)
  */
 abstract
-public class PinnedAdapter<T extends ItemWrapper> extends MultiAdapter<T> implements IPinnedItemViewType, IConvert {
+public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implements IPinnedItemViewType, IConvert {
     public PinnedAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
 
+    public PinnedAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
+        super(context, datas, itemLayoutResId);
+    }
 
     private interface PinnedItemRange {
         int FIRST    = 1;
@@ -67,6 +74,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends MultiAdapter<T> implem
             pinnedLayout.pinnedView.setVisibility(View.GONE);
             holder.itemView.setTag(R.string.pinned_item_status, PinnedItemRange.OTHER);
         }
+
         final int type = getItem(position).type;
         holder.itemView.setTag(R.string.pinned_item_data_type, type);
         holder.itemView.setTag(R.string.item_index_in_datasection, position);
@@ -79,6 +87,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends MultiAdapter<T> implem
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        this.layoutManager = recyclerView.getLayoutManager();
 
         try {
             //父容器是FrameLayout,否则让粘性功能失效
@@ -96,21 +105,29 @@ public class PinnedAdapter<T extends ItemWrapper> extends MultiAdapter<T> implem
 
 
     private BaseViewHolder pinnedViewHolder;
-    private View pinnedView;
+    private View topPinnedView;
 
     private void initPinnedView(ViewGroup parent, RecyclerView recyclerView) {
-        this.pinnedView = inflater.inflate(getPinnedItemViewLayout(), recyclerView, false);
-        this.pinnedViewHolder = new BaseViewHolder(pinnedView);
-        parent.addView(this.pinnedView);
+        this.topPinnedView = inflater.inflate(getPinnedItemViewLayout(), recyclerView, false);
+        this.pinnedViewHolder = new BaseViewHolder(topPinnedView);
+        parent.addView(this.topPinnedView);
     }
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if ( mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
+                topPinnedView.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            final int pinnedViewWidth = topPinnedView.getMeasuredWidth();
+            final int pinnedViewHeight = topPinnedView.getMeasuredHeight();
 
-            final int pinnedViewWidth = pinnedView.getMeasuredWidth();
-            final int pinnedViewHeight = pinnedView.getMeasuredHeight();
             //获取Adapter中粘性头部位置上方的控件
             View headerView = recyclerView.findChildViewUnder(pinnedViewWidth / 2, 5);
 
@@ -132,15 +149,49 @@ public class PinnedAdapter<T extends ItemWrapper> extends MultiAdapter<T> implem
             int translationY = headerView.getTop() - pinnedViewHeight;
             if (transViewStatus == PinnedItemRange.FIRST) {
                 if (headerView.getTop() > 0) {
-                    pinnedView.setTranslationY(translationY);
+                    topPinnedView.setTranslationY(translationY);
                 } else {
-                    pinnedView.setTranslationY(0);
+                    topPinnedView.setTranslationY(0);
                 }
             } else if (transViewStatus == PinnedItemRange.OTHER) {
-                pinnedView.setTranslationY(0);
+                topPinnedView.setTranslationY(0);
+
             }
 
+            //在RecyclerView上贴了粘性头部后会遮挡效果，下面处理一下
+            findFirstVisibleItemIndex();
+            if ( mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
+                if (View.GONE != topPinnedView.getVisibility()) {
+                    topPinnedView.setVisibility(View.GONE);
+                }
+            }else {
+                if (View.VISIBLE != topPinnedView.getVisibility()) {
+                    topPinnedView.setVisibility(View.VISIBLE);
+                }
+            }
         }
     };
 
+
+    private RecyclerView.LayoutManager layoutManager;
+    private int mFirstVisibleItemIndex;
+    private int mFirstCompletelyVisibleItemIndex;
+    private void findFirstVisibleItemIndex() {
+        if (null == layoutManager) {
+            return ;
+        }
+
+        if (layoutManager instanceof GridLayoutManager) {
+            mFirstVisibleItemIndex = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
+            mFirstCompletelyVisibleItemIndex = ((GridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            mFirstVisibleItemIndex = ((StaggeredGridLayoutManager) layoutManager).findFirstVisibleItemPositions(new int[1])[0];
+            mFirstCompletelyVisibleItemIndex = ((StaggeredGridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPositions(new int[1])[0];
+
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            mFirstVisibleItemIndex = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+            mFirstCompletelyVisibleItemIndex = ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+        }
+    }
 }

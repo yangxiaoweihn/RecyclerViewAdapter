@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 
 import java.util.List;
 
+import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.adapter.swipe.SwipeAdapter;
 
 /**
@@ -15,7 +16,7 @@ import ws.dyt.view.adapter.swipe.SwipeAdapter;
  * 2. 采用{@link #MultiAdapter(Context, List)} 构造方法时需要重新 {@link #getItemViewLayout(int)} 设置每一项布局
  */
 abstract
-public class MultiAdapter<T> extends SwipeAdapter<T> implements MultiItemViewType {
+public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType {
     private @LayoutRes int itemLayoutResId;
 
     /**

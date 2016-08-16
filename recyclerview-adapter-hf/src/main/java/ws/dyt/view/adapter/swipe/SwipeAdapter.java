@@ -1,6 +1,7 @@
 package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import ws.dyt.view.adapter.core.MultiAdapter;
 import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
@@ -15,14 +17,19 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * Created by yangxiaowei on 16/8/2.
  *
  * 滑动菜单适配器
+ * 1. 支持左右菜单任意个数添加(目前不能同时支持)
+ * 2. 菜单支持点击事件回调
  */
 abstract
-public class SwipeAdapter<T> extends BaseAdapter<T> implements ICreateMenus, IMenuSupport{
+public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IMenuSupport{
 
     public SwipeAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
 
+    public SwipeAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
+        super(context, datas, itemLayoutResId);
+    }
 
     @Override
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {

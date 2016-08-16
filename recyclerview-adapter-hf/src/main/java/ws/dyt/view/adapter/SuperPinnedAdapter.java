@@ -10,10 +10,19 @@ import ws.dyt.view.adapter.pinned.PinnedAdapter;
 /**
  * Created by yangxiaowei on 16/8/9.
  *
+ * 客户端接口
+ * 支持:
+ * 1. 支持 {@link SuperAdapter} 所有功能
+ * 2. 支持粘性头部相关操作
  */
 abstract
 public class SuperPinnedAdapter<T extends ItemWrapper> extends PinnedAdapter<T> {
     public SuperPinnedAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
+
+    public SuperPinnedAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
+        super(context, datas, itemLayoutResId);
+    }
+
 }
