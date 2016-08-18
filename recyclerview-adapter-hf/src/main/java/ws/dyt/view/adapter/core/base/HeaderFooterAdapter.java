@@ -521,14 +521,15 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
             return;
         }
         int shc = this.getSysHeaderViewCount();
-        int hc = shc + this.getHeaderViewCount();
+        int hc = this.getHeaderViewCount();
+        int hAll = shc + hc;
         int dc = this.getDataSectionItemCount();
         int index = this.footerViews.indexOf(view);
         this.footerViews.remove(view);
         if (changeAllVisibleItems) {
             notifyDataSetChanged();
         }else {
-            notifyItemRemoved(hc + dc + index);
+            notifyItemRemoved(hAll + dc + index);
         }
     }
 

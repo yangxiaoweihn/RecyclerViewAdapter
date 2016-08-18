@@ -196,10 +196,13 @@ public class Bilili_1_ListFragment extends BaseFragment {
             super.getItemOffsets(outRect, view, parent, state);
             int itemPosition = parent.getChildAdapterPosition(view);
             int aAll = adapter.getSysHeaderViewCount() + adapter.getHeaderViewCount();
-//            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll);
+            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll);
+            if (itemPosition < 0) {
+                return;
+            }
             //header
             if (0 != aAll && itemPosition < aAll) {
-//                Log.e("DEBUG", "---");
+                Log.e("DEBUG", "---");
                 return;
             }
 
@@ -212,9 +215,9 @@ public class Bilili_1_ListFragment extends BaseFragment {
 
             int index = itemPosition - aAll;
 
+            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll+" , fall: "+fAll+" , dataIndex: "+index);
             Wrapper1 e = adapter.getItem(index);
 
-//            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll+" , fall: "+fAll+" , dataIndex: "+index+" , "+e.toString());
 
             outRect.left = padding;
             outRect.right = padding;
