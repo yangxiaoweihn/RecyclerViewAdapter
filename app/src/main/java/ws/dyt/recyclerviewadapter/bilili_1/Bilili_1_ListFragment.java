@@ -142,6 +142,15 @@ public class Bilili_1_ListFragment extends BaseFragment {
             this.group = group;
             this.index = index;
         }
+
+        @Override
+        public String toString() {
+            return "Wrapper1{" +
+                    "type= " + type +
+                    " , group= " + group +
+                    " , index= " + index +
+                    '}';
+        }
     }
 
     private List<Wrapper1> generate() {
@@ -181,44 +190,48 @@ public class Bilili_1_ListFragment extends BaseFragment {
             padding = UnitUtils.dip2Px(getContext(), 10);
         }
 
+
         @Override
-        public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-            super.getItemOffsets(outRect, itemPosition, parent);
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            int itemPosition = parent.getChildAdapterPosition(view);
             int aAll = adapter.getSysHeaderViewCount() + adapter.getHeaderViewCount();
-            Log.e("GGGG", "all: "+aAll+" , index: "+itemPosition);
+//            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll);
+            //header
             if (0 != aAll && itemPosition < aAll) {
-
+//                Log.e("DEBUG", "---");
                 return;
             }
 
+            //footer
             int fAll = adapter.getSysFooterViewCount() + adapter.getFooterViewCount();
-            if (0 != fAll && itemPosition > (itemPosition - fAll)) {
+            if (0 != fAll && itemPosition - (aAll + adapter.getDataSectionItemCount()) >= 0) {
                 return;
             }
-
 
 
             int index = itemPosition - aAll;
+
             Wrapper1 e = adapter.getItem(index);
+
+//            Log.e("DEBUG", "postion: "+itemPosition+" , all: "+aAll+" , fall: "+fAll+" , dataIndex: "+index+" , "+e.toString());
 
             outRect.left = padding;
             outRect.right = padding;
-
-            if (e.type == 1) {
+            if (e.type == 0) {
+                outRect.bottom = padding;
+                if (index == 0) {
+                    outRect.top = padding;
+                }
+            }else if (e.type == 1) {
                 //ad
                 outRect.bottom = padding;
             }else if (e.type == 2) {
                 //data
                 outRect.bottom = padding;
-
+//
                 outRect.left = e.index % 2 == 0 ? padding : 0;
-            }else if (e.type == 0) {
-                outRect.bottom = padding;
-                if (index == 0) {
-                    outRect.top = padding;
-                }
             }
-
         }
     }
 }

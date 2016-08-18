@@ -192,17 +192,17 @@ public class Bilili_2_ListFragment extends BaseFragment {
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
-            super.getItemOffsets(outRect, itemPosition, parent);
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            int itemPosition = parent.getChildAdapterPosition(view);
             int aAll = adapter.getSysHeaderViewCount() + adapter.getHeaderViewCount();
-            Log.e("GGGG", "all: " + aAll + " , index: " + itemPosition);
             if (0 != aAll && itemPosition < aAll) {
 
                 return;
             }
 
             int fAll = adapter.getSysFooterViewCount() + adapter.getFooterViewCount();
-            if (0 != fAll && itemPosition > (itemPosition - fAll)) {
+            if (0 != fAll && itemPosition - (aAll + adapter.getDataSectionItemCount()) >= 0) {
                 return;
             }
 

@@ -144,7 +144,7 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddHeaderClick(){
         final View header1 = layoutInflater.inflate(R.layout.item_header_1, recyclerView, false);
-        getAdapter().addHeaderView(header1, true);
+        getAdapter().addHeaderView(header1, false);
 
         header1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

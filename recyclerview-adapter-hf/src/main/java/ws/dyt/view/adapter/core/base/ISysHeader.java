@@ -11,13 +11,16 @@ public interface ISysHeader {
 
     void addSysHeaderView(View view);
 
+    @Deprecated
     void addSysHeaderView(View view, boolean changeAllVisibleItems);
 
     void setSysHeaderView(View view);
 
+    @Deprecated
     void setSysHeaderView(View view, boolean changeAllVisibleItems);
 
     void removeSysHeaderView(View view);
 
+    @Deprecated
     void removeSysHeaderView(View view, boolean changeAllVisibleItems);
 }
