@@ -6,7 +6,7 @@
     4. 支持粘性视图，同时支持滑动菜单
     
 ## 系列文章
-    ![系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
+    [系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
 ## 添加依赖
 ```
     compile 'ws.dyt.view:recyclerview-adapter-hf:2.0'
