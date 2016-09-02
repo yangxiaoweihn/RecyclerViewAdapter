@@ -10,7 +10,7 @@
     [系列源码实现说明]<a href="http://www.jianshu.com/p/b9bbed94d02e">系列源码实现说明</a>
     [系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
     This is [an example](http://example.com/ "Title") inline link.
-</p
+</p>
 [This link](http://example.net/) has no title attribute.
 ## 添加依赖
 ```
