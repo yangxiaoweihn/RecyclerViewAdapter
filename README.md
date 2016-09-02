@@ -4,7 +4,7 @@
     2. 可以添加系统头部、尾部（数量和使用上做了限制，在使用上尽量不要去使用这部分），具体说明将会在之后的文章中进行阐述。
     3. 可以针对不同的item添加滑动菜单（目前只支持左滑、右滑），并且菜单定制性高
     4. 支持粘性视图，同时支持滑动菜单
-    5. [系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
+    5. ![系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
 ## 添加依赖
 ```
     compile 'ws.dyt.view:recyclerview-adapter-hf:2.0'
