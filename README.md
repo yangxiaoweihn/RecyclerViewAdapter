@@ -11,6 +11,7 @@
     [系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
     This is [an example](http://example.com/ "Title") inline link.
 </p>
+[系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)
 [This link](http://example.net/) has no title attribute.
 ## 添加依赖
 ```
