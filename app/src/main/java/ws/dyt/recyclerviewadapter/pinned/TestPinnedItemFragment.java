@@ -105,17 +105,17 @@ public class TestPinnedItemFragment extends Fragment {
                 holder.setText(R.id.tv_text_pinned, getItem(position).data.title);
             }
 
-            @Override
-            public List<MenuItem> onCreateMultiMenuItem(int viewType) {
-                List<MenuItem> mm = new ArrayList<>();
-                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
-                return mm;
-            }
-
-            @Override
-            public boolean isCloseOtherItemsWhenThisWillOpen() {
-                return true;
-            }
+//            @Override
+//            public List<MenuItem> onCreateMultiMenuItem(int viewType) {
+//                List<MenuItem> mm = new ArrayList<>();
+//                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
+//                return mm;
+//            }
+//
+//            @Override
+//            public boolean isCloseOtherItemsWhenThisWillOpen() {
+//                return true;
+//            }
         };
     }
 

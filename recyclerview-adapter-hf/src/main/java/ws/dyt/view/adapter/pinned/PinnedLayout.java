@@ -27,6 +27,8 @@ public class PinnedLayout extends LinearLayout{
     }
 
     private void init() {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setLayoutParams(lp);
         this.setOrientation(VERTICAL);
     }
 

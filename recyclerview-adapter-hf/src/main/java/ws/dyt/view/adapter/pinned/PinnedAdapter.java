@@ -131,8 +131,8 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             //获取Adapter中粘性头部位置上方的控件
             View headerView = recyclerView.findChildViewUnder(pinnedViewWidth / 2, 5);
 
-            Object obj = headerView.getTag(R.string.pinned_item_data_type);
-            if (headerView != null && null != obj && obj instanceof Integer) {
+            Object obj = null == headerView ? null : headerView.getTag(R.string.pinned_item_data_type);
+            if (null != obj && obj instanceof Integer) {
                 int position = (int) headerView.getTag(R.string.item_index_in_datasection);
                 convertPinnedHolder(pinnedViewHolder, position, (int) obj);
             }
@@ -140,8 +140,8 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             //获取Adapter中粘性头部位置下方的控件
             headerView = recyclerView.findChildViewUnder(pinnedViewWidth / 2, pinnedViewHeight + 1);
 
-            obj = headerView.getTag(R.string.pinned_item_status);
-            if (null == headerView || null == obj || !(obj instanceof Integer)) {
+            obj = null == headerView ? null : headerView.getTag(R.string.pinned_item_status);
+            if (null == obj || !(obj instanceof Integer)) {
                 return;
             }
             int transViewStatus = (int) obj;

@@ -43,6 +43,8 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
     private ViewDragHelper helper;
     private SwipeDragHelperDelegate delegate;
     private void init() {
+        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setLayoutParams(lp);
     }
 
     private ViewGroup viewGroup;
