@@ -43,20 +43,25 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     public HeaderFooterAdapter(Context context, List<T> datas) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.datas = datas;
+        this.datas = null == datas ? new ArrayList<T>() : datas;
     }
 
     public HeaderFooterAdapter(Context context, List<List<T>> sectionDatas, int unused) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        if (null == sectionDatas || sectionDatas.isEmpty()) {
-            return;
+        if (null == sectionDatas) {
+            this.datas = new ArrayList<T>();
+        }else {
+            if (sectionDatas.isEmpty()) {
+                return;
+            }
+            for (List<T> e:sectionDatas) {
+                if (null == e || e.isEmpty()) {
+                    continue;
+                }
+                this.datas.addAll(e);
+            }
         }
-        List<T> all = new ArrayList<>();
-        for (List<T> e:sectionDatas) {
-            all.addAll(e);
-        }
-        this.datas = all;
     }
 
     /**
