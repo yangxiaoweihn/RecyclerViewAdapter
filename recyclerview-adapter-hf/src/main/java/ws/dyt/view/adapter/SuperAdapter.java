@@ -39,6 +39,12 @@ public class SuperAdapter<T> extends SwipeAdapter<T> {
 
     @Override
     final
+    protected void onBindHolder(BaseViewHolder holder, int position) {
+        super.onBindHolder(holder, position);
+    }
+
+    @Override
+    final
     public int getDataSectionItemCount() {
         return super.getDataSectionItemCount();
     }

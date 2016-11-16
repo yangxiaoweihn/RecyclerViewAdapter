@@ -20,6 +20,7 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.view.adapter.ItemWrapper;
+import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.adapter.SuperPinnedAdapter;
 import ws.dyt.view.adapter.swipe.MenuItem;
 import ws.dyt.view.adapter.swipe.OnItemMenuClickListener;

@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.decoration;
+package ws.dyt.recyclerviewadapter.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;

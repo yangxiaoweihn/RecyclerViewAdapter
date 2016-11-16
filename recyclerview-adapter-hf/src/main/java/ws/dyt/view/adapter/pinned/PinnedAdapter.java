@@ -83,7 +83,6 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
         this.convertPinnedHolder(holder, position, type);
     }
 
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -111,6 +110,8 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
         this.topPinnedView = inflater.inflate(getPinnedItemViewLayout(), recyclerView, false);
         this.pinnedViewHolder = new BaseViewHolder(topPinnedView);
         parent.addView(this.topPinnedView);
+        //初始让不可见
+        this.topPinnedView.setVisibility(View.GONE);
     }
 
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {

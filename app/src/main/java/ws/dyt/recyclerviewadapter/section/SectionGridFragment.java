@@ -14,7 +14,7 @@ import java.util.List;
 
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
-import ws.dyt.view.adapter.decoration.DividerItemDecoration;
+import ws.dyt.recyclerviewadapter.decoration.DividerItemDecoration;
 import ws.dyt.view.adapter.section.SectionMultiAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
