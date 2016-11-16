@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ws.dyt.view.adapter.Log.L;
+
 /**
  * Created by yangxiaowei on 16/8/1.
  *
@@ -71,9 +73,9 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
 
 
         //筛选左右菜单
-        List<MenuItem>[] menu = this.filterLeftAndRightMenu(menuItems, null, null);
-        List<MenuItem> left = menu[0];
-        List<MenuItem> right = menu[1];
+        Pair<List<MenuItem>, List<MenuItem>> menuPair = this.filterLeftAndRightMenu(menuItems, null, null);
+        List<MenuItem> left = menuPair.first;
+        List<MenuItem> right = menuPair.second;
 
         //添加左菜单(如果菜单项为多个的话，菜单外层需要嵌套一层线性布局)
         if (null != left && !left.isEmpty()) {
@@ -107,15 +109,23 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
             }
         }
 
+        //同时支持左右菜单
+        if (null != left && !left.isEmpty() && null != right && !right.isEmpty()) {
+            this.EdgeTracking = MenuItem.EdgeTrack.LEFT_RIGHT;
+        }
+
         if (null != itemView) {
             this.addView(itemView);
         }
 
-        delegate = new SwipeDragHelperDelegate(this);
+        this.delegate = new SwipeDragHelperDelegate(this);
         this.helper = ViewDragHelper.create(this, 1.0f, delegate);
-        delegate.init(helper);
+        this.delegate.init(helper);
 
-        if (this.EdgeTracking == MenuItem.EdgeTrack.LEFT) {
+        if (this.EdgeTracking == MenuItem.EdgeTrack.LEFT_RIGHT) {
+            helper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT|ViewDragHelper.EDGE_RIGHT);
+
+        }else if (this.EdgeTracking == MenuItem.EdgeTrack.LEFT) {
             helper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
 
         }else if (this.EdgeTracking == MenuItem.EdgeTrack.RIGHT) {
@@ -129,27 +139,28 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
      * @param menuItems
      * @param left
      * @param right
-     * @return [0]: left menu  [1]: right menu
+     * @return Pair<List<MenuItem>, List<MenuItem>> first: left menu  second: right menu
      */
-    private List<MenuItem>[] filterLeftAndRightMenu(List<MenuItem> menuItems, List<MenuItem> left, List<MenuItem> right) {
+    private Pair<List<MenuItem>, List<MenuItem>> filterLeftAndRightMenu(List<MenuItem> menuItems, List<MenuItem> left, List<MenuItem> right) {
         for (MenuItem e:menuItems) {
             if (null == e) {
                 continue;
             }
 
-            if (e.getEdgeTrack() == MenuItem.EdgeTrack.LEFT) {
+            final int et = e.getEdgeTrack();
+            if (et == MenuItem.EdgeTrack.LEFT) {
                 if (null == left) {
                     left = new ArrayList<>();
                 }
                 left.add(e);
-            }else if (e.getEdgeTrack() == MenuItem.EdgeTrack.RIGHT) {
+            }else if (et == MenuItem.EdgeTrack.RIGHT) {
                 if (null == right) {
                     right = new ArrayList<>();
                 }
                 right.add(e);
             }
         }
-        return new List[]{left, right};
+        return new Pair<>(left, right);
     }
 
     private void setUpLeftMenuView(MenuItem item, LinearLayout parent) {
@@ -205,7 +216,6 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
     private LinearLayout getMultiHorizonMenuLayout() {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setBackgroundColor(Color.RED);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.CENTER;
@@ -236,10 +246,14 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
                 return false;
         }
 
+        L.e("onInterceptTouchEvent->"+action+" , "+isCloseOtherItemsWhenThisWillOpen);
         if (isCloseOtherItemsWhenThisWillOpen) {
             if (MotionEvent.ACTION_DOWN == action) {
                 if (hasOpendMenuItems()) {
-                    closeOtherMenuItems();
+                    if (!closeOtherMenuItems()) {
+                        //保证有item menu打开时其他item不能响应事件
+                        return true;
+                    }
                 }
             }
         }
@@ -274,8 +288,8 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
     }
 
     @Override
-    public void closeOtherMenuItems() {
-        this.delegate.closeOtherMenuItems();
+    public boolean closeOtherMenuItems() {
+        return this.delegate.closeOtherMenuItems();
     }
 
     @Override
@@ -291,10 +305,10 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
         return itemView;
     }
 
+    //当前item支持的菜单类型
     public int getEdgeTracking() {
         return EdgeTracking;
     }
-
 
 
     private List<Pair<View, MenuItem>> empAllMenus;

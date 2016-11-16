@@ -2,6 +2,7 @@ package ws.dyt.recyclerviewadapter.swipe;
 
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -91,10 +93,11 @@ public class TestSwipeItemFragment extends Fragment {
 
     private SuperAdapter<News> getAdapter() {
         return new SuperAdapter<News>(getContext(), generate(), R.layout.item_swipe) {
-            public List<MenuItem> onCreateMultiMenuItem(int viewType) {
+            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
                 List<MenuItem> mm = new ArrayList<>();
                 mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.RIGHT, 01));
                 mm.add(new MenuItem(R.layout.menu_item_test_mark, MenuItem.EdgeTrack.RIGHT, 02));
+//                mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.LEFT, 03));
                 return mm;
             }
 
@@ -103,8 +106,11 @@ public class TestSwipeItemFragment extends Fragment {
                 final News news = getItem(position);
                 holder.setText(R.id.tv_title, news.title)
                 .setText(R.id.tv_from, news.from)
-                .setText(R.id.tv_time, news.time)
-                .setText(R.id.tv_menu_mark, "加关注");
+                .setText(R.id.tv_time, news.time);
+                 View v = holder.getView(R.id.tv_menu_mark);
+                if (null != v) {
+                    ((TextView) v).setText("加关注");
+                }
 
                 holder.setOnClickListener(R.id.btn_to, new View.OnClickListener() {
                     @Override

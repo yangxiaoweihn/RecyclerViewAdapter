@@ -30,7 +30,7 @@ public class MenuItem {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({EdgeTrack.LEFT, EdgeTrack.RIGHT/*, EdgeTrack.LEFT_RIGHT*/})
+    @IntDef({EdgeTrack.LEFT, EdgeTrack.RIGHT, EdgeTrack.LEFT_RIGHT})
     public @interface EdgeTrackWhere {}
 
     /**
@@ -39,7 +39,7 @@ public class MenuItem {
     public interface EdgeTrack{
         int LEFT = 0;
         int RIGHT = 1;
-//        int LEFT_RIGHT = 2;
+        int LEFT_RIGHT = 2;
     }
 
     public int getMenuLayoutId() {

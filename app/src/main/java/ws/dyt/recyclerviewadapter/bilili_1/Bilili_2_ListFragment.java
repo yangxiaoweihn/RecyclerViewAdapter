@@ -2,6 +2,7 @@ package ws.dyt.recyclerviewadapter.bilili_1;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 import ws.dyt.view.adapter.ItemWrapper;
 import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.view.adapter.swipe.MenuItem;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -80,6 +82,17 @@ public class Bilili_2_ListFragment extends BaseFragment {
                 Wrapper1 t = getItem(position);
                 //只有动漫类型并且不是第二组（动漫总共两组）的以两列展示
                 return t.type == 2 && t.group != 2;
+            }
+
+            @Override
+            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
+                if (R.layout.bilili_item_data != viewType) {
+                    return null;
+                }
+                List<MenuItem> mm = new ArrayList<>();
+                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
+                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.RIGHT, 02));
+                return mm;
             }
         };
 

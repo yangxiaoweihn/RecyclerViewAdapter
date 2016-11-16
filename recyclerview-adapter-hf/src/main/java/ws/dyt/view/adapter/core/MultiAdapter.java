@@ -49,6 +49,7 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
     }
 
     @Override
+    @LayoutRes
     public int getItemViewLayout(int position) {
         return this.itemLayoutResId;
     }

@@ -1,5 +1,7 @@
 package ws.dyt.view.adapter.swipe;
 
+import android.support.annotation.LayoutRes;
+
 import java.util.List;
 
 /**
@@ -9,17 +11,17 @@ import java.util.List;
 public interface ICreateMenus {
     /**
      * 创建多个菜单
-     * @param viewType  可以针对不同的item类型创建不同的菜单
+     * @param viewType  可以针对不同的item类型创建不同的菜单 {@link ws.dyt.view.adapter.core.MultiItemViewType#getItemViewLayout(int)}
      * @return
      */
-    List<MenuItem> onCreateMultiMenuItem(int viewType);
+    List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType);
 
 
     /**
      * 创建单个菜单
-     * @param viewType  可以针对不同的item类型创建不同的菜单
+     * @param viewType  可以针对不同的item类型创建不同的菜单 {@link ws.dyt.view.adapter.core.MultiItemViewType#getItemViewLayout(int)}
      * @return
      */
-    MenuItem onCreateSingleMenuItem(int viewType);
+    MenuItem onCreateSingleMenuItem(@LayoutRes int viewType);
 
 }

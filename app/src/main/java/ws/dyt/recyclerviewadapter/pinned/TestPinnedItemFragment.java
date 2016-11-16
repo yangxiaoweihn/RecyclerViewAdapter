@@ -2,6 +2,7 @@ package ws.dyt.recyclerviewadapter.pinned;
 
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -106,17 +107,18 @@ public class TestPinnedItemFragment extends Fragment {
                 holder.setText(R.id.tv_text_pinned, getItem(position).data.title);
             }
 
-//            @Override
-//            public List<MenuItem> onCreateMultiMenuItem(int viewType) {
-//                List<MenuItem> mm = new ArrayList<>();
-//                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
-//                return mm;
-//            }
-//
-//            @Override
-//            public boolean isCloseOtherItemsWhenThisWillOpen() {
-//                return true;
-//            }
+            @Override
+            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
+                List<MenuItem> mm = new ArrayList<>();
+                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
+                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.RIGHT, 02));
+                return mm;
+            }
+
+            @Override
+            public boolean isCloseOtherItemsWhenThisWillOpen() {
+                return true;
+            }
         };
     }
 

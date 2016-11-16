@@ -11,8 +11,9 @@ public interface ICloseMenus {
 
     /**
      * 关闭其他打开菜单的item
+     * @return true:标识当前item menu打开状态
      */
-    void closeOtherMenuItems();
+    boolean closeOtherMenuItems();
 
     /**
      * 是否有其他打开菜单的item项(不包含当前客户端触摸的item)

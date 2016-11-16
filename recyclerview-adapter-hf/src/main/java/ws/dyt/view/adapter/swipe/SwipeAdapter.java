@@ -63,18 +63,18 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     }
 
     @Override
-    public List<MenuItem> onCreateMultiMenuItem(int viewType) {
+    public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
         return null;
     }
 
     @Override
-    public MenuItem onCreateSingleMenuItem(int viewType) {
+    public MenuItem onCreateSingleMenuItem(@LayoutRes int viewType) {
         return null;
     }
 
     @Override
     public boolean isCloseOtherItemsWhenThisWillOpen() {
-        return false;
+        return true;
     }
 
     /**
