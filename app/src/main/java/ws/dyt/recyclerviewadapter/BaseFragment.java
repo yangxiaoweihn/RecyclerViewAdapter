@@ -144,12 +144,12 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddHeaderClick(){
         final View header1 = layoutInflater.inflate(R.layout.item_header_1, recyclerView, false);
-        getAdapter().addHeaderView(header1, false);
+        adapter.addHeaderView(header1, false);
 
         header1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                getAdapter().removeHeaderView(header1, true);
+                adapter.removeHeaderView(header1);
                 return true;
             }
         });
@@ -157,12 +157,12 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddFooterClick(){
         final View footer1 = layoutInflater.inflate(R.layout.item_footer_1, recyclerView, false);
-        getAdapter().addFooterView(footer1);
+        adapter.addFooterView(footer1);
 
         footer1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                getAdapter().removeFooterView(footer1);
+                adapter.removeFooterView(footer1);
                 return true;
             }
         });
@@ -171,12 +171,12 @@ abstract public class BaseFragment extends Fragment{
     private void onAddSysHeaderClick() {
         final View sysHeader = layoutInflater.inflate(R.layout.item_sys_header, recyclerView, false);
 //        getAdapter().setSysHeaderView(sysHeader);
-        getAdapter().addSysHeaderView(sysHeader);
+        adapter.addSysHeaderView(sysHeader);
 
         sysHeader.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                getAdapter().removeSysHeaderView(sysHeader);
+                adapter.removeSysHeaderView(sysHeader);
                 return true;
             }
         });
@@ -184,12 +184,12 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddSysFooterClick(){
         final View sysFooter = layoutInflater.inflate(R.layout.item_sys_footer, recyclerView, false);
-        getAdapter().setSysFooterView(sysFooter);
+        adapter.setSysFooterView(sysFooter);
 
         sysFooter.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                getAdapter().removeSysFooterView(sysFooter);
+                adapter.removeSysFooterView(sysFooter);
                 return true;
             }
         });
@@ -199,23 +199,25 @@ abstract public class BaseFragment extends Fragment{
     abstract
     protected HeaderFooterAdapter getAdapter();
 
+    HeaderFooterAdapter adapter;
 
     private void addListener(){
-        getAdapter().setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
+        adapter = null == adapter ? getAdapter() : adapter;
+        adapter.setOnItemClickListener(new HeaderFooterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 toast(position);
             }
         });
 
-        getAdapter().setOnItemLongClickListener(new HeaderFooterAdapter.OnItemLongClickListener() {
+        adapter.setOnItemLongClickListener(new HeaderFooterAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View itemView, int position) {
                 toast(position);
             }
         });
 
-        HeaderFooterAdapter adapter = getAdapter();
+        recyclerView.setAdapter(adapter);
         if (adapter instanceof SectionMultiAdapter) {
             SectionMultiAdapter sectionAdapter = (SectionMultiAdapter) adapter;
             sectionAdapter.setOnItemClickListener(new SectionMultiAdapter.OnItemClickListener() {

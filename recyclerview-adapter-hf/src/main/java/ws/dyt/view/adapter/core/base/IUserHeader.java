@@ -17,4 +17,6 @@ public interface IUserHeader {
 
     @Deprecated
     void removeHeaderView(View view, boolean changeAllVisibleItems);
+
+    boolean isHeaderItemView(int position);
 }

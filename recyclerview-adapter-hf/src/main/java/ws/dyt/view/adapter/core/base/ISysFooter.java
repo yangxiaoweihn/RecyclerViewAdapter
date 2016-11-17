@@ -11,4 +11,6 @@ public interface ISysFooter {
     void setSysFooterView(View view);
 
     void removeSysFooterView(View view);
+
+    boolean isSysFooterView(int position);
 }

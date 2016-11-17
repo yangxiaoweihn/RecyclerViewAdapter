@@ -38,7 +38,9 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
 
     private interface PinnedItemRange {
         int FIRST    = 1;
-        int OTHER    = 2;
+        int MIDDLE   = 2;
+        //有footer时的处理
+        int FOOTER   = 3;
     }
 
 
@@ -72,7 +74,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             holder.itemView.setTag(R.string.pinned_item_status, PinnedItemRange.FIRST);
         } else {
             pinnedLayout.pinnedView.setVisibility(View.GONE);
-            holder.itemView.setTag(R.string.pinned_item_status, PinnedItemRange.OTHER);
+            holder.itemView.setTag(R.string.pinned_item_status, PinnedItemRange.MIDDLE);
         }
 
         final int type = getItem(position).type;
@@ -97,8 +99,8 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             recyclerView.addOnScrollListener(scrollListener);
         } catch (Exception e) {
             Log.e("DEBUG", "RecyclerView parent must be FrameLayout");
-            e.printStackTrace();
             Toast.makeText(context, "RecyclerView parent must be FrameLayout", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
@@ -141,33 +143,43 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             //获取Adapter中粘性头部位置下方的控件
             headerView = recyclerView.findChildViewUnder(pinnedViewWidth / 2, pinnedViewHeight + 1);
 
-            obj = null == headerView ? null : headerView.getTag(R.string.pinned_item_status);
-            if (null == obj || !(obj instanceof Integer)) {
+            if (null == headerView) {
                 return;
             }
+
+            obj = headerView.getTag(R.string.pinned_item_status);
+            if (null == obj || !(obj instanceof Integer)) {
+                obj = PinnedItemRange.FOOTER;
+            }
+
             int transViewStatus = (int) obj;
 
             int translationY = headerView.getTop() - pinnedViewHeight;
-            if (transViewStatus == PinnedItemRange.FIRST) {
+            if (transViewStatus == PinnedItemRange.FIRST || transViewStatus == PinnedItemRange.FOOTER) {
                 if (headerView.getTop() > 0) {
                     topPinnedView.setTranslationY(translationY);
                 } else {
                     topPinnedView.setTranslationY(0);
                 }
-            } else if (transViewStatus == PinnedItemRange.OTHER) {
+            } else if (transViewStatus == PinnedItemRange.MIDDLE) {
                 topPinnedView.setTranslationY(0);
-
             }
 
-            //在RecyclerView上贴了粘性头部后会遮挡效果，下面处理一下
+
             findFirstVisibleItemIndex();
-            if ( mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
-                if (View.GONE != topPinnedView.getVisibility()) {
-                    topPinnedView.setVisibility(View.GONE);
-                }
+            if (getItemTypeByPosition(mFirstVisibleItemIndex) != ItemTypeSummary.DATA) {
+                //添加了header后，需要对header处进行处理，只要header出现时需要隐藏
+                topPinnedView.setVisibility(View.GONE);
             }else {
-                if (View.VISIBLE != topPinnedView.getVisibility()) {
-                    topPinnedView.setVisibility(View.VISIBLE);
+                //在RecyclerView上贴了粘性头部后会遮挡效果，下面处理一下
+                if (mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
+                    if (View.GONE != topPinnedView.getVisibility()) {
+                        topPinnedView.setVisibility(View.GONE);
+                    }
+                }else {
+                    if (View.VISIBLE != topPinnedView.getVisibility()) {
+                        topPinnedView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

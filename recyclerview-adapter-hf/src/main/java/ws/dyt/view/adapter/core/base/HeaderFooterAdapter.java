@@ -422,7 +422,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param position
      * @return
      */
-    private boolean isSysHeaderView(int position) {
+    @Override
+    final
+    public boolean isSysHeaderItemView(int position) {
         int shc = this.getSysHeaderViewCount();
         return position >= 0 && 0 != shc && position < shc;
     }
@@ -480,7 +482,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param position
      * @return
      */
-    private boolean isHeaderItemView(int position) {
+    @Override
+    final
+    public boolean isHeaderItemView(int position) {
         int shc = this.getSysHeaderViewCount();
         int hc = shc + this.getHeaderViewCount();
         return position >= 0 && 0 != hc && position < hc;
@@ -547,7 +551,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param position
      * @return
      */
-    private boolean isFooterItemView(int position) {
+    @Override
+    final
+    public boolean isFooterItemView(int position) {
         int shc = this.getSysHeaderViewCount();
         int hc = shc + this.getHeaderViewCount();
         int dc = this.getDataSectionItemCount();
@@ -583,7 +589,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param position
      * @return
      */
-    private boolean isSysFooterView(int position) {
+    @Override
+    final
+    public boolean isSysFooterView(int position) {
         int sfc = this.getSysFooterViewCount();
         int ic = this.getItemCount();
         return position >= 0 && sfc != 0 && position >= (ic - sfc);
@@ -697,7 +705,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      */
     @ItemTypeSummaryWhere
     public int getItemTypeByPosition(int position) {
-        if (isSysHeaderView(position)) {
+        if (isSysHeaderItemView(position)) {
             return ItemTypeSummary.HEADER_SYS;
         }
 

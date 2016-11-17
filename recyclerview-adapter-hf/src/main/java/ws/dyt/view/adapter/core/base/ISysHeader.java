@@ -23,4 +23,6 @@ public interface ISysHeader {
 
     @Deprecated
     void removeSysHeaderView(View view, boolean changeAllVisibleItems);
+
+    boolean isSysHeaderItemView(int position);
 }

@@ -17,4 +17,6 @@ public interface IUserFooter {
 
     @Deprecated
     void removeFooterView(View view, boolean changeAllVisibleItems);
+
+    boolean isFooterItemView(int position);
 }
