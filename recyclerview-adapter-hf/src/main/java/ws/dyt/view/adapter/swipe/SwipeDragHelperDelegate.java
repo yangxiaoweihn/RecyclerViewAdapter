@@ -146,7 +146,8 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
     @Override
     public int getViewVerticalDragRange(View child) {
-        return swipeLayout.getItemView() == child ? child.getHeight() : 0;
+//        return swipeLayout.getItemView() == child ? child.getHeight() : 0;
+        return 0;
     }
 
 

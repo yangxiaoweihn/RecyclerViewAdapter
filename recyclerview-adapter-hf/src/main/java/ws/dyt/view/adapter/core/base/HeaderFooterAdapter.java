@@ -4,10 +4,8 @@ import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -272,6 +270,12 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         return true;
     }
 
+    /**
+     * [for extend] 重新定义data_section域的item生成方式
+     * @param parent
+     * @param viewType
+     * @return
+     */
     abstract
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType);
 
@@ -310,7 +314,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     /**
-     * 为了子类扩展
+     * [for extend]
      * @param holder
      * @param position
      */

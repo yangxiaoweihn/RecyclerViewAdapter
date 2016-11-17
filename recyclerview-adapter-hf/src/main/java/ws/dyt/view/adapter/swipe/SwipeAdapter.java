@@ -1,8 +1,11 @@
 package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,20 +38,10 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(viewType, parent, false);
 
-        MenuItem mi = this.onCreateSingleMenuItem(viewType);
-        List<MenuItem> mm = this.onCreateMultiMenuItem(viewType);
+        List<MenuItem> menuItems = this.collectMenus(viewType);
         //客户端没有设置菜单支持
-        if (null == mi && (null == mm || mm.isEmpty())) {
+        if (null == menuItems || menuItems.isEmpty()) {
             return new BaseViewHolder(itemView);
-        }
-
-        List<MenuItem> menuItems = new ArrayList<>();
-        if (null != mi) {
-            menuItems.add(mi);
-        }
-
-        if (null != mm && !mm.isEmpty()) {
-            menuItems.addAll(mm);
         }
 
         final SwipeLayout swipeLayout = new SwipeLayout(context);
@@ -57,9 +50,44 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
 
         itemView.setClickable(true);
 
-        BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
+        final BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
         this.initMenusListener(holder);
         return holder;
+    }
+
+    private List<MenuItem> collectMenus(int viewType) {
+        MenuItem mi = this.onCreateSingleMenuItem(viewType);
+        List<MenuItem> mm = this.onCreateMultiMenuItem(viewType);
+
+        List<MenuItem> menuItems = null;
+        //客户端没有设置菜单支持
+        if (null == mi && (null == mm || mm.isEmpty())) {}else {
+            menuItems = new ArrayList<>();
+            if (null != mi) {
+                menuItems.add(mi);
+            }
+
+            if (null != mm && !mm.isEmpty()) {
+                menuItems.addAll(mm);
+            }
+        }
+
+        return menuItems;
+    }
+
+    @Override
+    final
+    protected int filterDataSectionItemViewTypeToItemLayoutId(int position) {
+        final @LayoutRes int layoutIdMap2ViewType = super.filterDataSectionItemViewTypeToItemLayoutId(position);
+
+
+        return layoutIdMap2ViewType;
+    }
+
+
+    @Override
+    public int getItemViewLayout(int position) {
+        return super.getItemViewLayout(position);
     }
 
     @Override

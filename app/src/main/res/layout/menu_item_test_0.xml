@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sml"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="#666">
+
+
+    <TextView
+        android:id="@+id/tv_menu_test"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="测试"
+        android:textSize="15sp" />
+
+
+</FrameLayout>

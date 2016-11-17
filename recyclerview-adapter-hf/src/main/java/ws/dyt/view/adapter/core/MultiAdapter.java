@@ -45,6 +45,10 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
         if (isEmpty()) {
             return super.mapDataSectionItemViewTypeToItemLayoutId(position);
         }
+        return filterDataSectionItemViewTypeToItemLayoutId(position);
+    }
+
+    protected int filterDataSectionItemViewTypeToItemLayoutId(int position) {
         return getItemViewLayout(position);
     }
 

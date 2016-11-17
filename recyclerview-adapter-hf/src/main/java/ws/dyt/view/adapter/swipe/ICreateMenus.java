@@ -22,6 +22,6 @@ public interface ICreateMenus {
      * @param viewType  可以针对不同的item类型创建不同的菜单 {@link ws.dyt.view.adapter.core.MultiItemViewType#getItemViewLayout(int)}
      * @return
      */
-    MenuItem onCreateSingleMenuItem(@LayoutRes int viewType);
+    MenuItem onCreateSingleMenuItem( @LayoutRes int viewType);
 
 }
