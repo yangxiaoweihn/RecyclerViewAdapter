@@ -18,6 +18,7 @@ import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
 import ws.dyt.view.adapter.ItemWrapper;
 import ws.dyt.view.adapter.SuperAdapter;
+import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
@@ -119,7 +120,7 @@ public class Bilili_1_ListFragment extends BaseFragment {
     }
 
     @Override
-    protected HeaderFooterAdapter getAdapter() {
+    protected BaseAdapter<Wrapper1> getAdapter() {
         return adapter;
     }
 

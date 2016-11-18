@@ -32,6 +32,8 @@ abstract public class BaseFragment extends Fragment{
     public ViewGroup mSectionInput;
     @BindView(R.id.et)
     EditText mEt;
+    @BindView(R.id.et_operator)
+    EditText mEtOperator;
 
 
     @Nullable
@@ -141,10 +143,23 @@ abstract public class BaseFragment extends Fragment{
         }
     }
 
+    private int getPosition() {
+        String s = mEtOperator.getText().toString();
+        int p = -1;
+        if (!TextUtils.isEmpty(s)) {
+            p = Integer.valueOf(s);
+        }
+        return p;
+    }
 
     private void onAddHeaderClick(){
         final View header1 = layoutInflater.inflate(R.layout.item_header_1, recyclerView, false);
-        adapter.addHeaderView(header1, false);
+        int p = getPosition();
+        if (p < 0) {
+            adapter.addHeaderView(header1);
+        }else {
+            adapter.addHeaderView(header1, p);
+        }
 
         header1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -157,7 +172,12 @@ abstract public class BaseFragment extends Fragment{
 
     private void onAddFooterClick(){
         final View footer1 = layoutInflater.inflate(R.layout.item_footer_1, recyclerView, false);
-        adapter.addFooterView(footer1);
+        int p = getPosition();
+        if (p < 0) {
+            adapter.addFooterView(footer1);
+        }else {
+            adapter.addFooterView(footer1, p);
+        }
 
         footer1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -171,7 +191,12 @@ abstract public class BaseFragment extends Fragment{
     private void onAddSysHeaderClick() {
         final View sysHeader = layoutInflater.inflate(R.layout.item_sys_header, recyclerView, false);
 //        getAdapter().setSysHeaderView(sysHeader);
-        adapter.addSysHeaderView(sysHeader);
+        int p = getPosition();
+        if (p < 0) {
+            adapter.addSysHeaderView(sysHeader);
+        }else {
+            adapter.addSysHeaderView(sysHeader, p);
+        }
 
         sysHeader.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -185,6 +210,10 @@ abstract public class BaseFragment extends Fragment{
     private void onAddSysFooterClick(){
         final View sysFooter = layoutInflater.inflate(R.layout.item_sys_footer, recyclerView, false);
         adapter.setSysFooterView(sysFooter);
+//        int p = getPosition();
+//        if (p < 0) {
+//        }else {
+//        }
 
         sysFooter.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -199,7 +228,7 @@ abstract public class BaseFragment extends Fragment{
     abstract
     protected HeaderFooterAdapter getAdapter();
 
-    HeaderFooterAdapter adapter;
+    public HeaderFooterAdapter adapter;
 
     private void addListener(){
         adapter = null == adapter ? getAdapter() : adapter;

@@ -10,13 +10,11 @@ public interface IUserFooter {
 
     void addFooterView(View view);
 
-    @Deprecated
-    void addFooterView(View view, boolean changeAllVisibleItems);
+    void addFooterView(View view, int position);
 
     void removeFooterView(View view);
 
-    @Deprecated
-    void removeFooterView(View view, boolean changeAllVisibleItems);
+    void removeFooterView(int position);
 
     boolean isFooterItemView(int position);
 }

@@ -1,9 +1,10 @@
 package ws.dyt.view.adapter.core.base;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
+
+import ws.dyt.view.adapter.Log.L;
 
 
 /**
@@ -13,87 +14,81 @@ import java.util.List;
  */
 abstract
 public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
-    public static final String TAG = "Adapter";
 
     public BaseAdapter(Context context, List<T> datas) {
         super(context, datas);
     }
 
 
-
     @Override
     public void add(T item) {
-        datas.add(item);
-        int index = getHeaderViewCount() + getDataSectionItemCount() - 1;
-        Log.e(TAG, "index: "+index);
-        notifyItemInserted(index);
+        this.add(getDataSectionItemCount(), item);
     }
 
     @Override
     public void add(int position, T item) {
-        datas.add(position, item);
-        position = getHeaderViewCount() + position;
+        if (null == item) {
+            L.e("data should't be null");
+            return;
+        }
+        if (position < 0 || position > getDataSectionItemCount()) {
+            throw new IndexOutOfBoundsException("data position out of bounds");
+        }
+        realDatas.add(position, item);
+        position = this.getAllHeaderViewCount() + position;
         notifyItemInserted(position);
     }
 
     @Override
     public void addAll(List<T> items) {
-        if (null == items || items.isEmpty()) {
-            Log.w(TAG, "no data.");
-            return;
-        }
-        int index = getDataSectionItemCount();
-        datas.addAll(items);
-        index = getHeaderViewCount() + index;
-        notifyItemRangeInserted(index, items.size());
+        this.addAll(getDataSectionItemCount(), items);
     }
 
     @Override
     public void addAll(int position, List<T> items) {
         if (null == items || items.isEmpty()) {
-            Log.w(TAG, "no data.");
+            L.w("no data.");
             return;
         }
 
-        if (position < 0 || position >= getDataSectionItemCount()) {
-            Log.w(TAG, "position IndexOutOfBoundsException.");
-            return;
+        if (position < 0 || position > getDataSectionItemCount()) {
+            throw new IndexOutOfBoundsException("data position out of bounds");
         }
 
-        position += getHeaderViewCount();
-        datas.addAll(position, items);
+        realDatas.addAll(position, items);
+        position += this.getAllHeaderViewCount();
         notifyItemRangeInserted(position, items.size());
     }
 
     @Override
     public void remove(T item) {
-        if (datas.contains(item)) {
-            remove(datas.indexOf(item));
+        if (realDatas.contains(item)) {
+            remove(realDatas.indexOf(item));
         }
     }
 
     @Override
     public void remove(int position) {
-        datas.remove(position);
-        position += getHeaderViewCount();
+        realDatas.remove(position);
+        position += this.getAllHeaderViewCount();
         notifyItemRemoved(position);
     }
 
     @Override
     public void removeAll(List<T> items) {
-        datas.removeAll(items);
+        realDatas.removeAll(items);
         notifyDataSetChanged();
     }
 
     @Override
     public void replace(T oldItem, T newItem) {
-        replace(datas.indexOf(oldItem), newItem);
+        replace(realDatas.indexOf(oldItem), newItem);
     }
 
     @Override
     public void replace(int position, T item) {
-        datas.set(position, item);
-        position += getHeaderViewCount();
+        realDatas.set(position, item);
+        position += this.getAllHeaderViewCount();
         notifyItemChanged(position);
     }
 
@@ -107,7 +102,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         if (isEmpty()) {
             return;
         }
-        datas.clear();
+        realDatas.clear();
         notifyDataSetChanged();
     }
 }

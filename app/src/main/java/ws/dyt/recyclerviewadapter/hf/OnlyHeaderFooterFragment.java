@@ -3,6 +3,7 @@ package ws.dyt.recyclerviewadapter.hf;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,142 +34,39 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  */
-public class OnlyHeaderFooterFragment extends Fragment {
+public class OnlyHeaderFooterFragment extends BaseFragment {
 
 
     public OnlyHeaderFooterFragment() {
     }
 
-
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.recyclerview_pinned, container, false);
-        return rootView;
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        mSectionInput.setVisibility(View.VISIBLE);
+        return view;
     }
-
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.init();
+    protected void onInputData(int position, List<String> data) {
+        if (position < 0) {
+            ((SuperAdapter) adapter).addAll(data);
+        }else {
+            ((SuperAdapter) adapter).addAll(position, data);
+        }
     }
 
-    private void init() {
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerview);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        recyclerView.setLayoutManager(llm);
-        final SuperPinnedAdapter<ItemWrapper<CourseResult.Course>> adapter = getAdapter();
-
-        for (int i = 0; i <8; i++) {
-            final View footer = LayoutInflater.from(getContext()).inflate(R.layout.item_header_1, recyclerView, false);
-            adapter.addHeaderView(footer);
-
-            footer.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    adapter.removeHeaderView(v);
-                    return false;
-                }
-            });
-
-        }
-
-        for (int i = 0; i < 15; i++) {
-            final View footer = LayoutInflater.from(getContext()).inflate(R.layout.item_footer_1, recyclerView, false);
-            adapter.addFooterView(footer);
-
-
-            footer.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    adapter.removeFooterView(v);
-                    return false;
-                }
-            });
-        }
-
-
-
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SuperPinnedAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                Toast.makeText(getContext(), "item: " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        adapter.setOnItemMenuClickListener(new OnItemMenuClickListener() {
-            @Override
-            public void onMenuClick(SwipeLayout swipeItemView, View itemView, View menuView, int position, int menuId) {
-                if (menuId == 01) {
-                    swipeItemView.closeMenuItem();
-                    Log.d("DEBUG", "--menu: 喜欢 -> position: " + position + " , menuId: " + menuId);
-                    Toast.makeText(getContext(), "喜欢", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
-    }
-
-    public SuperPinnedAdapter<ItemWrapper<CourseResult.Course>> getAdapter() {
-        return new SuperPinnedAdapter<ItemWrapper<CourseResult.Course>>(getContext(), generate()) {
-
-            @Override
-            public int getItemViewLayout(int position) {
-                return R.layout.item_pinned_data;
-            }
-
-            @Override
-            public int getPinnedItemViewLayout() {
-                return R.layout.item_pinned;
-            }
-
+    @Override
+    protected SuperAdapter<String> getAdapter() {
+        LinearLayoutManager lm = new LinearLayoutManager(getContext());
+        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(lm);
+        return new SuperAdapter<String>(getContext(), null, R.layout.item_text_c) {
             @Override
             public void convert(BaseViewHolder holder, int position) {
-                CourseResult.Course e = getItem(position).data;
-                holder.setText(R.id.tv_name, e.name)
-                        .setText(R.id.tv_length, e.length);
-            }
-
-            @Override
-            public void convertPinnedHolder(BaseViewHolder holder, int position, int type) {
-                holder.setText(R.id.tv_text_pinned, getItem(position).data.title);
-            }
-
-            @Override
-            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
-                List<MenuItem> mm = new ArrayList<>();
-                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.LEFT, 01));
-                mm.add(new MenuItem(R.layout.menu_item_test_like, MenuItem.EdgeTrack.RIGHT, 02));
-                return mm;
-            }
-
-            @Override
-            public boolean isCloseOtherItemsWhenThisWillOpen() {
-                return true;
+                holder.setText(R.id.tv_text, getItem(position));
             }
         };
-    }
-
-    private List<ItemWrapper<CourseResult.Course>> generate() {
-
-        String json = FileUtils.readRawFile(getResources(), R.raw.classes_pinned);
-
-        List<CourseResult> results = new Gson().fromJson(json, new TypeToken<ArrayList<CourseResult>>() {
-        }.getType());
-
-        List<ItemWrapper<CourseResult.Course>> data = new ArrayList<>();
-        for (CourseResult e:results) {
-            for (CourseResult.Course cc:e.course_list) {
-                cc.title = e.title;
-                data.add(new ItemWrapper<CourseResult.Course>(e.title.hashCode(), cc));
-            }
-        }
-
-        return data;
     }
 }

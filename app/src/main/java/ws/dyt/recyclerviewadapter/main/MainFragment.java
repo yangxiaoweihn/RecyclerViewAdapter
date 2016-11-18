@@ -89,7 +89,7 @@ public class MainFragment extends Fragment {
 //        data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
 //        data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
 //        data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
-        data.add(new FragmentEntity("头尾功能测试", OnlyHeaderFooterFragment.class));
+//        data.add(new FragmentEntity("头尾功能测试", OnlyHeaderFooterFragment.class));
         data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——1", Bilili_1_ListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));

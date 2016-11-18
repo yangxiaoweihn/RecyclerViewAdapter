@@ -153,12 +153,6 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
         return false;
     }
 
-    @Override
-    final
-    public void onBindViewHolder(BaseViewHolder holder, int position, List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
-    }
-
     /**
      * 菜单状态
      * @param holder

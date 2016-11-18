@@ -10,13 +10,9 @@ public interface IUserHeader {
 
     void addHeaderView(View view);
 
-    @Deprecated
-    void addHeaderView(View view, boolean changeAllVisibleItems);
+    void addHeaderView(View view, int position);
 
     void removeHeaderView(View view);
-
-    @Deprecated
-    void removeHeaderView(View view, boolean changeAllVisibleItems);
 
     boolean isHeaderItemView(int position);
 }
