@@ -9,13 +9,19 @@ public interface ISysHeader {
 
     int getSysHeaderViewCount();
 
-    void addSysHeaderView(View view);
+    int addSysHeaderView(View view);
 
     void addSysHeaderView(View view, int position);
 
-    void setSysHeaderView(View view);
+    int setSysHeaderView(View view);
 
-    void removeSysHeaderView(View view);
+    int removeSysHeaderView(View view);
 
     boolean isSysHeaderItemView(int position);
+
+    int findSysHeaderViewPosition(View view);
+
+    void clearSysHeaders();
+
+    boolean isEmptyOfSysHeaders();
 }

@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.view.adapter.SuperAdapter;
@@ -30,7 +31,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  */
-public class TestSwipeItemFragment extends Fragment {
+public class TestSwipeItemFragment extends DevFragment {
 
 
     public TestSwipeItemFragment() {
@@ -41,12 +42,8 @@ public class TestSwipeItemFragment extends Fragment {
         return new TestSwipeItemFragment();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recyclerview, container, false);
-    }
 
-
+    private SuperAdapter<News> adapter;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -59,7 +56,7 @@ public class TestSwipeItemFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(llm);
-        final SuperAdapter<News> adapter = getAdapter();
+        adapter = getAdapter();
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
             @Override
@@ -79,13 +76,17 @@ public class TestSwipeItemFragment extends Fragment {
             @Override
             public void onMenuClick(SwipeLayout swipeItemView, View itemView, View menuView, int position, int menuId) {
                 if (menuId == 01) {
-                    swipeItemView.closeMenuItem();
+//                    swipeItemView.closeMenuItem();
+                    adapter.remove(position);
                     Log.d("DEBUG", "--menu: 删除 -> position: " + position + " , menuId: " + menuId);
                     Toast.makeText(getContext(), "删除", Toast.LENGTH_SHORT).show();
                 } else if (menuId == 02) {
+                    swipeItemView.closeMenuItem();
                     Log.d("DEBUG", "--menu: 关注 -> position: " + position + " , menuId: " + menuId);
                     Toast.makeText(getContext(), "加关注", Toast.LENGTH_SHORT).show();
 
+                }else if (menuId == 03) {
+                    adapter.remove(position);
                 }
             }
         });
@@ -96,6 +97,7 @@ public class TestSwipeItemFragment extends Fragment {
             @Override
             public int getItemViewLayout(int position) {
                 return position == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe;
+//                return R.layout.item_swipe;
             }
 
             @Override
@@ -143,4 +145,8 @@ public class TestSwipeItemFragment extends Fragment {
         return data;
     }
 
+    @Override
+    protected void onFloatActionButtonClicked() {
+        adapter.remove(0);
+    }
 }

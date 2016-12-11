@@ -27,4 +27,6 @@ public interface CRUD<T> {
     void replaceAll(List<T> items);
 
     void clear();
+
+    boolean isEmptyOfData();
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ws.dyt.recyclerviewadapter.utils.ViewJect;
 import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
 import ws.dyt.view.adapter.deprecated.SectionAdapter;
@@ -46,13 +47,19 @@ abstract public class BaseFragment extends Fragment{
 
         mSectionInput.setVisibility(View.GONE);
 
-        rootView.findViewById(R.id.btn_add).setOnClickListener(ll);
-        rootView.findViewById(R.id.addHeader).setOnClickListener(ll);
-        rootView.findViewById(R.id.addFooter).setOnClickListener(ll);
-        rootView.findViewById(R.id.addSysHeader).setOnClickListener(ll);
-        rootView.findViewById(R.id.addSysFooter).setOnClickListener(ll);
+        ViewJect.find(R.id.btn_add, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.addHeader, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.addFooter, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.addSysHeader, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.addSysFooter, rootView).setOnClickListener(ll);
+
+        ViewJect.find(R.id.btn_clearSysHeader, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.btn_clearHeader, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.btn_clearFooter, rootView).setOnClickListener(ll);
+        ViewJect.find(R.id.btn_clearSysFooter, rootView).setOnClickListener(ll);
         return rootView;
     }
+
 
     @Override
     public void onResume() {
@@ -64,6 +71,22 @@ abstract public class BaseFragment extends Fragment{
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.btn_clearSysHeader:{
+                    adapter.clearSysHeaders();
+                    break;
+                }
+                case R.id.btn_clearHeader:{
+                    adapter.clearHeaders();
+                    break;
+                }
+                case R.id.btn_clearFooter:{
+                    adapter.clearFooters();
+                    break;
+                }
+                case R.id.btn_clearSysFooter:{
+                    adapter.clearSysFooters();
+                    break;
+                }
                 case R.id.btn_add:{
                     onAddDataClick();
                     break;

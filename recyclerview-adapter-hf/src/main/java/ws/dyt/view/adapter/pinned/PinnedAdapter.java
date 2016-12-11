@@ -104,6 +104,12 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
         }
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+
+        recyclerView.removeOnScrollListener(scrollListener);
+    }
 
     private BaseViewHolder pinnedViewHolder;
     private View topPinnedView;

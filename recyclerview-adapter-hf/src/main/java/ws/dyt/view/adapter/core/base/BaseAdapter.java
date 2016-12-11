@@ -62,6 +62,9 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
 
     @Override
     public void remove(T item) {
+        if (isEmptyOfData()) {
+            return;
+        }
         if (realDatas.contains(item)) {
             remove(realDatas.indexOf(item));
         }
@@ -69,13 +72,24 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
 
     @Override
     public void remove(int position) {
+        if (isEmptyOfData()) {
+            return;
+        }
+        if (position < 0 || position > getDataSectionItemCount()) {
+            throw new IndexOutOfBoundsException("data position out of bounds");
+        }
+
         realDatas.remove(position);
         position += this.getAllHeaderViewCount();
         notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, getDataSectionItemCount());
     }
 
     @Override
     public void removeAll(List<T> items) {
+        if (isEmptyOfData()) {
+            return;
+        }
         realDatas.removeAll(items);
         notifyDataSetChanged();
     }
@@ -87,9 +101,21 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
 
     @Override
     public void replace(int position, T item) {
+        if (isEmptyOfData()) {
+            return;
+        }
+        if (position < 0 || position > getDataSectionItemCount()) {
+            throw new IndexOutOfBoundsException("data position out of bounds");
+        }
+
         realDatas.set(position, item);
         position += this.getAllHeaderViewCount();
         notifyItemChanged(position);
+    }
+
+    @Override
+    public boolean isEmptyOfData() {
+        return isEmpty();
     }
 
     @Override

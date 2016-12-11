@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.view.adapter.ItemWrapper;
@@ -30,7 +31,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  */
-public class TestPinnedItemFragment extends Fragment {
+public class TestPinnedItemFragment extends DevFragment {
 
 
     public TestPinnedItemFragment() {
@@ -40,13 +41,6 @@ public class TestPinnedItemFragment extends Fragment {
     public static TestPinnedItemFragment newInstance(){
         return new TestPinnedItemFragment();
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.recyclerview, container, false);
-        return rootView;
-    }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

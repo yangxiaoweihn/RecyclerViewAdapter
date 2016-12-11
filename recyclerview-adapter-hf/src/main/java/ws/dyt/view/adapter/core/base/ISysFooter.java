@@ -8,9 +8,15 @@ import android.view.View;
 public interface ISysFooter {
     int getSysFooterViewCount();
 
-    void setSysFooterView(View view);
+    int setSysFooterView(View view);
 
-    void removeSysFooterView(View view);
+    int removeSysFooterView(View view);
 
     boolean isSysFooterView(int position);
+
+    int findSysFooterViewPosition(View view);
+
+    void clearSysFooters();
+
+    boolean isEmptyOfSysFooters();
 }

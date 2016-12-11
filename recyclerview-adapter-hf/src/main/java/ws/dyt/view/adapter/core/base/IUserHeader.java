@@ -8,11 +8,17 @@ import android.view.View;
 public interface IUserHeader {
     int getHeaderViewCount();
 
-    void addHeaderView(View view);
+    int addHeaderView(View view);
 
     void addHeaderView(View view, int position);
 
-    void removeHeaderView(View view);
+    int removeHeaderView(View view);
 
     boolean isHeaderItemView(int position);
+
+    int findHeaderViewPosition(View view);
+
+    void clearHeaders();
+
+    boolean isEmptyOfHeaders();
 }
