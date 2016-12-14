@@ -99,7 +99,7 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("Pinned测试", TestPinnedItemFragment.class));
 
 
-        data.add(new FragmentEntity("diff_dev", DiffDevItemFragment.class));
+//        data.add(new FragmentEntity("diff_dev", DiffDevItemFragment.class));
 
         return data;
     }
