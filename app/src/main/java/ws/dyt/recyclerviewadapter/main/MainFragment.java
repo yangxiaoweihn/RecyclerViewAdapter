@@ -16,6 +16,7 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
+import ws.dyt.recyclerviewadapter.diffdev.DiffDevItemFragment;
 import ws.dyt.recyclerviewadapter.hf.OnlyHeaderFooterFragment;
 import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
 import ws.dyt.recyclerviewadapter.section.SectionGridFragment;
@@ -96,6 +97,9 @@ public class MainFragment extends Fragment {
 
         data.add(new FragmentEntity("滑动菜单测试", TestSwipeItemFragment.class));
         data.add(new FragmentEntity("Pinned测试", TestPinnedItemFragment.class));
+
+
+        data.add(new FragmentEntity("diff_dev", DiffDevItemFragment.class));
 
         return data;
     }

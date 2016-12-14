@@ -79,7 +79,7 @@ public class Bilili_2_ListFragment extends BaseFragment {
             }
 
             @Override
-            protected boolean isFullSpanWithItemView(int position) {
+            public boolean isFullSpanWithItemView(int position) {
                 Wrapper1 t = getItem(position);
                 //只有动漫类型并且不是第二组（动漫总共两组）的以两列展示
                 return t.type == 2 && t.group != 2;

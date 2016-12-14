@@ -82,7 +82,6 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         realDatas.remove(position);
         position += this.getAllHeaderViewCount();
         notifyItemRemoved(position);
-//        notifyItemRangeChanged(position, getDataSectionItemCount());
     }
 
     @Override

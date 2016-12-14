@@ -1,4 +1,4 @@
-package ws.dyt.recyclerviewadapter.swipe;
+package ws.dyt.recyclerviewadapter.diffdev;
 
 
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import ws.dyt.recyclerviewadapter.base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
+import ws.dyt.recyclerviewadapter.swipe.News;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
@@ -28,15 +30,15 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
  */
-public class TestSwipeItemFragment extends DevFragment {
+public class DiffDevItemFragment extends DevFragment {
 
 
-    public TestSwipeItemFragment() {
+    public DiffDevItemFragment() {
         // Required empty public constructor
     }
 
-    public static TestSwipeItemFragment newInstance(){
-        return new TestSwipeItemFragment();
+    public static DiffDevItemFragment newInstance(){
+        return new DiffDevItemFragment();
     }
 
 
@@ -45,6 +47,11 @@ public class TestSwipeItemFragment extends DevFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.init();
+    }
+
+    @Override
+    protected void setUpView() {
+        fab.setVisibility(View.VISIBLE);
     }
 
     private void init() {
@@ -87,13 +94,27 @@ public class TestSwipeItemFragment extends DevFragment {
                 }
             }
         });
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+//        for (int i = 0; i < 4; i++) {
+//            View view = inflater.inflate(R.layout.item_header_1, null, false);
+//            adapter.addHeaderView(view);
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    adapter.removeHeaderView(v);
+//                }
+//            });
+//        }
     }
 
     private SuperAdapter<News> getAdapter() {
         return new SuperAdapter<News>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
-                return position == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe;
+//                return position == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe;
+                return getItem(position).id % 2 == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe_new;
+//                return R.layout.item_swipe;
             }
 
             @Override
@@ -138,6 +159,9 @@ public class TestSwipeItemFragment extends DevFragment {
     private List<News> generate() {
         String json = FileUtils.readRawFile(getResources(), R.raw.news);
         List<News> data = new Gson().fromJson(json, new TypeToken<ArrayList<News>>(){}.getType());
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).id = i;
+        }
         return data;
     }
 

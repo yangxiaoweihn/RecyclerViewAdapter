@@ -75,7 +75,7 @@ public class Bilili_1_ListFragment extends BaseFragment {
             }
 
             @Override
-            protected boolean isFullSpanWithItemView(int position) {
+            public boolean isFullSpanWithItemView(int position) {
                 Wrapper1 t = getItem(position);
                 return t.type == 2;
 //                return false;

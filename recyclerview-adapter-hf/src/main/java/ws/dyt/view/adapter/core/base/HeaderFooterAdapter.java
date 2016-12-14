@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * 1. 系统尾部 sys_footer_item 目前只支持设置一个view
  */
 abstract
-public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> implements ISysHeader, IUserHeader, ISysFooter, IUserFooter{
+public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> implements ISysHeader, IUserHeader, ISysFooter, IUserFooter, IFullSpanItemView{
     protected Context context;
     protected LayoutInflater inflater;
     protected RecyclerView recyclerView;
@@ -721,7 +722,8 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @param position
      * @return
      */
-    protected boolean isFullSpanWithItemView(int position) {
+    @Override
+    public boolean isFullSpanWithItemView(int position) {
         return false;
     }
 
@@ -732,6 +734,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
             return;
         }
         this.recyclerView = recyclerView;
+        this.layoutManager = recyclerView.getLayoutManager();
         this.adapterGridLayoutManager();
     }
 
@@ -860,4 +863,66 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
          */
         void onItemLongClick(View itemView, int position);
     }
+
+    protected RecyclerView.LayoutManager layoutManager;
+    protected int firstVisibleItemIndex;
+    protected int firstCompletelyVisibleItemIndex;
+    protected int lastVisibleItemIndex;
+    protected int lastCompletelyVisibleItemIndex;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({FindItemType.ALL, FindItemType.FIRST, FindItemType.LAST})
+    public @interface FindItemTypeWhere{}
+    public interface FindItemType{
+        int ALL      = 1 + 0;
+        int FIRST    = 1 + ALL;
+        int LAST     = 1 + FIRST;
+    }
+    protected void findFirstAndLastVisibleItemIndex(@FindItemTypeWhere int findItemType) {
+        if (null == layoutManager) {
+            return ;
+        }
+
+        if (layoutManager instanceof GridLayoutManager) {
+
+            final GridLayoutManager glm = (GridLayoutManager) layoutManager;
+
+            if (findItemType != FindItemType.LAST) {
+                firstVisibleItemIndex = glm.findFirstVisibleItemPosition();
+                firstCompletelyVisibleItemIndex = glm.findFirstCompletelyVisibleItemPosition();
+            }
+
+            if (findItemType != FindItemType.FIRST) {
+                lastVisibleItemIndex = glm.findLastVisibleItemPosition();
+                lastCompletelyVisibleItemIndex = glm.findLastCompletelyVisibleItemPosition();
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+
+            final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) layoutManager;
+
+            if (findItemType != FindItemType.LAST) {
+                firstVisibleItemIndex = sglm.findFirstVisibleItemPositions(new int[1])[0];
+                firstCompletelyVisibleItemIndex = sglm.findFirstCompletelyVisibleItemPositions(new int[1])[0];
+            }
+
+            if (findItemType != FindItemType.FIRST) {
+                lastVisibleItemIndex = sglm.findLastVisibleItemPositions(new int[1])[0];
+                lastCompletelyVisibleItemIndex = sglm.findLastCompletelyVisibleItemPositions(new int[1])[0];
+            }
+        } else if (layoutManager instanceof LinearLayoutManager) {
+
+            final LinearLayoutManager llm = (LinearLayoutManager) layoutManager;
+
+            if (findItemType != FindItemType.LAST) {
+                firstVisibleItemIndex = llm.findFirstVisibleItemPosition();
+                firstCompletelyVisibleItemIndex = llm.findFirstCompletelyVisibleItemPosition();
+            }
+
+            if (findItemType != FindItemType.FIRST) {
+                lastVisibleItemIndex = llm.findLastVisibleItemPosition();
+                lastCompletelyVisibleItemIndex = llm.findLastCompletelyVisibleItemPosition();
+            }
+        }
+    }
+
 }

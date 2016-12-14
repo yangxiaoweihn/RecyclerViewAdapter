@@ -89,7 +89,7 @@ public abstract class SectionAdapter<T> extends HeaderFooterAdapter<T> implement
     }
 
     @Override
-    protected boolean isFullSpanWithItemView(int position) {
+    public boolean isFullSpanWithItemView(int position) {
         DataSectionItemWrapper item = this.getDataSectionItemInfo(position);
         //是否为数据域中数据项
         return null != item && ItemType.ITEM_DATA == item.itemType;

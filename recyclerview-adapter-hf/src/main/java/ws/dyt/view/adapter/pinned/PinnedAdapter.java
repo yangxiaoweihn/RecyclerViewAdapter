@@ -88,7 +88,6 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        this.layoutManager = recyclerView.getLayoutManager();
 
         try {
             //父容器是FrameLayout,否则让粘性功能失效
@@ -126,7 +125,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if ( mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
+            if ( firstVisibleItemIndex == firstCompletelyVisibleItemIndex && 0 == firstVisibleItemIndex) {
                 topPinnedView.setVisibility(View.GONE);
             }
         }
@@ -172,13 +171,13 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             }
 
 
-            findFirstVisibleItemIndex();
-            if (getItemTypeByPosition(mFirstVisibleItemIndex) != ItemTypeSummary.DATA) {
+            findFirstAndLastVisibleItemIndex(FindItemType.FIRST);
+            if (getItemTypeByPosition(firstVisibleItemIndex) != ItemTypeSummary.DATA) {
                 //添加了header后，需要对header处进行处理，只要header出现时需要隐藏
                 topPinnedView.setVisibility(View.GONE);
             }else {
                 //在RecyclerView上贴了粘性头部后会遮挡效果，下面处理一下
-                if (mFirstVisibleItemIndex == mFirstCompletelyVisibleItemIndex && 0 == mFirstVisibleItemIndex) {
+                if (firstVisibleItemIndex == firstCompletelyVisibleItemIndex && 0 == firstVisibleItemIndex) {
                     if (View.GONE != topPinnedView.getVisibility()) {
                         topPinnedView.setVisibility(View.GONE);
                     }
@@ -191,26 +190,4 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
         }
     };
 
-
-    private RecyclerView.LayoutManager layoutManager;
-    private int mFirstVisibleItemIndex;
-    private int mFirstCompletelyVisibleItemIndex;
-    private void findFirstVisibleItemIndex() {
-        if (null == layoutManager) {
-            return ;
-        }
-
-        if (layoutManager instanceof GridLayoutManager) {
-            mFirstVisibleItemIndex = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
-            mFirstCompletelyVisibleItemIndex = ((GridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
-
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            mFirstVisibleItemIndex = ((StaggeredGridLayoutManager) layoutManager).findFirstVisibleItemPositions(new int[1])[0];
-            mFirstCompletelyVisibleItemIndex = ((StaggeredGridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPositions(new int[1])[0];
-
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            mFirstVisibleItemIndex = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
-            mFirstCompletelyVisibleItemIndex = ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
-        }
-    }
 }

@@ -135,7 +135,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
     }
 
     @Override
-    protected boolean isFullSpanWithItemView(int position) {
+    public boolean isFullSpanWithItemView(int position) {
         DataSectionItemWrapper item = this.getDataSectionItemInfo(position);
         //是否为数据域中数据项
         return null != item && ItemType.ITEM_DATA == item.itemType;

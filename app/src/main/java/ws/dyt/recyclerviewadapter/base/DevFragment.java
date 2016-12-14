@@ -1,4 +1,4 @@
-package base;
+package ws.dyt.recyclerviewadapter.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,18 +16,23 @@ import ws.dyt.recyclerviewadapter.utils.ViewJect;
 public class DevFragment extends Fragment {
 
     protected View rootView;
+    protected View fab;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.recyclerview, container, false);
-        View fab = ViewJect.find(R.id.fab, rootView);
-        fab.setVisibility(View.VISIBLE);
+        fab = ViewJect.find(R.id.fab, rootView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onFloatActionButtonClicked();
             }
         });
+        setUpView();
         return rootView;
+    }
+
+    protected void setUpView() {
+
     }
 
     protected void onFloatActionButtonClicked() {}

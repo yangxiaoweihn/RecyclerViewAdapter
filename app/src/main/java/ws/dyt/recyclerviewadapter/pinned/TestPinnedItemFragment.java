@@ -3,13 +3,10 @@ package ws.dyt.recyclerviewadapter.pinned;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -18,11 +15,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import base.DevFragment;
+import ws.dyt.recyclerviewadapter.base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.adapter.SuperPinnedAdapter;
 import ws.dyt.view.adapter.swipe.MenuItem;
 import ws.dyt.view.adapter.swipe.OnItemMenuClickListener;

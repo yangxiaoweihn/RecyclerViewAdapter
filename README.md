@@ -2,7 +2,7 @@
     RecyclerView的数据适配器，主要拥有以下功能：
     1. 可以添加、删除任意数量的头部、尾部（就像ListView那样）
     2. 可以添加系统头部、尾部（数量和使用上做了限制，在使用上尽量不要去使用这部分），具体说明将会在之后的文章中进行阐述。
-    3. 可以针对不同的item添加滑动菜单（目前只支持左滑、右滑），并且菜单定制性高
+    3. 可以针对不同的item添加滑动菜单（目前只支持左滑、右滑），且菜单定制性高
     4. 支持粘性视图，同时支持滑动菜单
     
 ## 系列文章
@@ -137,26 +137,19 @@ adapter.setOnItemLongClickListener(new SuperAdapter.OnItemLongClickListener() {
 ```
     从上面的结构中可以看到，大体分为3中（header部分、数据部分、footer部分），细分的话，头部又分为系统header部分(item_sys_header)和用户header部分(item_header)，footer部分分为系统footer部分(item_footer)和用户footer部分(item_sys_footer)。
     我为什么要这么划分呢，在实现上是有一些考虑的，头部和尾部不要去污染数据部分（分离），这样在扩展上更好一些。一般在使用时系统header和系统footer可以忽略，加这两个的用途也是为了扩展用，比如在我的另外一个上拉加载库中就用了系统footer。
-主要提供了一下几个api：
+针对上述域，api提供在以下文件中：
+header部分api:
 ```java
-final
-public void addHeaderView(View view);
-final
-public void addHeaderView(View view, boolean changeAllVisibleItems);
-final
-public void removeHeaderView(View view);
-final
-public void removeHeaderView(View view, boolean changeAllVisibleItems);
-final
-public void addFooterView(View view);
-final
-public void addFooterView(View view, boolean changeAllVisibleItems);
-final
-public void removeFooterView(View view);
-final
-public void removeFooterView(View view, boolean changeAllVisibleItems);
+ws.dyt.view.adapter.core.base.IUserHeader
 ```
-其中changeAllVisibleItems表示是否只刷新可见区域（为true时），否则只刷新当前发生变化的item，默认为false
+footer部分api:
+```java
+ws.dyt.view.adapter.core.base.IUserFooter
+```
+数据域部分api:
+```java
+ws.dyt.view.adapter.core.base.CRUD
+```
 ###   横跨列的api
 
 在``RecyclerView``的布局管理器是``GridLayoutManager``或者``StaggeredGridLayoutManager``时，有些item需要横跨所有列，这种情况下我们也提供了以下api去设置，默认为false，表示保持管理器设置，为true时表示横跨。
@@ -166,7 +159,7 @@ public void removeFooterView(View view, boolean changeAllVisibleItems);
  * @param position
  * @return
  */
-protected boolean isFullSpanWithItemView(int position) {
+public boolean isFullSpanWithItemView(int position) {
     return false;
 }
 ```
