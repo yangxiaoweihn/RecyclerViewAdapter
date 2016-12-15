@@ -9,6 +9,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * 2. 菜单支持点击事件回调
  */
 abstract
-public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IMenuSupport{
+public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IMenuSupport, IMultiViewHolder{
 
     public SwipeAdapter(Context context, List<T> datas) {
         super(context, datas);
@@ -35,13 +37,18 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     }
 
     @Override
+    public BaseViewHolder onCreateViewHolderWithMultiItemTypes(int itemLayoutOfViewType, View itemViewOfViewType) {
+        return new BaseViewHolder(itemViewOfViewType);
+    }
+
+    @Override
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(viewType, parent, false);
 
         List<MenuItem> menuItems = this.collectMenus(viewType);
         //客户端没有设置菜单支持
         if (null == menuItems || menuItems.isEmpty()) {
-            return new BaseViewHolder(itemView);
+            return generateViewHolder(viewType, itemView);
         }
 
         final SwipeLayout swipeLayout = new SwipeLayout(context);
@@ -50,9 +57,19 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
 
         itemView.setClickable(true);
 
-        final BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
+//        final BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
+        BaseViewHolder holder = generateViewHolder(viewType, swipeLayout);
+        holder.eventItemView = itemView;
         this.initMenusListener(holder);
         return holder;
+    }
+
+    private BaseViewHolder generateViewHolder(int itemLayoutOfViewType, View itemViewOfViewType) {
+        BaseViewHolder viewHolder = onCreateViewHolderWithMultiItemTypes(itemLayoutOfViewType, itemViewOfViewType);
+        if (null == viewHolder) {
+            viewHolder = new BaseViewHolder(itemViewOfViewType);
+        }
+        return viewHolder;
     }
 
     private List<MenuItem> collectMenus(int viewType) {
@@ -110,6 +127,9 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
      * @param holder
      */
     private void initMenusListener(final BaseViewHolder holder) {
+        if (null == holder) {
+            return;
+        }
         if (! (holder.itemView instanceof SwipeLayout)) {
             return;
         }

@@ -9,7 +9,7 @@
 进阶式的功能添加实现，都在[系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)，请多多提意见。
 ## 添加依赖
 ```
-    compile 'ws.dyt.view:recyclerview-adapter-hf:2.4.2'
+    compile 'ws.dyt.view:recyclerview-adapter-hf:2.4'
 ```
 ## 屏幕截图
 ![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/1.png)
@@ -191,6 +191,7 @@ adapter.setOnItemMenuClickListener(new OnItemMenuClickListener() {
 });
 ```
 ###   添加粘性头部支持及头部数据设置
+
 注意粘性头部的``Adapter``是``PinnedAdapter``.
 ```java
 @Override
@@ -200,6 +201,32 @@ public int getPinnedItemViewLayout() {
 @Override
 public void convertPinnedHolder(BaseViewHolder holder, int position, int type) {
     holder.setText(R.id.tv_text_pinned, getItem(position).data.title);
+}
+```
+
+###   多ViewHolder支持
+
+从2.5版本开始，增加自定义ViewHolder对象支持，之前版本都是库内部通过创建BaseViewHolder实现，现在默认实现也是BaseViewHolder，但是子类可以通过重写以下方法进行自定义ViewHolder（通过继承BaseViewHolder）。
+```java
+/**
+ * 重写该方法自定义ViewHolder
+ * @param itemLayoutOfViewType  对应{@link SwipeAdapter#getItemViewLayout(int)}返回值
+ * @param itemViewOfViewType    一般情况下为{@param itemLayoutOfViewType}对应加载后的view
+ * @return
+ */
+BaseViewHolder onCreateViewHolderWithMultiItemTypes(int itemLayoutOfViewType, View itemViewOfViewType);
+```
+```java
+private static class DefinedViewHolder extends BaseViewHolder{
+
+    private View btnTo;
+    public DefinedViewHolder(View itemView) {
+        super(itemView);
+    }
+
+    public DefinedViewHolder(View itemView, View eventItemView) {
+        super(itemView, eventItemView);
+    }
 }
 ```
 

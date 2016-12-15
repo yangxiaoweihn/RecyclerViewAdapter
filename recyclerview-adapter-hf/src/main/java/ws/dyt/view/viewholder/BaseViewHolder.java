@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-final
 public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSetter<BaseViewHolder> {
     //事件(解决滑动时事件问题)
     public View eventItemView;

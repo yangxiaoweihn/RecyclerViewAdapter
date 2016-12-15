@@ -173,6 +173,9 @@ public class DiffDevItemFragment extends DevFragment {
                     ((TextView) v).setText("加关注");
                 }
 
+                if (holder instanceof ViewHolder) {
+                    return;
+                }
                 holder.setOnClickListener(R.id.btn_to, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -184,6 +187,14 @@ public class DiffDevItemFragment extends DevFragment {
             @Override
             public boolean isCloseOtherItemsWhenThisWillOpen() {
                 return true;
+            }
+
+            @Override
+            public BaseViewHolder onCreateViewHolderWithMultiItemTypes(int itemLayoutOfViewType, View itemViewOfViewType) {
+                if (itemLayoutOfViewType == R.layout.item_swipe_new) {
+                    return new ViewHolder(itemViewOfViewType);
+                }
+                return super.onCreateViewHolderWithMultiItemTypes(itemLayoutOfViewType, itemViewOfViewType);
             }
         };
     }
@@ -200,5 +211,30 @@ public class DiffDevItemFragment extends DevFragment {
     @Override
     protected void onFloatActionButtonClicked() {
         adapter.remove(0);
+    }
+
+
+    private static class ViewHolder extends BaseViewHolder{
+
+        private View btnTo;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.init();
+        }
+
+        public ViewHolder(View itemView, View eventItemView) {
+            super(itemView, eventItemView);
+            this.init();
+        }
+
+        private void init() {
+            btnTo = itemView.findViewById(R.id.btn_to);
+            btnTo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "----点击测试：", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
