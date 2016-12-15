@@ -96,16 +96,48 @@ public class DiffDevItemFragment extends DevFragment {
         });
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-//        for (int i = 0; i < 4; i++) {
-//            View view = inflater.inflate(R.layout.item_header_1, null, false);
-//            adapter.addHeaderView(view);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    adapter.removeHeaderView(v);
-//                }
-//            });
-//        }
+        for (int i = 0; i < 2; i++) {
+            View view = inflater.inflate(R.layout.item_sys_header, null, false);
+            adapter.addSysHeaderView(view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.clearSysHeaders();
+                }
+            });
+        }
+        for (int i = 0; i < 4; i++) {
+            View view = inflater.inflate(R.layout.item_header_1, null, false);
+            adapter.addHeaderView(view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.clearHeaders();
+                }
+            });
+        }
+
+        for (int i = 0; i < 2; i++) {
+            View view = inflater.inflate(R.layout.item_footer_1, null, false);
+            adapter.addFooterView(view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.clearFooters();
+                }
+            });
+        }
+
+        for (int i = 0; i < 2; i++) {
+            View view = inflater.inflate(R.layout.item_sys_footer, null, false);
+            adapter.setSysFooterView(view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.clearSysFooters();
+                }
+            });
+        }
     }
 
     private SuperAdapter<News> getAdapter() {

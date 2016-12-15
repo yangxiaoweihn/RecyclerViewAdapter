@@ -14,6 +14,11 @@ public interface ISysFooter {
 
     boolean isSysFooterView(int position);
 
+    /**
+     * 返回在sys-footer section中view对应的position
+     * @param view
+     * @return
+     */
     int findSysFooterViewPosition(View view);
 
     void clearSysFooters();

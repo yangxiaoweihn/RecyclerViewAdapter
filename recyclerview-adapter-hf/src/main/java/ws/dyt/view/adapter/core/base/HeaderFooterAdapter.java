@@ -558,7 +558,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     public void clearHeaders() {
         final int size = this.getHeaderViewCount();
         this.headerViews.clear();
-        notifyItemRangeChanged(0, size);
+        notifyItemRangeChanged(getSysHeaderViewCount(), size);
     }
 
     @Override
@@ -638,7 +638,8 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     public void clearFooters() {
         final int size = this.getFooterViewCount();
         this.footerViews.clear();
-        notifyItemRangeChanged(0, size);
+        final int index = getAllHeaderViewCount() + getDataSectionItemCount();
+        notifyItemRangeRemoved(index, size);
     }
 
     @Override
@@ -695,8 +696,9 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     final
     public void clearSysFooters() {
         final int size = this.getSysFooterViewCount();
-        this.footerViews.clear();
-        notifyItemRangeChanged(0, size);
+        this.sysFooterView = null;
+        final int index = getAllHeaderViewCount() + getDataSectionItemCount() + getFooterViewCount();
+        notifyItemRangeRemoved(index, size);
     }
 
     /**

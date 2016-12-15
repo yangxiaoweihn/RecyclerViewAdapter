@@ -16,6 +16,11 @@ public interface IUserHeader {
 
     boolean isHeaderItemView(int position);
 
+    /**
+     * 返回在header section中view对应的position
+     * @param view
+     * @return
+     */
     int findHeaderViewPosition(View view);
 
     void clearHeaders();

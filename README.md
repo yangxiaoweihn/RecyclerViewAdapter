@@ -9,7 +9,7 @@
 进阶式的功能添加实现，都在[系列源码实现说明](http://www.jianshu.com/p/b9bbed94d02e)，请多多提意见。
 ## 添加依赖
 ```
-    compile 'ws.dyt.view:recyclerview-adapter-hf:2.4.1'
+    compile 'ws.dyt.view:recyclerview-adapter-hf:2.4.2'
 ```
 ## 屏幕截图
 ![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/1.png)

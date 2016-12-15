@@ -19,6 +19,11 @@ public interface ISysHeader {
 
     boolean isSysHeaderItemView(int position);
 
+    /**
+     * 返回在sys-header section中view对应的position
+     * @param view
+     * @return
+     */
     int findSysHeaderViewPosition(View view);
 
     void clearSysHeaders();

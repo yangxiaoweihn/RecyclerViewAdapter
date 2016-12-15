@@ -36,6 +36,8 @@ abstract public class BaseFragment extends Fragment{
     @BindView(R.id.et_operator)
     EditText mEtOperator;
 
+    @BindView(R.id.section_clear)
+    View mSectionClear;
 
     @Nullable
     @Override

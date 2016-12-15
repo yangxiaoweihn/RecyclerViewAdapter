@@ -18,6 +18,11 @@ public interface IUserFooter {
 
     boolean isFooterItemView(int position);
 
+    /**
+     * 返回在footer section中view对应的position
+     * @param view
+     * @return
+     */
     int findFooterViewPosition(View view);
 
     void clearFooters();
