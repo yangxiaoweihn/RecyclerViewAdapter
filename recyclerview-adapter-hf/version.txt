@@ -3,3 +3,5 @@
 //------
 gradlew install
 gradlew bintrayUpload
+
+非线性布局bug修复

@@ -16,13 +16,8 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
-import ws.dyt.recyclerviewadapter.diffdev.DiffDevItemFragment;
-import ws.dyt.recyclerviewadapter.hf.OnlyHeaderFooterFragment;
 import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
-import ws.dyt.recyclerviewadapter.section.SectionGridFragment;
-import ws.dyt.recyclerviewadapter.section.SectionLinearFragment;
-import ws.dyt.recyclerviewadapter.section.SectionLinearNoFooterFragment;
-import ws.dyt.recyclerviewadapter.section.SectionSkinGridFragment;
+import ws.dyt.recyclerviewadapter.rr_nest.NestMainFragment;
 import ws.dyt.recyclerviewadapter.swipe.TestSwipeItemFragment;
 import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 import ws.dyt.view.adapter.SuperAdapter;
@@ -100,6 +95,7 @@ public class MainFragment extends Fragment {
 
 
 //        data.add(new FragmentEntity("diff_dev", DiffDevItemFragment.class));
+        data.add(new FragmentEntity("懒加载测试", NestMainFragment.class));
 
         return data;
     }

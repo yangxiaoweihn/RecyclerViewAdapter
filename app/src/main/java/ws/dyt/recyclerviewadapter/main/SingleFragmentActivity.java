@@ -1,9 +1,12 @@
 package ws.dyt.recyclerviewadapter.main;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import ws.dyt.recyclerviewadapter.R;
 
@@ -13,7 +16,14 @@ import ws.dyt.recyclerviewadapter.R;
 public class SingleFragmentActivity extends AppCompatActivity{
 	public static final String CLASS_FRAGMENT = "class_fragment";
 	public static final String ARGUMENTS_TO_FRAGMENT = "arguments_to_fragment";
-	
+
+	public static void to(Context context, Class<? extends Fragment> toFragmentClass, Bundle argsToFragment) {
+		Intent intent = new Intent(context, SingleFragmentActivity.class);
+		intent.putExtra(CLASS_FRAGMENT, toFragmentClass.getName());
+		intent.putExtra(ARGUMENTS_TO_FRAGMENT, argsToFragment);
+		context.startActivity(intent);
+	}
+
 	protected Fragment fragment = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,4 +48,10 @@ public class SingleFragmentActivity extends AppCompatActivity{
 		return fragment;
 	}
 
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		Log.e("DEBUG", "OneItemFragment -> onWindowFocusChanged: "+hasFocus);
+	}
 }

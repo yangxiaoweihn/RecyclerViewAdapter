@@ -716,7 +716,8 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         if (!isHeaderOrFooter) {
             return isHeaderOrFooter;
         }
-        return this.isFullSpanWithItemView(position - hAll);
+        //这里需要取反
+        return !this.isFullSpanWithItemView(position - hAll);
     }
 
     /**
