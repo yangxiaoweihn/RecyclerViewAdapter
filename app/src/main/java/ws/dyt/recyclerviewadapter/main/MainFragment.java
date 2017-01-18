@@ -16,6 +16,7 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
+import ws.dyt.recyclerviewadapter.hf.OnlyHeaderFooterFragment;
 import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
 import ws.dyt.recyclerviewadapter.rr_nest.NestMainFragment;
 import ws.dyt.recyclerviewadapter.swipe.TestSwipeItemFragment;
