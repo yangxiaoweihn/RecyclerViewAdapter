@@ -3,7 +3,7 @@ package ws.dyt.view.adapter.swipe;
 /**
  * Created by yangxiaowei on 16/8/6.
  */
-public interface ICloseMenus {
+public interface ICloseMenus /*extends IMenuStatus*/{
     /**
      * 关闭菜单
      */
@@ -15,9 +15,4 @@ public interface ICloseMenus {
      */
     boolean closeOtherMenuItems();
 
-    /**
-     * 是否有其他打开菜单的item项(不包含当前客户端触摸的item)
-     * @return
-     */
-    boolean hasOpendMenuItems();
 }

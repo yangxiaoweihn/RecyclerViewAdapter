@@ -22,20 +22,20 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
     /**
      * 调用该构造方法时需要调用 {@link #getItemViewLayout(int)} 设置item布局
      * @param context
-     * @param datas
+     * @param data
      */
-    public MultiAdapter(Context context, List<T> datas) {
-        super(context, datas);
+    public MultiAdapter(Context context, List<T> data) {
+        super(context, data);
     }
 
     /**
      * 调用该构造方法时默认数据项都采用 itemLayoutResId 布局，同样可以调用 {@link #getItemViewLayout(int)} 重新设置item布局
      * @param context
-     * @param datas
+     * @param data
      * @param itemLayoutResId
      */
-    public MultiAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
-        this(context, datas);
+    public MultiAdapter(Context context, List<T> data, @LayoutRes int itemLayoutResId) {
+        this(context, data);
         this.itemLayoutResId = itemLayoutResId;
     }
 

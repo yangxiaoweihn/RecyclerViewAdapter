@@ -8,7 +8,7 @@ import ws.dyt.view.BuildConfig;
  * Created by yangxiaowei on 16/7/16.
  */
 public class L {
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = "Lib-SuperAdapter";
 
     public static void d(String msg) {

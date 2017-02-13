@@ -24,12 +24,12 @@ import ws.dyt.view.viewholder.BaseViewHolder;
 abstract
 public class SuperAdapter<T> extends SwipeAdapter<T> {
 
-    public SuperAdapter(Context context, List<T> datas) {
-        super(context, datas);
+    public SuperAdapter(Context context, List<T> data) {
+        super(context, data);
     }
 
-    public SuperAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
-        super(context, datas, itemLayoutResId);
+    public SuperAdapter(Context context, List<T> data, @LayoutRes int itemLayoutResId) {
+        super(context, data, itemLayoutResId);
     }
 
     @Override

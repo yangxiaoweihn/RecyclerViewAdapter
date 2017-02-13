@@ -1,14 +1,10 @@
 package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,7 +24,7 @@ import ws.dyt.view.adapter.Log.L;
  *
  * 用来承载菜单视图和客户端设置的item视图
  */
-public class SwipeLayout extends FrameLayout implements ICloseMenus{
+public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus{
     public SwipeLayout(Context context) {
         this(context, null);
     }
@@ -249,7 +245,7 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
         L.e("onInterceptTouchEvent->"+action+" , "+isCloseOtherItemsWhenThisWillOpen);
         if (isCloseOtherItemsWhenThisWillOpen) {
             if (MotionEvent.ACTION_DOWN == action) {
-                if (hasOpendMenuItems()) {
+                if (SwipeDragHelperDelegate.hasOpenedMenuItems()) {
                     if (!closeOtherMenuItems()) {
                         //保证有item menu打开时其他item不能响应事件
                         return true;
@@ -292,10 +288,10 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
         return this.delegate.closeOtherMenuItems();
     }
 
-    @Override
-    public boolean hasOpendMenuItems() {
-        return delegate.hasOpendMenuItems();
-    }
+//    @Override
+//    public boolean hasOpenedMenuItems() {
+//        return delegate.hasOpenedMenuItems();
+//    }
 
     public void setIsCloseOtherItemsWhenThisWillOpen(boolean isCloseOtherItemsWhenThisWillOpen) {
         this.isCloseOtherItemsWhenThisWillOpen = isCloseOtherItemsWhenThisWillOpen;
@@ -358,6 +354,11 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus{
 
     public int getMenuStatus() {
         return delegate.getMenuStatus();
+    }
+
+    @Override
+    public boolean isOpenedMenu() {
+        return getMenuStatus() == SwipeDragHelperDelegate.MenuStatus.OPEN;
     }
 
 }

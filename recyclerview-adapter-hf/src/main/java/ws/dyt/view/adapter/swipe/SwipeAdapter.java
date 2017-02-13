@@ -1,21 +1,15 @@
 package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.view.adapter.core.MultiAdapter;
-import ws.dyt.view.adapter.core.base.BaseAdapter;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -26,14 +20,14 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * 2. 菜单支持点击事件回调
  */
 abstract
-public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IMenuSupport, IMultiViewHolder{
+public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IMenuSupport, IMultiViewHolder, IMenusManage {
 
-    public SwipeAdapter(Context context, List<T> datas) {
-        super(context, datas);
+    public SwipeAdapter(Context context, List<T> data) {
+        super(context, data);
     }
 
-    public SwipeAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
-        super(context, datas, itemLayoutResId);
+    public SwipeAdapter(Context context, List<T> data, @LayoutRes int itemLayoutResId) {
+        super(context, data, itemLayoutResId);
     }
 
     @Override
@@ -96,8 +90,6 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     final
     protected int filterDataSectionItemViewTypeToItemLayoutId(int position) {
         final @LayoutRes int layoutIdMap2ViewType = super.filterDataSectionItemViewTypeToItemLayoutId(position);
-
-
         return layoutIdMap2ViewType;
     }
 
@@ -159,7 +151,7 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     @Override
     final
     protected void onItemClick(BaseViewHolder holder, View view) {
-        if (!isMenuOpend(holder)) {
+        if (!isMenuOpened(holder)) {
             super.onItemClick(holder, view);
         }
     }
@@ -167,7 +159,7 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     @Override
     final
     protected boolean onItemLongClick(BaseViewHolder holder, View view) {
-        if (!isMenuOpend(holder)) {
+        if (!isMenuOpened(holder)) {
             return super.onItemLongClick(holder, view);
         }
         return false;
@@ -178,22 +170,41 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
      * @param holder
      * @return
      */
-    private boolean isMenuOpend(BaseViewHolder holder) {
-        boolean isOpend = false;
+    private boolean isMenuOpened(BaseViewHolder holder) {
+        boolean isOpened = false;
         //处理当前菜单的关闭
         if (holder.itemView instanceof SwipeLayout) {
             SwipeLayout swipeLayout = (SwipeLayout) holder.itemView;
-            if (SwipeDragHelperDelegate.MenuStatus.OPEN == swipeLayout.getMenuStatus()) {
+            if (swipeLayout.isOpenedMenu()/*SwipeDragHelperDelegate.MenuStatus.OPEN == swipeLayout.getMenuStatus()*/) {
                 swipeLayout.closeMenuItem();
-                isOpend = true;
+                isOpened = true;
             }
         }
-        return isOpend;
+        return isOpened;
+    }
+
+    @Override
+    final
+    public boolean hasOpenedMenuItems() {
+        return SwipeDragHelperDelegate.hasOpenedMenuItems();
+    }
+
+    @Override
+    final
+    public void closeAllMenuItems() {
+        SwipeDragHelperDelegate.closeAllMenuItems();
     }
 
     private OnItemMenuClickListener onItemMenuClickListener = null;
 
     public void setOnItemMenuClickListener(OnItemMenuClickListener onItemMenuClickListener) {
         this.onItemMenuClickListener = onItemMenuClickListener;
+    }
+
+    @Override
+    public void release() {
+        super.release();
+
+        SwipeDragHelperDelegate.release();
     }
 }

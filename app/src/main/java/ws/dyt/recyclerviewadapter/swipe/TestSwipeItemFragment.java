@@ -93,20 +93,26 @@ public class TestSwipeItemFragment extends DevFragment {
         return new SuperAdapter<News>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
-                return position == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe;
+//                return position == 0 ? R.layout.item_swipe_wrapper_for_menu : R.layout.item_swipe;
+                return R.layout.item_swipe;
             }
 
+//            @Override
+//            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
+//                List<MenuItem> mm = new ArrayList<>();
+//                if (viewType == R.layout.item_swipe_wrapper_for_menu) {
+//                    mm.add(new MenuItem(R.layout.menu_item_test_0, MenuItem.EdgeTrack.RIGHT, 03));
+//                }else {
+//                    mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.RIGHT, 01));
+//                    mm.add(new MenuItem(R.layout.menu_item_test_mark, MenuItem.EdgeTrack.RIGHT, 02));
+//                }
+////                mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.LEFT, 03));
+//                return mm;
+//            }
+
             @Override
-            public List<MenuItem> onCreateMultiMenuItem(@LayoutRes int viewType) {
-                List<MenuItem> mm = new ArrayList<>();
-                if (viewType == R.layout.item_swipe_wrapper_for_menu) {
-                    mm.add(new MenuItem(R.layout.menu_item_test_0, MenuItem.EdgeTrack.RIGHT, 03));
-                }else {
-                    mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.RIGHT, 01));
-                    mm.add(new MenuItem(R.layout.menu_item_test_mark, MenuItem.EdgeTrack.RIGHT, 02));
-                }
-//                mm.add(new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.LEFT, 03));
-                return mm;
+            public MenuItem onCreateSingleMenuItem(@LayoutRes int viewType) {
+                return new MenuItem(R.layout.menu_item_test_delete, MenuItem.EdgeTrack.RIGHT, 01);
             }
 
             @Override

@@ -15,8 +15,8 @@ import ws.dyt.view.adapter.Log.L;
 abstract
 public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
 
-    public BaseAdapter(Context context, List<T> datas) {
-        super(context, datas);
+    public BaseAdapter(Context context, List<T> data) {
+        super(context, data);
     }
 
 
@@ -34,7 +34,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         if (position < 0 || position > getDataSectionItemCount()) {
             throw new IndexOutOfBoundsException("data position out of bounds");
         }
-        realDatas.add(position, item);
+        realData.add(position, item);
         position = this.getAllHeaderViewCount() + position;
         notifyItemInserted(position);
     }
@@ -55,7 +55,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
             throw new IndexOutOfBoundsException("data position out of bounds");
         }
 
-        realDatas.addAll(position, items);
+        realData.addAll(position, items);
         position += this.getAllHeaderViewCount();
         notifyItemRangeInserted(position, items.size());
     }
@@ -65,8 +65,8 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         if (isEmptyOfData()) {
             return;
         }
-        if (realDatas.contains(item)) {
-            remove(realDatas.indexOf(item));
+        if (realData.contains(item)) {
+            remove(realData.indexOf(item));
         }
     }
 
@@ -79,7 +79,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
             throw new IndexOutOfBoundsException("data position out of bounds");
         }
 
-        realDatas.remove(position);
+        realData.remove(position);
         position += this.getAllHeaderViewCount();
         notifyItemRemoved(position);
     }
@@ -89,13 +89,13 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         if (isEmptyOfData()) {
             return;
         }
-        realDatas.removeAll(items);
+        realData.removeAll(items);
         notifyDataSetChanged();
     }
 
     @Override
     public void replace(T oldItem, T newItem) {
-        replace(realDatas.indexOf(oldItem), newItem);
+        replace(realData.indexOf(oldItem), newItem);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
             throw new IndexOutOfBoundsException("data position out of bounds");
         }
 
-        realDatas.set(position, item);
+        realData.set(position, item);
         position += this.getAllHeaderViewCount();
         notifyItemChanged(position);
     }
@@ -127,7 +127,7 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         if (isEmpty()) {
             return;
         }
-        realDatas.clear();
+        realData.clear();
         notifyDataSetChanged();
     }
 }

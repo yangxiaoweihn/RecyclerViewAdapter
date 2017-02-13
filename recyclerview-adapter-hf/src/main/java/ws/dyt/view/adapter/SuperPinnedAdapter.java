@@ -17,12 +17,12 @@ import ws.dyt.view.adapter.pinned.PinnedAdapter;
  */
 abstract
 public class SuperPinnedAdapter<T extends ItemWrapper> extends PinnedAdapter<T> {
-    public SuperPinnedAdapter(Context context, List<T> datas) {
-        super(context, datas);
+    public SuperPinnedAdapter(Context context, List<T> data) {
+        super(context, data);
     }
 
-    public SuperPinnedAdapter(Context context, List<T> datas, @LayoutRes int itemLayoutResId) {
-        super(context, datas, itemLayoutResId);
+    public SuperPinnedAdapter(Context context, List<T> data, @LayoutRes int itemLayoutResId) {
+        super(context, data, itemLayoutResId);
     }
 
 }

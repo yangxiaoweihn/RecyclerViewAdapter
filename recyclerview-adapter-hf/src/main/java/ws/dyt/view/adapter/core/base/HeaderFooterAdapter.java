@@ -27,7 +27,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  * 1. 系统尾部 sys_footer_item 目前只支持设置一个view
  */
 abstract
-public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> implements ISysHeader, IUserHeader, ISysFooter, IUserFooter, IFullSpanItemView{
+public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> implements ISysHeader, IUserHeader, ISysFooter, IUserFooter, IFullSpanItemView, IGC{
     protected Context context;
     protected LayoutInflater inflater;
     protected RecyclerView recyclerView;
@@ -37,28 +37,28 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     private List<View> sysHeaderViews = new ArrayList<>();
     private View sysFooterView;
     //真实的数据部分
-    protected List<T> realDatas;
+    protected List<T> realData;
 
-    public HeaderFooterAdapter(Context context, List<T> realDatas) {
+    public HeaderFooterAdapter(Context context, List<T> realData) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.realDatas = null == realDatas ? new ArrayList<T>() : realDatas;
+        this.realData = null == realData ? new ArrayList<T>() : realData;
     }
 
-    public HeaderFooterAdapter(Context context, List<List<T>> sectionDatas, int unused) {
+    public HeaderFooterAdapter(Context context, List<List<T>> sectionData, int unused) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        if (null == sectionDatas) {
-            this.realDatas = new ArrayList<T>();
+        if (null == sectionData) {
+            this.realData = new ArrayList<T>();
         }else {
-            if (sectionDatas.isEmpty()) {
+            if (sectionData.isEmpty()) {
                 return;
             }
-            for (List<T> e:sectionDatas) {
+            for (List<T> e:sectionData) {
                 if (null == e || e.isEmpty()) {
                     continue;
                 }
-                this.realDatas.addAll(e);
+                this.realData.addAll(e);
             }
         }
     }
@@ -71,12 +71,12 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     final
     @Deprecated
     protected boolean isEmpty() {
-        return null == this.realDatas || this.realDatas.isEmpty();
+        return null == this.realData || this.realData.isEmpty();
     }
 
     final
     public T getItem(int position) {
-        return isEmpty() ? null : this.realDatas.get(position);
+        return isEmpty() ? null : this.realData.get(position);
     }
 
     /**
@@ -100,7 +100,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
      * @return
      */
     public int getDataSectionItemCount() {
-        return isEmpty() ? 0 : this.realDatas.size();
+        return isEmpty() ? 0 : this.realData.size();
     }
 
     @Override
@@ -928,4 +928,28 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
         }
     }
 
+
+    @Override
+    @CallSuper
+    public void release() {
+        if (null != sysHeaderViews) {
+            sysHeaderViews.clear();
+            sysHeaderViews = null;
+        }
+
+        if (null != headerViews) {
+            headerViews.clear();
+            headerViews = null;
+        }
+
+        if (null != realData) {
+            realData.clear();
+            realData = null;
+        }
+
+        if (null != footerViews) {
+            footerViews.clear();
+            footerViews = null;
+        }
+    }
 }
