@@ -2,10 +2,7 @@ package ws.dyt.view.adapter.pinned;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +46,8 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateHolder(parent, viewType);
 
-        View headerView = inflater.inflate(getPinnedItemViewLayout(), parent, false);
-        PinnedLayout pinnedLayout = new PinnedLayout(context);
+        View headerView = mInflater.inflate(getPinnedItemViewLayout(), parent, false);
+        PinnedLayout pinnedLayout = new PinnedLayout(mContext);
         pinnedLayout.setUpView(parent, holder.itemView, headerView);
 
         //说明客户端设置了支持滑动菜单
@@ -98,7 +95,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
             recyclerView.addOnScrollListener(scrollListener);
         } catch (Exception e) {
             Log.e("DEBUG", "RecyclerView parent must be FrameLayout");
-            Toast.makeText(context, "RecyclerView parent must be FrameLayout", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "RecyclerView parent must be FrameLayout", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -114,7 +111,7 @@ public class PinnedAdapter<T extends ItemWrapper> extends SwipeAdapter<T> implem
     private View topPinnedView;
 
     private void initPinnedView(ViewGroup parent, RecyclerView recyclerView) {
-        this.topPinnedView = inflater.inflate(getPinnedItemViewLayout(), recyclerView, false);
+        this.topPinnedView = mInflater.inflate(getPinnedItemViewLayout(), recyclerView, false);
         this.pinnedViewHolder = new BaseViewHolder(topPinnedView);
         parent.addView(this.topPinnedView);
         //初始让不可见

@@ -18,20 +18,20 @@ import ws.dyt.view.adapter.Log.L;
  */
 public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements ICloseMenus{
 
-    private ViewDragHelper helper;
-    private SwipeLayout swipeLayout;
+    private ViewDragHelper mViewDragHelper;
+    private SwipeLayout mSwipeLayout;
     public SwipeDragHelperDelegate(final SwipeLayout swipeLayout) {
-        this.swipeLayout = swipeLayout;
+        this.mSwipeLayout = swipeLayout;
     }
 
 
     public void init(ViewDragHelper helper) {
-        this.helper = helper;
+        this.mViewDragHelper = helper;
     }
 
     @Override
     public boolean tryCaptureView(View child, int pointerId) {
-        final View itemView = swipeLayout.getItemView();
+        final View itemView = mSwipeLayout.getItemView();
         if (null != itemView && itemView == child) {
             return true;
         }
@@ -45,7 +45,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     private boolean checkMenuIsLeft() {
         //用来标识正在出现的菜单
         boolean isLeftMenuVisible;
-        final int et = swipeLayout.getEdgeTracking();
+        final int et = mSwipeLayout.getEdgeTracking();
         if (et == MenuItem.EdgeTrack.LEFT_RIGHT) {
             //同时存在左右菜单
             isLeftMenuVisible = which == 1;
@@ -63,10 +63,10 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
         final int menuWidth;
         //获取菜单宽度
         if (checkMenuIsLeft()) {
-            menuWidth = swipeLayout.getLeftMenuWidth();
+            menuWidth = mSwipeLayout.getLeftMenuWidth();
 
         }else {
-            menuWidth = swipeLayout.getRightMenuWidth();
+            menuWidth = mSwipeLayout.getRightMenuWidth();
 
         }
 
@@ -88,7 +88,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
         L.e("clampViewPositionHorizontal -> trackType: "+ which +" , "+left+" , "+dx);
 
         if (isLeftMenuVisible) {
-            int menuWidth = swipeLayout.getLeftMenuWidth();
+            int menuWidth = mSwipeLayout.getLeftMenuWidth();
             if (left < 0 && dx < 0) {
                 return 0;
             }
@@ -96,7 +96,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
                 return menuWidth;
             }
         }else {
-            int menuWidth = swipeLayout.getRightMenuWidth();
+            int menuWidth = mSwipeLayout.getRightMenuWidth();
             if (left > 0 && dx > 0) {
                 return 0;
             }
@@ -110,7 +110,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
     @Override
     public void onViewReleased(View releasedChild, float xvel, float yvel) {
-        final View itemView = swipeLayout.getItemView();
+        final View itemView = mSwipeLayout.getItemView();
         if (releasedChild != itemView) {
             return;
         }
@@ -123,29 +123,29 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
         //获取菜单宽度
         final int menuWidth = getMenuWidth();
 
-        final float min = Math.abs(menuWidth * openMenuBoundaryPercent);
+        final float min = Math.abs(menuWidth * mOpenMenuBoundaryPercent);
 
         int left = 0;
 
-        Log.e("DEBUG", "left: "+l+" , min: "+min+" , from: "+this.menuBoundaryStatusOfBeenTo);
+        Log.e("DEBUG", "left: "+l+" , min: "+min+" , from: "+this.mMenuBoundaryStatusOfBeenTo);
         //计算偏移量
-        if (l < min || (MenuStatus.OPEN == this.menuBoundaryStatusOfBeenTo && l < menuWidth)) {
+        if (l < min || (MenuStatus.OPEN == this.mMenuBoundaryStatusOfBeenTo && l < menuWidth)) {
             left = 0;
         } else {
             left += isLeftMenuVisible ? (+1 * menuWidth) : (-1 * menuWidth);
         }
-        this.helper.settleCapturedViewAt(left, 0);
-        this.swipeLayout.invalidate();
+        this.mViewDragHelper.settleCapturedViewAt(left, 0);
+        this.mSwipeLayout.invalidate();
     }
 
     @Override
     public int getViewHorizontalDragRange(View child) {
-        return swipeLayout.getItemView() == child ? child.getWidth() : 0;
+        return mSwipeLayout.getItemView() == child ? child.getWidth() : 0;
     }
 
     @Override
     public int getViewVerticalDragRange(View child) {
-//        return swipeLayout.getItemView() == child ? child.getHeight() : 0;
+//        return mSwipeLayout.getItemView() == child ? child.getHeight() : 0;
         return 0;
     }
 
@@ -164,52 +164,52 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
         //记录拖动时到达过的边界状态
         if (left == 0) {
-            this.menuBoundaryStatusOfBeenTo = MenuStatus.CLOSED;
+            this.mMenuBoundaryStatusOfBeenTo = MenuStatus.CLOSED;
         }else if (Math.abs(left) >= menuWidth) {
-            this.menuBoundaryStatusOfBeenTo = MenuStatus.OPEN;
+            this.mMenuBoundaryStatusOfBeenTo = MenuStatus.OPEN;
         }
 
         //记录操作过程中菜单的真实状态
         if (left == 0 ) {
-            this.menuStatus = MenuStatus.CLOSED;
+            this.mMenuStatus = MenuStatus.CLOSED;
         }else {
             left = Math.abs(left);
             if(left == menuWidth) {
-                this.menuStatus = MenuStatus.OPEN;
+                this.mMenuStatus = MenuStatus.OPEN;
             }else {
-                this.menuStatus = MenuStatus.DRAGGING;
+                this.mMenuStatus = MenuStatus.DRAGGING;
             }
         }
 
         //记录打开关闭菜单项的item
         if (left == 0) {
-            this.opened.remove(this.swipeLayout);
+            this.sOpenedItem.remove(this.mSwipeLayout);
         }else if (0 != menuWidth && left == menuWidth) {
-            if (!opened.contains(swipeLayout)) {
-                opened.add(swipeLayout);
+            if (!sOpenedItem.contains(mSwipeLayout)) {
+                sOpenedItem.add(mSwipeLayout);
             }
         }
     }
 
     @Override
     public void closeMenuItem() {
-        this.helper.smoothSlideViewTo(this.swipeLayout.getItemView(), 0, 0);
-        ViewCompat.postInvalidateOnAnimation(this.swipeLayout);
+        this.mViewDragHelper.smoothSlideViewTo(this.mSwipeLayout.getItemView(), 0, 0);
+        ViewCompat.postInvalidateOnAnimation(this.mSwipeLayout);
     }
 
 
-    public static List<SwipeLayout> opened = new ArrayList<>();
+    private final static List<SwipeLayout> sOpenedItem = new ArrayList<>();
 
     @Override
     public boolean closeOtherMenuItems() {
-        L.e("opened.size: "+opened.size());
+        L.e("sOpenedItem.size: "+sOpenedItem.size());
         //当前item menu打开状态
         boolean currentItemMenuOpened = false;
-        for (SwipeLayout e:opened) {
+        for (SwipeLayout e:sOpenedItem) {
             if (null == e) {
                 continue;
             }
-            if (e == this.swipeLayout) {
+            if (e == this.mSwipeLayout) {
                 currentItemMenuOpened = true;
                 continue;
             }
@@ -220,7 +220,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     }
 
     public static void closeAllMenuItems() {
-        for (SwipeLayout e:opened) {
+        for (SwipeLayout e:sOpenedItem) {
             if (null == e) {
                 continue;
             }
@@ -229,12 +229,12 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     }
 
     //打开菜单所滑动的边界百分比,超过将打开菜单,否在则不打开
-    private float openMenuBoundaryPercent = 0.2f;
+    private float mOpenMenuBoundaryPercent = 0.2f;
 
 
     //记录拖动之前达到过的状态(只要到达过菜单开的状态，此时再次移动将会关闭菜单)
     @MenuBoundaryStatusOfBeenToWhere
-    private int menuBoundaryStatusOfBeenTo = MenuStatus.CLOSED;
+    private int mMenuBoundaryStatusOfBeenTo = MenuStatus.CLOSED;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MenuStatus.OPEN, MenuStatus.CLOSED})
@@ -242,7 +242,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
     //记录真实状态
     @MenuStatusWhere
-    private int menuStatus = MenuStatus.CLOSED;
+    private int mMenuStatus = MenuStatus.CLOSED;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MenuStatus.OPEN, MenuStatus.DRAGGING, MenuStatus.CLOSED})
@@ -258,16 +258,16 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     }
 
     public int getMenuStatus() {
-        return menuStatus;
+        return mMenuStatus;
     }
 
     public static boolean hasOpenedMenuItems() {
-        return null != opened && !opened.isEmpty();
+        return null != sOpenedItem && !sOpenedItem.isEmpty();
     }
 
     public static void release() {
-        if (null != opened) {
-            opened.clear();
+        if (null != sOpenedItem) {
+            sOpenedItem.clear();
         }
     }
 }

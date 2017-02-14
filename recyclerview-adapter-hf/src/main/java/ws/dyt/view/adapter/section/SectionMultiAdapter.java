@@ -307,7 +307,7 @@ public class SectionMultiAdapter<T> extends HeaderFooterAdapter<T> implements Se
 
     @Override
     public final BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        return new BaseViewHolder(inflater.inflate(viewType, parent, false));
+        return new BaseViewHolder(mInflater.inflate(viewType, parent, false));
     }
 
     @Override

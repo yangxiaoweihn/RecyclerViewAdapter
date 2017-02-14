@@ -67,7 +67,7 @@ public abstract class LazyLoadFragment extends Fragment {
         }
 
         if (this.mIsRealViewSetup) {
-            this.onFragmentVisibilityChanged(isVisibleToUser, false);
+            this.onFragmentVisibilityChangedInner(isVisibleToUser, false);
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class LazyLoadFragment extends Fragment {
         Log.e("LazyLoadFragment", "onStart -> mIsRealViewSetup: " + mIsRealViewSetup + " , originVisibleOfUserHint+ " + originVisibleOfUserHint + " ]]> " + getClass().getSimpleName());
 
         if (mIsRealViewSetup && originVisibleOfUserHint) {
-            this.onFragmentVisibilityChanged(true, true);
+            this.onFragmentVisibilityChangedInner(true, true);
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class LazyLoadFragment extends Fragment {
         super.onStop();
 
         if (mIsRealViewSetup && originVisibleOfUserHint) {
-            this.onFragmentVisibilityChanged(false, true);
+            this.onFragmentVisibilityChangedInner(false, true);
         }
     }
 
@@ -110,7 +110,7 @@ public abstract class LazyLoadFragment extends Fragment {
      * @param isLifeCycle     当前fragment可见性是否由fragment生命周期变化引起  false: 由调用{@link #setUserVisibleHint}引起
      */
     @CallSuper
-    private void onFragmentVisibilityChanged(boolean isVisibleToUser, boolean isLifeCycle) {
+    private void onFragmentVisibilityChangedInner(boolean isVisibleToUser, boolean isLifeCycle) {
         this.mCurrentFragmentVisibility = isVisibleToUser;
         Fragment fragment = getParentFragment();
         boolean fragmentVisible = false;
@@ -123,8 +123,11 @@ public abstract class LazyLoadFragment extends Fragment {
             }
         }
 
-        this.onFragmentVisibilityChanged(isVisibleToUser);
-        Log.e("LazyLoadFragment", "onFragmentVisibilityChanged -> isVisibleToUser: " + isVisibleToUser + " , isLifeCycle: " + isLifeCycle + " , [-" + getClass().getSimpleName() + "-]" + " , parent: " + fragment.getClass().getSimpleName() + " = " + fragmentVisible);
+        this.onFragmentVisibilityChangedInner(isVisibleToUser);
+        Log.e("LazyLoadFragment", "onFragmentVisibilityChangedInner -> currentFragment: " +getClass().getSimpleName()+"->  isVisibleToUser: "+isVisibleToUser+" , isLifeCycle: " + isLifeCycle + " , originVisible: "+isVisible()
+                + " , parent: " + fragment.getClass().getSimpleName() + " = " + fragmentVisible
+                + " , originVisible: "+fragment.isVisible()
+        );
 
         final ViewPager viewPager = this.setNestedViewPagerWithNestedFragment();
         if (null != viewPager) {
@@ -143,7 +146,7 @@ public abstract class LazyLoadFragment extends Fragment {
      * @param isLifeCycle
      */
     private void handleNestedFragmentVisibilityWhenFragmentVisibilityChanged(final ViewPager viewPager, boolean isVisible, boolean isLifeCycle) {
-        Log.e("DEBUG", "onFragmentVisibilityChanged ---- ###  " + isVisible + " , " + isLifeCycle);
+        Log.e("DEBUG", "onFragmentVisibilityChangedInner ---- ###  " + isVisible + " , " + isLifeCycle);
         if (null == viewPager || isLifeCycle) {
             return;
         }
@@ -160,7 +163,7 @@ public abstract class LazyLoadFragment extends Fragment {
                 fragment.setUserVisibleHint(isVisible);
             }
         } else {
-            Log.e("DEBUG", "onFragmentVisibilityChanged ---- " + viewPager.getCurrentItem());
+            Log.e("DEBUG", "onFragmentVisibilityChangedInner ---- " + viewPager.getCurrentItem());
             Fragment fragment = adapter.getItem(viewPager.getCurrentItem());
             if (null != fragment) {
                 fragment.setUserVisibleHint(isVisible);
@@ -187,6 +190,19 @@ public abstract class LazyLoadFragment extends Fragment {
         return null;
     }
 
+
+    private boolean mVisible;
+    /**
+     * fragment可见性变化时回调
+     *
+     * Fragment 可见时该方法会回调一次, 不可见时保证最少调用一次
+     * @param visible
+     */
+    private void onFragmentVisibilityChangedInner(boolean visible) {
+        this.mVisible = visible;
+        this.onFragmentVisibilityChanged(visible);
+    }
+
     /**
      * fragment可见性变化时回调
      *
@@ -194,6 +210,10 @@ public abstract class LazyLoadFragment extends Fragment {
      * @param visible
      */
     protected void onFragmentVisibilityChanged(boolean visible) {}
+
+    public boolean isFragmentVisible() {
+        return mVisible;
+    }
 
     /**
      * 是否开启view的懒加载模式

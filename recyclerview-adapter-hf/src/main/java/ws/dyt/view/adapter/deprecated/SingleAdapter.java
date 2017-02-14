@@ -29,7 +29,7 @@ public class SingleAdapter<T> extends BaseAdapter<T> {
 
     @Override
     public final BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        return itemLayoutResId > 0 ? new BaseViewHolder(inflater.inflate(itemLayoutResId, parent, false)) : null;
+        return itemLayoutResId > 0 ? new BaseViewHolder(mInflater.inflate(itemLayoutResId, parent, false)) : null;
     }
 
 }

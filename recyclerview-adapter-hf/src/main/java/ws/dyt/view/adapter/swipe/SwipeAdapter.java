@@ -37,7 +37,7 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
 
     @Override
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(viewType, parent, false);
+        View itemView = mInflater.inflate(viewType, parent, false);
 
         List<MenuItem> menuItems = this.collectMenus(viewType);
         //客户端没有设置菜单支持
@@ -45,7 +45,7 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
             return generateViewHolder(viewType, itemView);
         }
 
-        final SwipeLayout swipeLayout = new SwipeLayout(context);
+        final SwipeLayout swipeLayout = new SwipeLayout(mContext);
         swipeLayout.setUpView(parent, itemView, menuItems);
         swipeLayout.setIsCloseOtherItemsWhenThisWillOpen(this.isCloseOtherItemsWhenThisWillOpen());
 

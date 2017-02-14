@@ -4,4 +4,6 @@
 gradlew install
 gradlew bintrayUpload
 
-非线性布局bug修复
+TODO
+1. 菜单打开过程中不让RecyclerView上下滑动
+2. 是否有其他优化及扩展空间

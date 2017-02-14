@@ -17,7 +17,7 @@ import ws.dyt.view.adapter.swipe.SwipeAdapter;
  */
 abstract
 public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType {
-    private @LayoutRes int itemLayoutResId;
+    private @LayoutRes int mItemLayoutResId;
 
     /**
      * 调用该构造方法时需要调用 {@link #getItemViewLayout(int)} 设置item布局
@@ -29,14 +29,14 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
     }
 
     /**
-     * 调用该构造方法时默认数据项都采用 itemLayoutResId 布局，同样可以调用 {@link #getItemViewLayout(int)} 重新设置item布局
+     * 调用该构造方法时默认数据项都采用 mItemLayoutResId 布局，同样可以调用 {@link #getItemViewLayout(int)} 重新设置item布局
      * @param context
      * @param data
-     * @param itemLayoutResId
+     * @param mItemLayoutResId
      */
-    public MultiAdapter(Context context, List<T> data, @LayoutRes int itemLayoutResId) {
+    public MultiAdapter(Context context, List<T> data, @LayoutRes int mItemLayoutResId) {
         this(context, data);
-        this.itemLayoutResId = itemLayoutResId;
+        this.mItemLayoutResId = mItemLayoutResId;
     }
 
     @Override
@@ -55,6 +55,6 @@ public class MultiAdapter<T> extends BaseAdapter<T> implements MultiItemViewType
     @Override
     @LayoutRes
     public int getItemViewLayout(int position) {
-        return this.itemLayoutResId;
+        return this.mItemLayoutResId;
     }
 }

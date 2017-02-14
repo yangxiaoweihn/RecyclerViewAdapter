@@ -38,20 +38,20 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
         this.init();
     }
 
-    private ViewDragHelper helper;
-    private SwipeDragHelperDelegate delegate;
+    private ViewDragHelper mViewDragHelper;
+    private SwipeDragHelperDelegate mDelegate;
     private void init() {
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setLayoutParams(lp);
     }
 
-    private ViewGroup viewGroup;
+    private ViewGroup mViewGroup;
 
-    private View itemView;
-    private int leftMenuWidth;
-    private int rightMenuWidth;
-    private List<Pair<View, MenuItem>> leftMenus;
-    private List<Pair<View, MenuItem>> rightMenus;
+    private View mItemView;
+    private int mLeftMenuWidth;
+    private int mRightMenuWidth;
+    private List<Pair<View, MenuItem>> mLeftMenus;
+    private List<Pair<View, MenuItem>> mRightMenus;
 
     /**
      *
@@ -60,8 +60,8 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
      * @param menuItems
      */
     public void setUpView(ViewGroup viewGroup, View itemView, List<MenuItem> menuItems) {
-        this.viewGroup = viewGroup;
-        this.itemView = itemView;
+        this.mViewGroup = viewGroup;
+        this.mItemView = itemView;
 
         if (null == menuItems || menuItems.isEmpty()) {
             return;
@@ -114,18 +114,18 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
             this.addView(itemView);
         }
 
-        this.delegate = new SwipeDragHelperDelegate(this);
-        this.helper = ViewDragHelper.create(this, 1.0f, delegate);
-        this.delegate.init(helper);
+        this.mDelegate = new SwipeDragHelperDelegate(this);
+        this.mViewDragHelper = ViewDragHelper.create(this, 1.0f, mDelegate);
+        this.mDelegate.init(mViewDragHelper);
 
         if (this.EdgeTracking == MenuItem.EdgeTrack.LEFT_RIGHT) {
-            helper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT|ViewDragHelper.EDGE_RIGHT);
+            mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT|ViewDragHelper.EDGE_RIGHT);
 
         }else if (this.EdgeTracking == MenuItem.EdgeTrack.LEFT) {
-            helper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
+            mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
 
         }else if (this.EdgeTracking == MenuItem.EdgeTrack.RIGHT) {
-            helper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_RIGHT);
+            mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_RIGHT);
 
         }
     }
@@ -160,10 +160,10 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
     }
 
     private void setUpLeftMenuView(MenuItem item, LinearLayout parent) {
-        if (null == leftMenus) {
-            this.leftMenus = new ArrayList<>();
+        if (null == mLeftMenus) {
+            this.mLeftMenus = new ArrayList<>();
         }
-        View leftMenuView = LayoutInflater.from(getContext()).inflate(item.getMenuLayoutId(), viewGroup, false);
+        View leftMenuView = LayoutInflater.from(getContext()).inflate(item.getMenuLayoutId(), mViewGroup, false);
 
         if (null == parent) {
             this.addView(leftMenuView, getMenuLayout(MenuItem.EdgeTrack.LEFT));
@@ -171,15 +171,15 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
             parent.addView(leftMenuView);
         }
 
-        this.leftMenus.add(new Pair(leftMenuView, item));
+        this.mLeftMenus.add(new Pair(leftMenuView, item));
     }
 
     private void setUpRightMenuView(MenuItem item, LinearLayout parent) {
-        if (null == rightMenus) {
-            this.rightMenus = new ArrayList<>();
+        if (null == mRightMenus) {
+            this.mRightMenus = new ArrayList<>();
         }
 
-        View rightMenuView = LayoutInflater.from(getContext()).inflate(item.getMenuLayoutId(), viewGroup, false);
+        View rightMenuView = LayoutInflater.from(getContext()).inflate(item.getMenuLayoutId(), mViewGroup, false);
 
         if (null == parent) {
             this.addView(rightMenuView, getMenuLayout(MenuItem.EdgeTrack.RIGHT));
@@ -187,7 +187,7 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
             parent.addView(rightMenuView);
         }
 
-        this.rightMenus.add(new Pair(rightMenuView, item));
+        this.mRightMenus.add(new Pair(rightMenuView, item));
     }
 
     /**
@@ -223,27 +223,27 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
     private int EdgeTracking = MenuItem.EdgeTrack.RIGHT;
 
 
-    private boolean isCloseOtherItemsWhenThisWillOpen = false;
+    private boolean mIsCloseOtherItemsWhenThisWillOpen = false;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
         switch (action) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                helper.cancel();
+                mViewDragHelper.cancel();
 
-                RectF f = calcViewScreenLocation(itemView);
+                RectF f = calcViewScreenLocation(mItemView);
                 boolean isIn = f.contains(ev.getRawX(), ev.getRawY());
 
-                if (isIn && delegate.getMenuStatus() == SwipeDragHelperDelegate.MenuStatus.OPEN) {
-                    delegate.closeMenuItem();
+                if (isIn && mDelegate.getMenuStatus() == SwipeDragHelperDelegate.MenuStatus.OPEN) {
+                    mDelegate.closeMenuItem();
                     return true;
                 }
                 return false;
         }
 
-        L.e("onInterceptTouchEvent->"+action+" , "+isCloseOtherItemsWhenThisWillOpen);
-        if (isCloseOtherItemsWhenThisWillOpen) {
+        L.e("onInterceptTouchEvent->"+action+" , "+ mIsCloseOtherItemsWhenThisWillOpen);
+        if (mIsCloseOtherItemsWhenThisWillOpen) {
             if (MotionEvent.ACTION_DOWN == action) {
                 if (SwipeDragHelperDelegate.hasOpenedMenuItems()) {
                     if (!closeOtherMenuItems()) {
@@ -255,7 +255,7 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
         }
 
 
-        return helper.shouldInterceptTouchEvent(ev);
+        return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
     public static RectF calcViewScreenLocation(View view) {
@@ -266,39 +266,39 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        helper.processTouchEvent(event);
+        mViewDragHelper.processTouchEvent(event);
         return true;
     }
 
     @Override
     public void computeScroll() {
         super.computeScroll();
-        if (helper.continueSettling(true)) {
+        if (mViewDragHelper.continueSettling(true)) {
             invalidate();
         }
     }
 
     @Override
     public void closeMenuItem() {
-        this.delegate.closeMenuItem();
+        this.mDelegate.closeMenuItem();
     }
 
     @Override
     public boolean closeOtherMenuItems() {
-        return this.delegate.closeOtherMenuItems();
+        return this.mDelegate.closeOtherMenuItems();
     }
 
 //    @Override
 //    public boolean hasOpenedMenuItems() {
-//        return delegate.hasOpenedMenuItems();
+//        return mDelegate.hasOpenedMenuItems();
 //    }
 
     public void setIsCloseOtherItemsWhenThisWillOpen(boolean isCloseOtherItemsWhenThisWillOpen) {
-        this.isCloseOtherItemsWhenThisWillOpen = isCloseOtherItemsWhenThisWillOpen;
+        this.mIsCloseOtherItemsWhenThisWillOpen = isCloseOtherItemsWhenThisWillOpen;
     }
 
     public View getItemView() {
-        return itemView;
+        return mItemView;
     }
 
     //当前item支持的菜单类型
@@ -312,48 +312,48 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
         if (null != empAllMenus && !empAllMenus.isEmpty()) {
             return empAllMenus;
         }
-        if (null == empAllMenus && ( (null != leftMenus && !leftMenus.isEmpty()) || (null != rightMenus && !rightMenus.isEmpty()) )) {
+        if (null == empAllMenus && ( (null != mLeftMenus && !mLeftMenus.isEmpty()) || (null != mRightMenus && !mRightMenus.isEmpty()) )) {
             empAllMenus = new ArrayList<>();
         }
 
-        if (null != leftMenus && !leftMenus.isEmpty()) {
-            empAllMenus.addAll(leftMenus);
+        if (null != mLeftMenus && !mLeftMenus.isEmpty()) {
+            empAllMenus.addAll(mLeftMenus);
         }
 
-        if (null != rightMenus && !rightMenus.isEmpty()) {
-            empAllMenus.addAll(rightMenus);
+        if (null != mRightMenus && !mRightMenus.isEmpty()) {
+            empAllMenus.addAll(mRightMenus);
         }
         return empAllMenus;
     }
 
     public int getLeftMenuWidth() {
-        if (null == this.leftMenus || this.leftMenus.isEmpty()) {
+        if (null == this.mLeftMenus || this.mLeftMenus.isEmpty()) {
             return 0;
         }
 
-        if (this.leftMenuWidth == 0) {
-            for (Pair<View, MenuItem> pair:leftMenus) {
-                leftMenuWidth += pair.first.getWidth();
+        if (this.mLeftMenuWidth == 0) {
+            for (Pair<View, MenuItem> pair: mLeftMenus) {
+                mLeftMenuWidth += pair.first.getWidth();
             }
         }
-        return leftMenuWidth;
+        return mLeftMenuWidth;
     }
 
     public int getRightMenuWidth() {
-        if (null == this.rightMenus || this.rightMenus.isEmpty()) {
+        if (null == this.mRightMenus || this.mRightMenus.isEmpty()) {
             return 0;
         }
 
-        if (this.rightMenuWidth == 0) {
-            for (Pair<View, MenuItem> pair:rightMenus) {
-                rightMenuWidth += pair.first.getWidth();
+        if (this.mRightMenuWidth == 0) {
+            for (Pair<View, MenuItem> pair: mRightMenus) {
+                mRightMenuWidth += pair.first.getWidth();
             }
         }
-        return rightMenuWidth;
+        return mRightMenuWidth;
     }
 
     public int getMenuStatus() {
-        return delegate.getMenuStatus();
+        return mDelegate.getMenuStatus();
     }
 
     @Override

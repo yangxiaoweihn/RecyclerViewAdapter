@@ -82,12 +82,14 @@ public class IndexItemFragment extends BaseItemFrament {
     public void onFragmentVisibilityChanged(boolean isVisible) {
         super.onFragmentVisibilityChanged(isVisible);
         if (!isVisible) {
-            mRecyclerview.setLayoutFrozen(true);
+//            mRecyclerview.setLayoutFrozen(true);
         }
         if (isVisible) {
+            mRecyclerview.setLayoutFrozen(true);
             mRecyclerview.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+//                    mRecyclerview.stopScroll();
                     mRecyclerview.setLayoutFrozen(false);
                 }
             }, 500);
