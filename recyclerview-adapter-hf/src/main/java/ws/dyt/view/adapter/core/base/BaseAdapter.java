@@ -1,6 +1,7 @@
 package ws.dyt.view.adapter.core.base;
 
 import android.content.Context;
+import android.support.annotation.CallSuper;
 
 import java.util.List;
 
@@ -81,8 +82,12 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
 
         realData.remove(position);
         position += this.getAllHeaderViewCount();
+        this.notifyItemRemovedInner(position);
         notifyItemRemoved(position);
     }
+
+    @CallSuper
+    protected void notifyItemRemovedInner(int position) {}
 
     @Override
     public void removeAll(List<T> items) {
@@ -91,7 +96,11 @@ public class BaseAdapter<T> extends HeaderFooterAdapter<T> implements CRUD<T> {
         }
         realData.removeAll(items);
         notifyDataSetChanged();
+        this.notifyAllItemRemovedInner();
     }
+
+    @CallSuper
+    protected void notifyAllItemRemovedInner() {}
 
     @Override
     public void replace(T oldItem, T newItem) {

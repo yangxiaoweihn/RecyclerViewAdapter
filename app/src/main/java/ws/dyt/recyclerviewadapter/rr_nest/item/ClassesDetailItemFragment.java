@@ -57,4 +57,5 @@ public class ClassesDetailItemFragment extends BaseItemFrament {
             this.src = src;
         }
     }
+
 }

@@ -9,10 +9,12 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.v4.widget.Space;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import ws.dyt.view.adapter.SuperAdapter;
 import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
 import ws.dyt.view.adapter.swipe.MenuItem;
 import ws.dyt.view.adapter.swipe.OnItemMenuClickListener;
+import ws.dyt.view.adapter.swipe.SwipeDragHelperDelegate;
 import ws.dyt.view.adapter.swipe.SwipeLayout;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
@@ -64,6 +67,13 @@ public class TestSwipeItemFragment extends DevFragment {
 
         recyclerView.setLayoutManager(llm);
         adapter = getAdapter();
+
+        final int h = UnitUtils.dip2Px(getContext(), 10);
+        Space space = new Space(getContext());
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, h);
+        space.setLayoutParams(lp);
+        adapter.addHeaderView(space);
+
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
             @Override
@@ -85,6 +95,7 @@ public class TestSwipeItemFragment extends DevFragment {
                 if (menuId == 01) {
 //                    swipeItemView.closeMenuItem();
                     adapter.remove(position);
+                    SwipeDragHelperDelegate.release();
                     Log.d("DEBUG", "--menu: 删除 -> position: " + position + " , menuId: " + menuId);
                     Toast.makeText(getContext(), "删除", Toast.LENGTH_SHORT).show();
                 } else if (menuId == 02) {
@@ -162,6 +173,14 @@ public class TestSwipeItemFragment extends DevFragment {
         adapter.remove(0);
     }
 
+
+    @Override
+    public void onDestroy() {
+        if (null != adapter) {
+            adapter.release();
+        }
+        super.onDestroy();
+    }
 
     private static class Divider extends RecyclerView.ItemDecoration {
 //        Drawable divider = null;

@@ -2,6 +2,7 @@ package ws.dyt.view.adapter.swipe;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,6 +200,34 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
 
     public void setOnItemMenuClickListener(OnItemMenuClickListener onItemMenuClickListener) {
         this.onItemMenuClickListener = onItemMenuClickListener;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+
+        this.release();
+    }
+
+    @Override
+    protected void notifyItemRemovedInner(int position) {
+        super.notifyItemRemovedInner(position);
+
+//        position += getAllHeaderViewCount();
+        RecyclerView.ViewHolder vh = recyclerView.findViewHolderForAdapterPosition(position);
+        if (null != vh && vh instanceof BaseViewHolder) {
+            View view = ((BaseViewHolder) vh).itemView;
+            if (null != view && view instanceof SwipeLayout) {
+                ((SwipeLayout) view).release();
+            }
+        }
+    }
+
+    @Override
+    protected void notifyAllItemRemovedInner() {
+        super.notifyAllItemRemovedInner();
+
+        SwipeDragHelperDelegate.release();
     }
 
     @Override

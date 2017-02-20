@@ -18,13 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.view.adapter.Log.L;
+import ws.dyt.view.adapter.core.base.IGC;
 
 /**
  * Created by yangxiaowei on 16/8/1.
  *
  * 用来承载菜单视图和客户端设置的item视图
  */
-public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus{
+public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus, IGC{
     public SwipeLayout(Context context) {
         this(context, null);
     }
@@ -72,6 +73,7 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
         Pair<List<MenuItem>, List<MenuItem>> menuPair = this.filterLeftAndRightMenu(menuItems, null, null);
         List<MenuItem> left = menuPair.first;
         List<MenuItem> right = menuPair.second;
+        menuItems.clear();
 
         //添加左菜单(如果菜单项为多个的话，菜单外层需要嵌套一层线性布局)
         if (null != left && !left.isEmpty()) {
@@ -227,6 +229,7 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
+        L.e("onInterceptTouchEvent->"+action+" , "+ mIsCloseOtherItemsWhenThisWillOpen);
         switch (action) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
@@ -242,7 +245,6 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
                 return false;
         }
 
-        L.e("onInterceptTouchEvent->"+action+" , "+ mIsCloseOtherItemsWhenThisWillOpen);
         if (mIsCloseOtherItemsWhenThisWillOpen) {
             if (MotionEvent.ACTION_DOWN == action) {
                 if (SwipeDragHelperDelegate.hasOpenedMenuItems()) {
@@ -361,4 +363,21 @@ public class SwipeLayout extends FrameLayout implements ICloseMenus, IMenuStatus
         return getMenuStatus() == SwipeDragHelperDelegate.MenuStatus.OPEN;
     }
 
+    /**
+     * 该item被移除时，删除关联信息
+     */
+    @Override
+    public void release() {
+//        if (null != mLeftMenus) {
+//            mLeftMenus.clear();
+//        }
+//
+//        if (null != mRightMenus) {
+//            mRightMenus.clear();
+//        }
+
+        if (null != mDelegate) {
+            mDelegate.releaseItem(this);
+        }
+    }
 }

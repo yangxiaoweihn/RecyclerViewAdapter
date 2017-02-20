@@ -3,7 +3,6 @@ package ws.dyt.view.adapter.swipe;
 import android.support.annotation.IntDef;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
-import android.util.Log;
 import android.view.View;
 
 import java.lang.annotation.Retention;
@@ -127,7 +126,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
         int left = 0;
 
-        Log.e("DEBUG", "left: "+l+" , min: "+min+" , from: "+this.mMenuBoundaryStatusOfBeenTo);
+        L.e("onViewReleased -> left: "+l+" , min: "+min+" , from: "+this.mMenuBoundaryStatusOfBeenTo);
         //计算偏移量
         if (l < min || (MenuStatus.OPEN == this.mMenuBoundaryStatusOfBeenTo && l < menuWidth)) {
             left = 0;
@@ -183,10 +182,10 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
 
         //记录打开关闭菜单项的item
         if (left == 0) {
-            this.sOpenedItem.remove(this.mSwipeLayout);
+            this.sOpenedItems.remove(this.mSwipeLayout);
         }else if (0 != menuWidth && left == menuWidth) {
-            if (!sOpenedItem.contains(mSwipeLayout)) {
-                sOpenedItem.add(mSwipeLayout);
+            if (!sOpenedItems.contains(mSwipeLayout)) {
+                sOpenedItems.add(mSwipeLayout);
             }
         }
     }
@@ -198,14 +197,14 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     }
 
 
-    private final static List<SwipeLayout> sOpenedItem = new ArrayList<>();
+    private final static List<SwipeLayout> sOpenedItems = new ArrayList<>();
 
     @Override
     public boolean closeOtherMenuItems() {
-        L.e("sOpenedItem.size: "+sOpenedItem.size());
+        L.e("sOpenedItems.size: "+sOpenedItems.size());
         //当前item menu打开状态
         boolean currentItemMenuOpened = false;
-        for (SwipeLayout e:sOpenedItem) {
+        for (SwipeLayout e:sOpenedItems) {
             if (null == e) {
                 continue;
             }
@@ -220,7 +219,7 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
     }
 
     public static void closeAllMenuItems() {
-        for (SwipeLayout e:sOpenedItem) {
+        for (SwipeLayout e:sOpenedItems) {
             if (null == e) {
                 continue;
             }
@@ -261,13 +260,22 @@ public class SwipeDragHelperDelegate extends ViewDragHelper.Callback implements 
         return mMenuStatus;
     }
 
-    public static boolean hasOpenedMenuItems() {
-        return null != sOpenedItem && !sOpenedItem.isEmpty();
+    public synchronized static boolean hasOpenedMenuItems() {
+        return null != sOpenedItems && !sOpenedItems.isEmpty();
     }
 
-    public static void release() {
-        if (null != sOpenedItem) {
-            sOpenedItem.clear();
+    public synchronized void releaseItem(SwipeLayout swipeLayout) {
+        if (null != sOpenedItems && !sOpenedItems.isEmpty()) {
+            sOpenedItems.remove(swipeLayout);
         }
+
+        L.e("openedItems: (releaseItem) -> size: "+sOpenedItems.size());
+    }
+
+    public synchronized static void release() {
+        if (null != sOpenedItems) {
+            sOpenedItems.clear();
+        }
+        L.e("openedItems: (release) -> size: "+sOpenedItems.size());
     }
 }

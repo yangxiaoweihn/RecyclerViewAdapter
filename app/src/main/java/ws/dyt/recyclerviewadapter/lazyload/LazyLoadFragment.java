@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import ws.dyt.view.adapter.Log.L;
+
 /**
  * Created by yangxiaowei on 16/7/30.
  */
@@ -81,6 +83,11 @@ public abstract class LazyLoadFragment extends Fragment {
         if (mIsRealViewSetup && originVisibleOfUserHint) {
             this.onFragmentVisibilityChangedInner(true, true);
         }
+
+        //页面初始化完毕并且view不支持延迟加载时，处理为可见[主要针对单页面]
+        if (mIsRealViewSetup && !isViewLazyLoadEnable()) {
+            this.onFragmentVisibilityChangedInner(true, true);
+        }
     }
 
     @CallSuper
@@ -89,6 +96,10 @@ public abstract class LazyLoadFragment extends Fragment {
         super.onStop();
 
         if (mIsRealViewSetup && originVisibleOfUserHint) {
+            this.onFragmentVisibilityChangedInner(false, true);
+        }
+
+        if (mIsRealViewSetup && !isViewLazyLoadEnable()) {
             this.onFragmentVisibilityChangedInner(false, true);
         }
     }
@@ -125,8 +136,8 @@ public abstract class LazyLoadFragment extends Fragment {
 
         this.onFragmentVisibilityChangedInner(isVisibleToUser);
         Log.e("LazyLoadFragment", "onFragmentVisibilityChangedInner -> currentFragment: " +getClass().getSimpleName()+"->  isVisibleToUser: "+isVisibleToUser+" , isLifeCycle: " + isLifeCycle + " , originVisible: "+isVisible()
-                + " , parent: " + fragment.getClass().getSimpleName() + " = " + fragmentVisible
-                + " , originVisible: "+fragment.isVisible()
+                + (null != fragment ? " , parent: " + fragment.getClass().getSimpleName() + " = " + fragmentVisible
+                + " , originVisible: "+fragment.isVisible() : "")
         );
 
         final ViewPager viewPager = this.setNestedViewPagerWithNestedFragment();
@@ -200,6 +211,7 @@ public abstract class LazyLoadFragment extends Fragment {
      */
     private void onFragmentVisibilityChangedInner(boolean visible) {
         this.mVisible = visible;
+        Log.e("XXXXX", "XXXX "+getClass().getSimpleName()+" , "+visible);
         this.onFragmentVisibilityChanged(visible);
     }
 

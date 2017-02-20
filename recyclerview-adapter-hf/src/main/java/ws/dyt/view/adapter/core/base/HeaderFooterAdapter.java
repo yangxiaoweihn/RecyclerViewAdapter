@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ws.dyt.view.adapter.Log.L;
+import ws.dyt.view.adapter.swipe.SwipeLayout;
 import ws.dyt.view.viewholder.BaseViewHolder;
 
 /**
@@ -745,12 +747,27 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         this.recyclerView = null;
+        this.release();
     }
 
     @Override
     public void onViewAttachedToWindow(BaseViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         this.adapterStaggeredGridLayoutManager(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(BaseViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(BaseViewHolder holder) {
+        super.onViewRecycled(holder);
+//        if (holder.itemView instanceof SwipeLayout) {
+//            SwipeLayout swipeLayout = (SwipeLayout) holder.itemView;
+//            swipeLayout.release();
+//        }
     }
 
     private void adapterGridLayoutManager() {
@@ -888,42 +905,42 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
 
         if (layoutManager instanceof GridLayoutManager) {
 
-            final GridLayoutManager glm = (GridLayoutManager) layoutManager;
+            final GridLayoutManager lm = (GridLayoutManager) layoutManager;
 
             if (findItemType != FindItemType.LAST) {
-                firstVisibleItemIndex = glm.findFirstVisibleItemPosition();
-                firstCompletelyVisibleItemIndex = glm.findFirstCompletelyVisibleItemPosition();
+                firstVisibleItemIndex = lm.findFirstVisibleItemPosition();
+                firstCompletelyVisibleItemIndex = lm.findFirstCompletelyVisibleItemPosition();
             }
 
             if (findItemType != FindItemType.FIRST) {
-                lastVisibleItemIndex = glm.findLastVisibleItemPosition();
-                lastCompletelyVisibleItemIndex = glm.findLastCompletelyVisibleItemPosition();
+                lastVisibleItemIndex = lm.findLastVisibleItemPosition();
+                lastCompletelyVisibleItemIndex = lm.findLastCompletelyVisibleItemPosition();
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
 
-            final StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) layoutManager;
+            final StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) layoutManager;
 
             if (findItemType != FindItemType.LAST) {
-                firstVisibleItemIndex = sglm.findFirstVisibleItemPositions(new int[1])[0];
-                firstCompletelyVisibleItemIndex = sglm.findFirstCompletelyVisibleItemPositions(new int[1])[0];
+                firstVisibleItemIndex = lm.findFirstVisibleItemPositions(new int[1])[0];
+                firstCompletelyVisibleItemIndex = lm.findFirstCompletelyVisibleItemPositions(new int[1])[0];
             }
 
             if (findItemType != FindItemType.FIRST) {
-                lastVisibleItemIndex = sglm.findLastVisibleItemPositions(new int[1])[0];
-                lastCompletelyVisibleItemIndex = sglm.findLastCompletelyVisibleItemPositions(new int[1])[0];
+                lastVisibleItemIndex = lm.findLastVisibleItemPositions(new int[1])[0];
+                lastCompletelyVisibleItemIndex = lm.findLastCompletelyVisibleItemPositions(new int[1])[0];
             }
         } else if (layoutManager instanceof LinearLayoutManager) {
 
-            final LinearLayoutManager llm = (LinearLayoutManager) layoutManager;
+            final LinearLayoutManager lm = (LinearLayoutManager) layoutManager;
 
             if (findItemType != FindItemType.LAST) {
-                firstVisibleItemIndex = llm.findFirstVisibleItemPosition();
-                firstCompletelyVisibleItemIndex = llm.findFirstCompletelyVisibleItemPosition();
+                firstVisibleItemIndex = lm.findFirstVisibleItemPosition();
+                firstCompletelyVisibleItemIndex = lm.findFirstCompletelyVisibleItemPosition();
             }
 
             if (findItemType != FindItemType.FIRST) {
-                lastVisibleItemIndex = llm.findLastVisibleItemPosition();
-                lastCompletelyVisibleItemIndex = llm.findLastCompletelyVisibleItemPosition();
+                lastVisibleItemIndex = lm.findLastVisibleItemPosition();
+                lastCompletelyVisibleItemIndex = lm.findLastCompletelyVisibleItemPosition();
             }
         }
     }
@@ -934,22 +951,22 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     public void release() {
         if (null != mSysHeaderViews) {
             mSysHeaderViews.clear();
-            mSysHeaderViews = null;
         }
 
         if (null != mHeaderViews) {
             mHeaderViews.clear();
-            mHeaderViews = null;
         }
 
         if (null != realData) {
             realData.clear();
-            realData = null;
         }
 
         if (null != mFooterViews) {
             mFooterViews.clear();
-            mFooterViews = null;
         }
+    }
+
+    public static void setDebugMode(boolean debug) {
+        L.DEBUG = debug;
     }
 }

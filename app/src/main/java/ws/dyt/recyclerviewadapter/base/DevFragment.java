@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import ws.dyt.recyclerviewadapter.MyApplication;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.ViewJect;
 
@@ -36,4 +39,16 @@ public class DevFragment extends Fragment {
     }
 
     protected void onFloatActionButtonClicked() {}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        RefWatcher refWatcher = MyApplication.getRefWatcher(getActivity());
+        if(refWatcher != null) {
+
+            refWatcher.watch(this);
+
+        }
+    }
 }
