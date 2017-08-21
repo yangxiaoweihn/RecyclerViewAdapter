@@ -16,13 +16,11 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
 import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
-import ws.dyt.recyclerviewadapter.hf.OnlyHeaderFooterFragment;
 import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
-import ws.dyt.recyclerviewadapter.rr_nest.NestMainFragment;
 import ws.dyt.recyclerviewadapter.swipe.TestSwipeItemFragment;
 import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
-import ws.dyt.view.adapter.SuperAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.SuperAdapter;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  */
@@ -78,15 +76,6 @@ public class MainFragment extends Fragment {
 
     private List<FragmentEntity> generate() {
         List<FragmentEntity> data = new ArrayList<>();
-//        data.add(new FragmentEntity("多简单类型V2", MultiSimpleItemV2Fragment.class));
-//        data.add(new FragmentEntity("多简单类型适配单类型", MultiSimpleItemV2ConvertSingleSimpleFragment.class));
-//        data.add(new FragmentEntity("多简单类型适配单类型Grid", MultiSimpleItemV2ConvertSingleSimpleGridFragment.class));
-//        data.add(new FragmentEntity("多简单类型适配单类型Staggered", MultiSimpleItemV2ConvertSingleSimpleStaggeredGridFragment.class));
-//        data.add(new FragmentEntity("section纵向线性单item", SectionLinearFragment.class));
-//        data.add(new FragmentEntity("section单itemGrid", SectionGridFragment.class));
-//        data.add(new FragmentEntity("section无Footer", SectionLinearNoFooterFragment.class));
-//        data.add(new FragmentEntity("section仿搜狗皮肤", SectionSkinGridFragment.class));
-//        data.add(new FragmentEntity("头尾功能测试", OnlyHeaderFooterFragment.class));
         data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——1", Bilili_1_ListFragment.class));
         data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));
@@ -94,9 +83,6 @@ public class MainFragment extends Fragment {
         data.add(new FragmentEntity("滑动菜单测试", TestSwipeItemFragment.class));
         data.add(new FragmentEntity("Pinned测试", TestPinnedItemFragment.class));
 
-
-//        data.add(new FragmentEntity("diff_dev", DiffDevItemFragment.class));
-        data.add(new FragmentEntity("懒加载测试", NestMainFragment.class));
 
         return data;
     }

@@ -18,12 +18,12 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.SuperPinnedAdapter;
-import ws.dyt.view.adapter.swipe.MenuItem;
-import ws.dyt.view.adapter.swipe.OnItemMenuClickListener;
-import ws.dyt.view.adapter.swipe.SwipeLayout;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.ItemWrapper;
+import ws.dyt.adapter.adapter.SuperPinnedAdapter;
+import ws.dyt.adapter.adapter.swipe.MenuItem;
+import ws.dyt.adapter.adapter.swipe.OnItemMenuClickListener;
+import ws.dyt.adapter.adapter.swipe.SwipeLayout;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  */

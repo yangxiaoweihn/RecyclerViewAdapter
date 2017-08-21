@@ -2,8 +2,6 @@ package ws.dyt.recyclerviewadapter.pinned;
 
 import java.util.ArrayList;
 
-import ws.dyt.view.adapter.ItemWrapper;
-
 /**
  * Created by yangxiaowei on 16/8/12.
  */

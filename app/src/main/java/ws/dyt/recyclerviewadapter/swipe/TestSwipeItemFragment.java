@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.Space;
@@ -24,18 +23,17 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.internal.Utils;
 import ws.dyt.recyclerviewadapter.base.DevFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.FileUtils;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
-import ws.dyt.view.adapter.SuperAdapter;
-import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
-import ws.dyt.view.adapter.swipe.MenuItem;
-import ws.dyt.view.adapter.swipe.OnItemMenuClickListener;
-import ws.dyt.view.adapter.swipe.SwipeDragHelperDelegate;
-import ws.dyt.view.adapter.swipe.SwipeLayout;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.SuperAdapter;
+import ws.dyt.adapter.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.adapter.adapter.swipe.MenuItem;
+import ws.dyt.adapter.adapter.swipe.OnItemMenuClickListener;
+import ws.dyt.adapter.adapter.swipe.SwipeDragHelperDelegate;
+import ws.dyt.adapter.adapter.swipe.SwipeLayout;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  */

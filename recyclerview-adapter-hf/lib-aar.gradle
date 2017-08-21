@@ -1,0 +1,18 @@
+def handleAar() {
+    android.libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            def buildType = variant.buildType
+
+            if (outputFile != null && buildType.name == 'release' && outputFile.name.endsWith('.aar')) {
+
+                def (libName, suffix) = outputFile.name.split(variant.baseName)
+
+                def versions = "${android.defaultConfig.versionName}"
+
+                def fileName = libName+versions+suffix
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+}

@@ -17,12 +17,11 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.SuperAdapter;
-import ws.dyt.view.adapter.core.base.BaseAdapter;
-import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
-import ws.dyt.view.adapter.swipe.MenuItem;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.ItemWrapper;
+import ws.dyt.adapter.adapter.SuperAdapter;
+import ws.dyt.adapter.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.adapter.adapter.swipe.MenuItem;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/22.
@@ -35,24 +34,63 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  *
  * 点击只绑定了部分数据，其他未绑定的数据自行处理
  */
-public class Bilili_2_ListFragment extends BaseFragment {
+public class Bilili_2_ListFragment extends BaseFragment<Bilili_2_ListFragment.Wrapper1> {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
         this.init();
         return view;
     }
 
-
-    SuperAdapter<Wrapper1> adapter;
-
     private void init() {
-        GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(llm);
 
-        adapter = new SuperAdapter<Wrapper1>(getContext(), generate()) {
+        recyclerView.addItemDecoration(new D());
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new GridLayoutManager(getContext(), 2);
+    }
+
+    private void bindGroupHeader(BaseViewHolder holder, String e) {
+        holder.setText(R.id.tv_group, e);
+    }
+
+    private void bindItemAd(BaseViewHolder holder, Ad e) {
+        holder.setText(R.id.tv_des, e.title).setImageResource(R.id.iv_img, R.drawable.bilili_ad_3);
+    }
+
+    private void bindItemData(BaseViewHolder holder, Series e) {
+        holder
+                .setText(R.id.tv_des, e.des)
+                .setText(R.id.tv_count_evaluate, e.count+100+"")
+                .setText(R.id.tv_count_view, "2.8万")
+                .setImageResource(R.id.iv_img, e.imgUrl);
+        holder.itemView.setTag(e);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object o = v.getTag();
+                if (null == o || !(o instanceof Series)) {
+                    return;
+                }
+
+                tost("" + ((Series) o).des);
+            }
+        });
+    }
+
+
+    private <V extends View> V getView(int id, View root) {
+        return (V) root.findViewById(id);
+    }
+
+    @Override
+    protected HeaderFooterAdapter<Wrapper1> getAdapter() {
+        return adapter = new SuperAdapter<Wrapper1>(getContext(), generate()) {
             @Override
             public int getItemViewLayout(int position) {
                 Wrapper1 e = getItem(position);
@@ -99,52 +137,10 @@ public class Bilili_2_ListFragment extends BaseFragment {
                 return mm;
             }
         };
-
-        recyclerView.addItemDecoration(new D());
-        recyclerView.setAdapter(adapter);
     }
 
 
-    private void bindGroupHeader(BaseViewHolder holder, String e) {
-        holder.setText(R.id.tv_group, e);
-    }
-
-    private void bindItemAd(BaseViewHolder holder, Ad e) {
-        holder.setText(R.id.tv_des, e.title).setImageResource(R.id.iv_img, R.drawable.bilili_ad_3);
-    }
-
-    private void bindItemData(BaseViewHolder holder, Series e) {
-        holder
-                .setText(R.id.tv_des, e.des)
-                .setText(R.id.tv_count_evaluate, e.count+100+"")
-                .setText(R.id.tv_count_view, "2.8万")
-                .setImageResource(R.id.iv_img, e.imgUrl);
-        holder.itemView.setTag(e);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Object o = v.getTag();
-                if (null == o || !(o instanceof Series)) {
-                    return;
-                }
-
-                tost("" + ((Series) o).des);
-            }
-        });
-    }
-
-
-    private <V extends View> V getView(int id, View root) {
-        return (V) root.findViewById(id);
-    }
-
-    @Override
-    protected BaseAdapter<Wrapper1> getAdapter() {
-        return adapter;
-    }
-
-
-    class Wrapper1<T> extends ItemWrapper<T> {
+    static class Wrapper1<T> extends ItemWrapper<T> {
         public int group;
         public int index;
         public Wrapper1(int type, T data) {

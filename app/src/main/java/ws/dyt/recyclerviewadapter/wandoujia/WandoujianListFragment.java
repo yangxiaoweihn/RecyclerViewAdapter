@@ -3,7 +3,6 @@ package ws.dyt.recyclerviewadapter.wandoujia;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,61 +14,23 @@ import java.util.List;
 
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.SuperAdapter;
-import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.ItemWrapper;
+import ws.dyt.adapter.adapter.SuperAdapter;
+import ws.dyt.adapter.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/22.
  */
-public class WandoujianListFragment extends BaseFragment {
+public class WandoujianListFragment extends BaseFragment<ItemWrapper> {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        this.init();
         return view;
     }
 
-
-    SuperAdapter<ItemWrapper> adapter;
-
-    private void init() {
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-
-        adapter = new SuperAdapter<ItemWrapper>(getContext(), generate()) {
-            @Override
-            public int getItemViewLayout(int position) {
-                ItemWrapper e = getItem(position);
-                if (e.type == 0) {
-                    return R.layout.wdj_ad_header;
-                } else if (e.type == 1) {
-                    return R.layout.wdj_item_ad;
-                }
-                return R.layout.wdj_item_data;
-            }
-
-            @Override
-            public void convert(BaseViewHolder holder, int position) {
-                ItemWrapper e = getItem(position);
-                if (e.type == 0) {
-                    bindHeaderAd(holder, (AdHeader) e.data);
-                } else if (e.type == 1) {
-                    //ad
-                    bindItemAd(holder, (ItemAd) e.data);
-                } else if (e.type == 2) {
-                    //app
-                    bindItemData(holder, (ItemData) e.data);
-                }
-            }
-        };
-
-        recyclerView.setAdapter(adapter);
-    }
 
     private void bindHeaderAd(BaseViewHolder holder, AdHeader ad) {
         holder
@@ -135,8 +96,33 @@ public class WandoujianListFragment extends BaseFragment {
     }
 
     @Override
-    protected HeaderFooterAdapter getAdapter() {
-        return adapter;
+    protected HeaderFooterAdapter<ItemWrapper> getAdapter() {
+        return adapter = new SuperAdapter<ItemWrapper>(getContext(), generate()) {
+            @Override
+            public int getItemViewLayout(int position) {
+                ItemWrapper e = getItem(position);
+                if (e.type == 0) {
+                    return R.layout.wdj_ad_header;
+                } else if (e.type == 1) {
+                    return R.layout.wdj_item_ad;
+                }
+                return R.layout.wdj_item_data;
+            }
+
+            @Override
+            public void convert(BaseViewHolder holder, int position) {
+                ItemWrapper e = getItem(position);
+                if (e.type == 0) {
+                    bindHeaderAd(holder, (AdHeader) e.data);
+                } else if (e.type == 1) {
+                    //ad
+                    bindItemAd(holder, (ItemAd) e.data);
+                } else if (e.type == 2) {
+                    //app
+                    bindItemData(holder, (ItemData) e.data);
+                }
+            }
+        };
     }
 
     private List<ItemWrapper> generate() {

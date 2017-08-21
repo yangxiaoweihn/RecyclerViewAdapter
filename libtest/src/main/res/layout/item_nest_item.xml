@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f1f1f1"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        tools:src="@drawable/bilili_ad_3"
+        android:src="@drawable/bilili_ad_3"
+        android:scaleType="centerCrop"
+        android:id="@+id/iv_skin"/>
+    <TextView
+        android:background="@color/colorWhite"
+        tools:text="---"
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="left"
+        />
+</LinearLayout>

@@ -16,11 +16,10 @@ import java.util.List;
 import ws.dyt.recyclerviewadapter.BaseFragment;
 import ws.dyt.recyclerviewadapter.R;
 import ws.dyt.recyclerviewadapter.utils.UnitUtils;
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.SuperAdapter;
-import ws.dyt.view.adapter.core.base.BaseAdapter;
-import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.ItemWrapper;
+import ws.dyt.adapter.adapter.SuperAdapter;
+import ws.dyt.adapter.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/22.
@@ -31,7 +30,7 @@ import ws.dyt.view.viewholder.BaseViewHolder;
  *
  * 点击只绑定了部分数据，其他未绑定的数据自行处理
  */
-public class Bilili_1_ListFragment extends BaseFragment {
+public class Bilili_1_ListFragment extends BaseFragment<Bilili_1_ListFragment.Wrapper1> {
 
     @Nullable
     @Override
@@ -41,49 +40,14 @@ public class Bilili_1_ListFragment extends BaseFragment {
         return view;
     }
 
-
-    SuperAdapter<Wrapper1> adapter;
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new GridLayoutManager(getContext(), 2);
+    }
 
     private void init() {
-        GridLayoutManager llm = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(llm);
-
-        adapter = new SuperAdapter<Wrapper1>(getContext(), generate()) {
-            @Override
-            public int getItemViewLayout(int position) {
-                Wrapper1 e = getItem(position);
-                if (e.type == 0) {
-                    return R.layout.bilili_item_group;
-                } else if (e.type == 1) {
-                    return R.layout.bilili_item_ad;
-                }
-                return R.layout.bilili_item_data;
-            }
-
-            @Override
-            public void convert(BaseViewHolder holder, int position) {
-                Wrapper1 e = getItem(position);
-                if (e.type == 0) {
-                    bindGroupHeader(holder, (String) e.data);
-                } else if (e.type == 1) {
-                    //ad
-                    bindItemAd(holder, (Ad) e.data);
-                } else if (e.type == 2) {
-                    //
-                    bindItemData(holder, (Series) e.data);
-                }
-            }
-
-            @Override
-            public boolean isFullSpanWithItemView(int position) {
-                Wrapper1 t = getItem(position);
-                return t.type != 2;
-//                return false;
-            }
-        };
 
         recyclerView.addItemDecoration(new D());
-        recyclerView.setAdapter(adapter);
     }
 
 
@@ -120,12 +84,44 @@ public class Bilili_1_ListFragment extends BaseFragment {
     }
 
     @Override
-    protected BaseAdapter<Wrapper1> getAdapter() {
-        return adapter;
+    protected HeaderFooterAdapter<Wrapper1> getAdapter() {
+        return adapter = new SuperAdapter<Wrapper1>(getContext(), generate()) {
+            @Override
+            public int getItemViewLayout(int position) {
+                Wrapper1 e = getItem(position);
+                if (e.type == 0) {
+                    return R.layout.bilili_item_group;
+                } else if (e.type == 1) {
+                    return R.layout.bilili_item_ad;
+                }
+                return R.layout.bilili_item_data;
+            }
+
+            @Override
+            public void convert(BaseViewHolder holder, int position) {
+                Wrapper1 e = getItem(position);
+                if (e.type == 0) {
+                    bindGroupHeader(holder, (String) e.data);
+                } else if (e.type == 1) {
+                    //ad
+                    bindItemAd(holder, (Ad) e.data);
+                } else if (e.type == 2) {
+                    //
+                    bindItemData(holder, (Series) e.data);
+                }
+            }
+
+            @Override
+            public boolean isFullSpanWithItemView(int position) {
+                Wrapper1 t = getItem(position);
+                return t.type != 2;
+//                return false;
+            }
+        };
     }
 
 
-    class Wrapper1<T> extends ItemWrapper<T> {
+    static class Wrapper1<T> extends ItemWrapper<T> {
         public int group;
         public int index;
         public Wrapper1(int type, T data) {
