@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.section;
+package ws.dyt.adapter.adapter.section;
 
 import android.support.annotation.LayoutRes;
 

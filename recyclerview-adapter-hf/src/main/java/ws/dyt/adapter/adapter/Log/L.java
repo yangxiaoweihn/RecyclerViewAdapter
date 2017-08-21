@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.Log;
+package ws.dyt.adapter.adapter.Log;
 
 import android.util.Log;
 

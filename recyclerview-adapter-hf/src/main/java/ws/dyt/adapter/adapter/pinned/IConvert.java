@@ -1,6 +1,6 @@
-package ws.dyt.view.adapter.pinned;
+package ws.dyt.adapter.adapter.pinned;
 
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/8/12.

@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.swipe;
+package ws.dyt.adapter.adapter.swipe;
 
 import android.content.Context;
 import android.graphics.RectF;
@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.view.adapter.Log.L;
-import ws.dyt.view.adapter.core.base.IGC;
+import ws.dyt.adapter.adapter.Log.L;
+import ws.dyt.adapter.adapter.core.base.IGC;
 
 /**
  * Created by yangxiaowei on 16/8/1.

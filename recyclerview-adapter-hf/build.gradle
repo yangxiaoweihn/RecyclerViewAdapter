@@ -1,18 +1,23 @@
 apply plugin: 'com.android.library'
-
+//apply plugin: 'com.github.dcendents.android-maven'
+apply from: "lib-aar.gradle"
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 7
-        versionCode 11
-        versionName "2.5.2"
+        minSdkVersion 9
+        versionCode 14
+        versionName "2.6"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            consumerProguardFile('proguard-rules-consumer.pro')
+
+            this.handleAar(android)
         }
     }
 
@@ -20,22 +25,43 @@ android {
         abortOnError false
     }
 
+    android {
+        packagingOptions {
+            exclude 'AndroidManifest.xml'
+        }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+
+    packageBuildConfig false
+
+
+//    //打包任务
+//    task excludeSome(type:org.gradle.api.tasks.bundling.Jar) {
+//        //去掉不需要打包的目录和文件
+//        exclude('BuildConfig.class')
+//    }
+//
+//    excludeSome.dependsOn(build)
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:25.0.1'
-    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 }
 
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'recyclerview-adapter-hf'
+    bintrayName = 'recyclerview-adapter-hf-ext'
 
     publishedGroupId = "ws.dyt.view"
     libraryName = 'RecyclerviewAdapterHF'
-    artifact = 'recyclerview-adapter-hf'
+    artifact = 'recyclerview-adapter-hf-ext'
 
     libraryDescription = "An adapter for RecyclerView widget, support single type and multi types, support add header views and footer views, support LinearLayoutManager and GridLayoutManager and StaggeredGridLayoutManager."
     siteUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter"
@@ -51,6 +77,7 @@ ext {
     allLicenses = ["Apache-2.0"]
 
 }
-
-apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/install.gradle"
-apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/bintray.gradle"
+//apply plugin: 'com.github.dcendents.android-maven'
+//apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/install.gradle"
+//apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/bintray.gradle"
+//apply from: 'bintrary.gradle'

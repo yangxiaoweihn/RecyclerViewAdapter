@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ws.dyt.view">
+    package="ws.dyt.adapter">
 
     <application
         android:allowBackup="true"

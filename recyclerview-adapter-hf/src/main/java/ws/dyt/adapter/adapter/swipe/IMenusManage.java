@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.swipe;
+package ws.dyt.adapter.adapter.swipe;
 
 /**
  * Created by yangxiaowei on 17/2/13.

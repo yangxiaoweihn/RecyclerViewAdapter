@@ -1,4 +1,4 @@
-package ws.dyt.view.viewholder;
+package ws.dyt.adapter.viewholder;
 
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -41,153 +41,195 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSett
                 childViews.put(id, childView);
             }
         }
-        return (T) childView;
+        return null == childView ? null : (T) childView;
     }
 
     @Override
     public BaseViewHolder setText(int viewId, CharSequence text) {
-        TextView textView = getView(viewId);
-        textView.setText(text);
+        TextView view = getView(viewId);
+        if (this.valid(view)) {
+            view.setText(text);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setTextColor(int viewId, int textColor) {
         TextView view = getView(viewId);
-        view.setTextColor(textColor);
+        if (this.valid(view)) {
+            view.setTextColor(textColor);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setTextColor(int viewId, ColorStateList colorStateList) {
         TextView view = getView(viewId);
-        view.setTextColor(colorStateList);
+        if (this.valid(view)) {
+            view.setTextColor(colorStateList);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setMovementMethod(int viewId, MovementMethod method) {
-        TextView textView = getView(viewId);
-        textView.setMovementMethod(method);
+        TextView view = getView(viewId);
+        if (this.valid(view)) {
+            view.setMovementMethod(method);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setImageResource(int viewId, int imgResId) {
         ImageView view = getView(viewId);
-        view.setImageResource(imgResId);
+        if (this.valid(view)) {
+            view.setImageResource(imgResId);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView view = getView(viewId);
-        view.setImageDrawable(drawable);
+        if (this.valid(view)) {
+            view.setImageDrawable(drawable);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
-        view.setImageBitmap(bitmap);
+        if (this.valid(view)) {
+            view.setImageBitmap(bitmap);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setImageUri(int viewId, Uri imageUri) {
         ImageView view = getView(viewId);
-        view.setImageURI(imageUri);
+        if (this.valid(view)) {
+            view.setImageURI(imageUri);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setScaleType(int viewId, ImageView.ScaleType type) {
         ImageView view = getView(viewId);
-        view.setScaleType(type);
+        if (this.valid(view)) {
+            view.setScaleType(type);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setBackgroundColor(int viewId, int bgColor) {
         View view = getView(viewId);
-        view.setBackgroundColor(bgColor);
+        if (this.valid(view)) {
+            view.setBackgroundColor(bgColor);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setBackgroundResource(int viewId, int bgRes) {
         View view = getView(viewId);
-        view.setBackgroundResource(bgRes);
+        if (this.valid(view)) {
+            view.setBackgroundResource(bgRes);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setColorFilter(int viewId, ColorFilter colorFilter) {
         ImageView view = getView(viewId);
-        view.setColorFilter(colorFilter);
+        if (this.valid(view)) {
+            view.setColorFilter(colorFilter);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setColorFilter(int viewId, int colorFilter) {
         ImageView view = getView(viewId);
-        view.setColorFilter(colorFilter);
+        if (this.valid(view)) {
+            view.setColorFilter(colorFilter);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setAlpha(int viewId, @FloatRange(from = 0.0, to = 1.0) float value) {
         View view = getView(viewId);
-        ViewCompat.setAlpha(view, value);
+        if (this.valid(view)) {
+            ViewCompat.setAlpha(view, value);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setVisibility(int viewId, int visibility) {
         View view = getView(viewId);
-        view.setVisibility(visibility);
+        if (this.valid(view)) {
+            view.setVisibility(visibility);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setMax(int viewId, int max) {
         ProgressBar view = getView(viewId);
-        view.setMax(max);
+        if (this.valid(view)) {
+            view.setMax(max);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setProgress(int viewId, int progress) {
         ProgressBar view = getView(viewId);
-        view.setProgress(progress);
+        if (this.valid(view)) {
+            view.setProgress(progress);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setRating(int viewId, float rating) {
         RatingBar view = getView(viewId);
-        view.setRating(rating);
+        if (this.valid(view)) {
+            view.setRating(rating);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setTag(int viewId, Object tag) {
         View view = getView(viewId);
-        view.setTag(tag);
+        if (this.valid(view)) {
+            view.setTag(tag);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setTag(int viewId, int key, Object tag) {
         View view = getView(viewId);
-        view.setTag(key, tag);
+        if (this.valid(view)) {
+            view.setTag(key, tag);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setEnabled(int viewId, boolean enabled) {
         View view = getView(viewId);
-        view.setEnabled(enabled);
+        if (this.valid(view)) {
+            view.setEnabled(enabled);
+        }
         return this;
     }
 
@@ -201,30 +243,43 @@ public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSett
     @Override
     public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager) {
         RecyclerView view = getView(viewId);
-        view.setAdapter(adapter);
-        view.setLayoutManager(layoutManager);
+        if (this.valid(view)) {
+            view.setAdapter(adapter);
+            view.setLayoutManager(layoutManager);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration itemDecoration) {
         RecyclerView view = getView(viewId);
-        view.setAdapter(adapter);
-        view.setLayoutManager(layoutManager);
-        view.addItemDecoration(itemDecoration);
+        if (this.valid(view)) {
+            view.setAdapter(adapter);
+            view.setLayoutManager(layoutManager);
+            view.addItemDecoration(itemDecoration);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
-        getView(viewId).setOnClickListener(listener);
+        View view = getView(viewId);
+        if (this.valid(view)) {
+            view.setOnClickListener(listener);
+        }
         return this;
     }
 
     @Override
     public BaseViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
-        getView(viewId).setOnLongClickListener(listener);
+        View view = getView(viewId);
+        if (this.valid(view)) {
+            view.setOnLongClickListener(listener);
+        }
         return this;
     }
 
+    private boolean valid(View view) {
+        return null != view;
+    }
 }

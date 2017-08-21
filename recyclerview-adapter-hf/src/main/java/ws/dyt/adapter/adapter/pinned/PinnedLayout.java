@@ -1,10 +1,7 @@
-package ws.dyt.view.adapter.pinned;
+package ws.dyt.adapter.adapter.pinned;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;

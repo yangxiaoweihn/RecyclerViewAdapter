@@ -1,11 +1,11 @@
-package ws.dyt.view.adapter.core.base;
+package ws.dyt.adapter.adapter.core.base;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
 
 import java.util.List;
 
-import ws.dyt.view.adapter.Log.L;
+import ws.dyt.adapter.adapter.Log.L;
 
 
 /**

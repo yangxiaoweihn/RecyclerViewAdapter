@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.pinned;
+package ws.dyt.adapter.adapter.pinned;
 
 import android.support.annotation.LayoutRes;
 

@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.core.base;
+package ws.dyt.adapter.adapter.core.base;
 
 /**
  * Created by yangxiaowei on 16/12/14.

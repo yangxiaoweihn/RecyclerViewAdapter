@@ -1,15 +1,13 @@
-package ws.dyt.view.adapter;
+package ws.dyt.adapter.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-import ws.dyt.view.adapter.core.MultiAdapter;
-import ws.dyt.view.adapter.swipe.SwipeAdapter;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.swipe.SwipeAdapter;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/8/9.

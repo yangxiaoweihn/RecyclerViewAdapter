@@ -1,7 +1,6 @@
-package ws.dyt.view.adapter.swipe;
+package ws.dyt.adapter.adapter.swipe;
 
 import android.support.annotation.IntDef;
-import android.view.View;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

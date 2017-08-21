@@ -1,4 +1,4 @@
-package ws.dyt.view.viewholder;
+package ws.dyt.adapter.viewholder;
 
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;

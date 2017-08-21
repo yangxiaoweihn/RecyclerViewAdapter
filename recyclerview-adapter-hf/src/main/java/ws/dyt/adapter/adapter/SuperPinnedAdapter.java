@@ -1,11 +1,11 @@
-package ws.dyt.view.adapter;
+package ws.dyt.adapter.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 
 import java.util.List;
 
-import ws.dyt.view.adapter.pinned.PinnedAdapter;
+import ws.dyt.adapter.adapter.pinned.PinnedAdapter;
 
 /**
  * Created by yangxiaowei on 16/8/9.

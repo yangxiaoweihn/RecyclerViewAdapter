@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.pinned;
+package ws.dyt.adapter.adapter.pinned;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import ws.dyt.view.R;
-import ws.dyt.view.adapter.ItemWrapper;
-import ws.dyt.view.adapter.swipe.SwipeAdapter;
-import ws.dyt.view.adapter.swipe.SwipeLayout;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.R;
+import ws.dyt.adapter.adapter.ItemWrapper;
+import ws.dyt.adapter.adapter.swipe.SwipeAdapter;
+import ws.dyt.adapter.adapter.swipe.SwipeLayout;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/8/8.

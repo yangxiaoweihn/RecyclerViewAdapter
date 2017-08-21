@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#-keep class ws.dyt.view.**{*;}
+-keep class ws.dyt.view.**{
+    protected *;
+    public *;
+}

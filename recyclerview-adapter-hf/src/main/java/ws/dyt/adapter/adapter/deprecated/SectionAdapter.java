@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.deprecated;
+package ws.dyt.adapter.adapter.deprecated;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -9,9 +9,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-import ws.dyt.view.adapter.core.base.HeaderFooterAdapter;
-import ws.dyt.view.adapter.section.SectionMultiItemViewType;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.core.base.HeaderFooterAdapter;
+import ws.dyt.adapter.adapter.section.SectionMultiItemViewType;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/13.

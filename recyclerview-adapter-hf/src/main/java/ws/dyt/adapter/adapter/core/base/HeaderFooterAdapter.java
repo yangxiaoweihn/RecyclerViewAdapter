@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.core.base;
+package ws.dyt.adapter.adapter.core.base;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ws.dyt.view.adapter.Log.L;
-import ws.dyt.view.adapter.swipe.SwipeLayout;
-import ws.dyt.view.viewholder.BaseViewHolder;
+import ws.dyt.adapter.adapter.Log.L;
+import ws.dyt.adapter.viewholder.BaseViewHolder;
 
 /**
  * Created by yangxiaowei on 16/6/8.

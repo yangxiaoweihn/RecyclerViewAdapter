@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.swipe;
+package ws.dyt.adapter.adapter.swipe;
 
 import android.view.View;
 

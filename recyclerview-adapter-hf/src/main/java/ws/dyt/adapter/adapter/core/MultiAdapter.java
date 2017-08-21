@@ -1,12 +1,11 @@
-package ws.dyt.view.adapter.core;
+package ws.dyt.adapter.adapter.core;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 
 import java.util.List;
 
-import ws.dyt.view.adapter.core.base.BaseAdapter;
-import ws.dyt.view.adapter.swipe.SwipeAdapter;
+import ws.dyt.adapter.adapter.core.base.BaseAdapter;
 
 /**
  * Created by yangxiaowei on 16/6/8.

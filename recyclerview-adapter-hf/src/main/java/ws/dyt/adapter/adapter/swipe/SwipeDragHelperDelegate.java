@@ -1,4 +1,4 @@
-package ws.dyt.view.adapter.swipe;
+package ws.dyt.adapter.adapter.swipe;
 
 import android.support.annotation.IntDef;
 import android.support.v4.view.ViewCompat;
@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.view.adapter.Log.L;
+import ws.dyt.adapter.adapter.Log.L;
 
 /**
  * Created by yangxiaowei on 16/8/1.

@@ -1,4 +1,16 @@
-def handleAar() {
+ext{
+    handleAar = this.&handleAar
+}
+
+/**
+ * 配置库输出目录，比如一般配置为app模块的aars目录
+ */
+def configLibsOutDir() {
+
+    return '../app/aars'
+}
+
+def handleAar(android) {
     android.libraryVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
@@ -10,8 +22,45 @@ def handleAar() {
 
                 def versions = "${android.defaultConfig.versionName}"
 
-                def fileName = libName+versions+suffix
+                def fileName = libName + 'release-' + versions+suffix
                 output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+}
+
+
+afterEvaluate {
+
+    tasks.matching {
+        def taskName = it.name
+
+        //只处理以下三个task
+        taskName == 'assembleDebug' || taskName == 'assembleRelease' || taskName == 'build'
+    }.each { task->
+
+        task.doLast {
+
+            def outDir = configLibsOutDir()
+            if (null != outDir && outDir.trim().length() != 0) {
+
+                def typeReg = task.name.toLowerCase().contains("release") ? 'release' : 'debug'
+                copy{
+                    println("<<< start copy .aar >>>")
+
+                    from('build/outputs/aar') {
+                        include "*${typeReg}*.aar"
+                    }
+                    into outDir
+
+                    //重命名，去掉 debug release标识
+                    rename {fileName ->
+                        def sp = fileName.split('-'+typeReg)
+                        fileName = sp[0] + '' + sp[1]
+                    }
+
+                    println("<<< end copy .aar >>>")
+                }
             }
         }
     }
