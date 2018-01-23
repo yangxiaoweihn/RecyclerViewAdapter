@@ -13,14 +13,17 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import ws.dyt.recyclerviewadapter.R;
-import ws.dyt.recyclerviewadapter.bilili_1.Bilili_1_ListFragment;
-import ws.dyt.recyclerviewadapter.bilili_1.Bilili_2_ListFragment;
-import ws.dyt.recyclerviewadapter.pinned.TestPinnedItemFragment;
-import ws.dyt.recyclerviewadapter.swipe.TestSwipeItemFragment;
-import ws.dyt.recyclerviewadapter.wandoujia.WandoujianListFragment;
 import ws.dyt.adapter.adapter.SuperAdapter;
 import ws.dyt.adapter.viewholder.BaseViewHolder;
+import ws.dyt.recyclerviewadapter.R;
+import ws.dyt.recyclerviewadapter.databinding.DataBindingFragment;
+import ws.dyt.recyclerviewadapter.decoration.DecorationListFragment;
+import ws.dyt.recyclerviewadapter.normal.CrossGridFragment;
+import ws.dyt.recyclerviewadapter.normal.HeaderFooterGridFragment;
+import ws.dyt.recyclerviewadapter.normal.HeaderFooterLineFragment;
+import ws.dyt.recyclerviewadapter.pinned.PinnedItemGridFragment;
+import ws.dyt.recyclerviewadapter.pinned.PinnedItemLineFragment;
+import ws.dyt.recyclerviewadapter.swipe.SwipeItemFragment;
 
 /**
  */
@@ -58,7 +61,7 @@ public class MainFragment extends Fragment {
         adapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                toFragment(adapter.getItem(position).clazz);
+                toPage(adapter.getItem(position).clazz);
             }
         });
 
@@ -76,18 +79,21 @@ public class MainFragment extends Fragment {
 
     private List<FragmentEntity> generate() {
         List<FragmentEntity> data = new ArrayList<>();
-        data.add(new FragmentEntity("模仿豌豆荚列表", WandoujianListFragment.class));
-        data.add(new FragmentEntity("模Bilili, Grid——1", Bilili_1_ListFragment.class));
-        data.add(new FragmentEntity("模Bilili, Grid——2", Bilili_2_ListFragment.class));
+        data.add(new FragmentEntity("线性布局 header footer", HeaderFooterLineFragment.class));
+        data.add(new FragmentEntity("网格布局 header footer", HeaderFooterGridFragment.class));
+        data.add(new FragmentEntity("网格布局 跨列api", CrossGridFragment.class));
+        data.add(new FragmentEntity("Decoration", DecorationListFragment.class));
 
-        data.add(new FragmentEntity("滑动菜单测试", TestSwipeItemFragment.class));
-        data.add(new FragmentEntity("Pinned测试", TestPinnedItemFragment.class));
+        data.add(new FragmentEntity("滑动菜单测试", SwipeItemFragment.class));
+        data.add(new FragmentEntity("粘性头部 线性", PinnedItemLineFragment.class));
+        data.add(new FragmentEntity("粘性头部 网格", PinnedItemGridFragment.class));
+        data.add(new FragmentEntity("DataBinding支持", DataBindingFragment.class));
 
 
         return data;
     }
 
-    private void toFragment(Class clazz) {
+    private void toPage(Class clazz) {
         Intent intent = new Intent(getActivity(), SingleFragmentActivity.class);
         intent.putExtra(SingleFragmentActivity.CLASS_FRAGMENT, clazz.getName());
         startActivity(intent);

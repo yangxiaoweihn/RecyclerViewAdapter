@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class=".CourseClassBinding">
+        <import type="ws.dyt.recyclerviewadapter.databinding.viewmodels.CourseViewModel" alias="CourseViewModel"/>
+        <variable
+            name="model"
+            type="CourseViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="#333"
+            android:textSize="13sp"
+            android:includeFontPadding="false"
+            tools:text="@string/holder"
+            android:text="@{model.className}"/>
+
+        <TextView
+            android:layout_gravity="left|bottom"
+            android:id="@+id/tv_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:textColor="#999"
+            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            tools:text="@string/holder"
+            android:text="@{model.duration}"/>
+    </LinearLayout>
+</layout>

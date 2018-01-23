@@ -9,9 +9,13 @@ public class CourseResult {
     public String title;
     public ArrayList<Course> course_list;
 
-    public class Course{
+    public static class Course{
         public String title;
         public String name;
         public String length;
+
+        public Course(String title) {
+            this.title = title;
+        }
     }
 }

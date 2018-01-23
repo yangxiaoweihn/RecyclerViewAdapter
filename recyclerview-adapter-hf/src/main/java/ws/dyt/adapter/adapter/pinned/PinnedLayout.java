@@ -30,16 +30,21 @@ public class PinnedLayout extends LinearLayout{
         this.setOrientation(VERTICAL);
     }
 
-    public View itemView;
-    public View pinnedView;
+    public View originalItemView;
+    public View stickyView;
 
-    public void setUpView(ViewGroup viewGroup, View itemView, View pinnedView) {
-        if (null != pinnedView) {
-            this.addView(pinnedView);
+    @Deprecated
+    public void setUpView(ViewGroup viewGroup, View originalItemView, View stickyView) {
+        if (null != stickyView) {
+            this.addView(stickyView);
         }
-        this.addView(itemView);
-        this.itemView = itemView;
-        this.pinnedView = pinnedView;
+        this.addView(originalItemView);
+        this.originalItemView = originalItemView;
+        this.stickyView = stickyView;
     }
 
+    public PinnedLayout join(View originalItemView, View stickyView) {
+        this.setUpView(null, originalItemView, stickyView);
+        return this;
+    }
 }

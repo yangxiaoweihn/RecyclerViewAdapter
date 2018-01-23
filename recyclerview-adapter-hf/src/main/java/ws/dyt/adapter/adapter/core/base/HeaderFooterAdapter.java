@@ -31,7 +31,7 @@ abstract
 public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> implements ISysHeader, IUserHeader, ISysFooter, IUserFooter, IFullSpanItemView, IGC{
     protected Context mContext;
     protected LayoutInflater mInflater;
-    protected RecyclerView recyclerView;
+    protected RecyclerView mRecyclerView;
     protected List<View> mHeaderViews = new ArrayList<>();
     protected List<View> mFooterViews = new ArrayList<>();
     //逻辑上设计为系统头部也可以是多个 ，但是实现上系统头部实现为仅有一个
@@ -783,10 +783,10 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        if (this.recyclerView == recyclerView) {
+        if (this.mRecyclerView == recyclerView) {
             return;
         }
-        this.recyclerView = recyclerView;
+        this.mRecyclerView = recyclerView;
         this.layoutManager = recyclerView.getLayoutManager();
         this.adapterGridLayoutManager();
     }
@@ -794,7 +794,7 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
-        this.recyclerView = null;
+        this.mRecyclerView = null;
         this.release();
     }
 
@@ -812,19 +812,21 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public void onViewRecycled(BaseViewHolder holder) {
         super.onViewRecycled(holder);
-//        if (holder.itemView instanceof SwipeLayout) {
-//            SwipeLayout swipeLayout = (SwipeLayout) holder.itemView;
+//        if (holder.originalItemView instanceof SwipeLayout) {
+//            SwipeLayout swipeLayout = (SwipeLayout) holder.originalItemView;
 //            swipeLayout.release();
 //        }
     }
 
+    protected RecyclerView.LayoutManager mLayoutManager;
     private void adapterGridLayoutManager() {
-        final RecyclerView.LayoutManager layoutManager = null == recyclerView ? null : recyclerView.getLayoutManager();
-        if (null == layoutManager) {
+        final RecyclerView.LayoutManager lm = null == mRecyclerView ? null : mRecyclerView.getLayoutManager();
+        this.mLayoutManager = lm;
+        if (null == lm) {
             return;
         }
-        if (layoutManager instanceof GridLayoutManager) {
-            final GridLayoutManager glm = (GridLayoutManager) layoutManager;
+        if (lm instanceof GridLayoutManager) {
+            final GridLayoutManager glm = (GridLayoutManager) lm;
             final GridLayoutManager.SpanSizeLookup ssl = glm.getSpanSizeLookup();
             glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
@@ -836,12 +838,13 @@ public class HeaderFooterAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     private void adapterStaggeredGridLayoutManager(BaseViewHolder holder) {
-        final RecyclerView.LayoutManager layoutManager = null == recyclerView ? null : recyclerView.getLayoutManager();
-        if (null == layoutManager) {
+        final RecyclerView.LayoutManager lm = null == mRecyclerView ? null : mRecyclerView.getLayoutManager();
+        this.mLayoutManager = lm;
+        if (null == lm) {
             return;
         }
 
-        if (layoutManager instanceof StaggeredGridLayoutManager) {
+        if (lm instanceof StaggeredGridLayoutManager) {
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             int position = holder.getAdapterPosition();
             if (null != lp && lp instanceof StaggeredGridLayoutManager.LayoutParams && !isDataItemView(position)) {

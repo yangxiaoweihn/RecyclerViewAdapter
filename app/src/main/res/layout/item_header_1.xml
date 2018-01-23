@@ -3,21 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:background="#00BFFF"
+    tools:background="#00BFFF"
+    android:id="@+id/section_root"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <TextView
-        android:text="用户Header"
+        tools:text="用户Header"
         android:id="@+id/tv_text"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:textColor="#752"
         android:padding="16dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#f0f0f0"/>
 </LinearLayout>

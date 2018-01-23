@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.method.MovementMethod;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -20,28 +21,56 @@ import android.widget.TextView;
 public class BaseViewHolder extends RecyclerView.ViewHolder implements ChainSetter<BaseViewHolder> {
     //事件(解决滑动时事件问题)
     public View eventItemView;
+    //处理在粘性模式下，粘性控件id冲突问题(比如在非线性模式下，数据分组后标题栏跟粘性头部一致的情况下，在现有实现方式下这两个控件会重复)
+    public View originalItemView;
+
+    //通过该属性可以设置一些缓存信息，比如可以通过该属性做DataBinding[或者采用继承方式都可以]
+    public Object holderTag;
 
     public BaseViewHolder(View itemView) {
-        super(itemView);
-        this.eventItemView = itemView;
+        this(itemView, itemView, itemView);
     }
 
     public BaseViewHolder(View itemView, View eventItemView) {
+        this(itemView, eventItemView, itemView);
+    }
+
+    public BaseViewHolder(View itemView, View eventItemView, View originalItemView) {
         super(itemView);
         this.eventItemView = eventItemView;
+        this.originalItemView = originalItemView;
     }
 
     private SparseArray<View> childViews = new SparseArray<>();
 
     public <T extends View> T getView(int id) {
+        //优先从原始item originalItemView中获取控件
         View childView = childViews.get(id);
         if (childView == null) {
-            childView = itemView.findViewById(id);
+            childView = originalItemView.findViewById(id);
             if (childView != null) {
                 childViews.put(id, childView);
+            }else {
+                childView = itemView.findViewById(id);
+                if (childView != null) {
+                    childViews.put(id, childView);
+                }
             }
         }
         return null == childView ? null : (T) childView;
+    }
+
+    public BaseViewHolder setHolderTag(Object holderTag) {
+        this.holderTag = holderTag;
+        return this;
+    }
+
+    public BaseViewHolder copyFromTo(BaseViewHolder from, BaseViewHolder to) {
+        if (null != from && null != to) {
+            to.holderTag = from.holderTag;
+        }
+
+        return to;
     }
 
     @Override

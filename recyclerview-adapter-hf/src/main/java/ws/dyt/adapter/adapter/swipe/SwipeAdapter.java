@@ -3,6 +3,7 @@ package ws.dyt.adapter.adapter.swipe;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,39 +33,35 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
     }
 
     @Override
+    @Deprecated
     public BaseViewHolder onCreateViewHolderWithMultiItemTypes(int itemLayoutOfViewType, View itemViewOfViewType) {
         return new BaseViewHolder(itemViewOfViewType);
     }
 
     @Override
+    public BaseViewHolder onCreateViewHolderByItemType(int itemLayoutOfViewType, ViewGroup parent) {
+        return new BaseViewHolder(mInflater.inflate(itemLayoutOfViewType, parent, false));
+    }
+
+    @Override
     public BaseViewHolder onCreateHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(viewType, parent, false);
 
         List<MenuItem> menuItems = this.collectMenus(viewType);
         //客户端没有设置菜单支持
         if (null == menuItems || menuItems.isEmpty()) {
-            return generateViewHolder(viewType, itemView);
+            return this.onCreateViewHolderByItemType(viewType, parent);
         }
 
+        BaseViewHolder vh = this.onCreateViewHolderByItemType(viewType, parent);
         final SwipeLayout swipeLayout = new SwipeLayout(mContext);
-        swipeLayout.setUpView(parent, itemView, menuItems);
+        swipeLayout.setUpView(parent, vh.itemView, menuItems);
         swipeLayout.setIsCloseOtherItemsWhenThisWillOpen(this.isCloseOtherItemsWhenThisWillOpen());
 
-        itemView.setClickable(true);
+        vh.itemView.setClickable(true);
 
-//        final BaseViewHolder holder = new BaseViewHolder(swipeLayout, itemView);
-        BaseViewHolder holder = generateViewHolder(viewType, swipeLayout);
-        holder.eventItemView = itemView;
+        final BaseViewHolder holder = new BaseViewHolder(swipeLayout, vh.itemView);
         this.initMenusListener(holder);
-        return holder;
-    }
-
-    private BaseViewHolder generateViewHolder(int itemLayoutOfViewType, View itemViewOfViewType) {
-        BaseViewHolder viewHolder = onCreateViewHolderWithMultiItemTypes(itemLayoutOfViewType, itemViewOfViewType);
-        if (null == viewHolder) {
-            viewHolder = new BaseViewHolder(itemViewOfViewType);
-        }
-        return viewHolder;
+        return holder.copyFromTo(vh, holder);
     }
 
     private List<MenuItem> collectMenus(int viewType) {
@@ -214,7 +211,7 @@ public class SwipeAdapter<T> extends MultiAdapter<T> implements ICreateMenus, IM
         super.notifyItemRemovedInner(position);
 
 //        position += getAllHeaderViewCount();
-        RecyclerView.ViewHolder vh = recyclerView.findViewHolderForAdapterPosition(position);
+        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
         if (null != vh && vh instanceof BaseViewHolder) {
             View view = ((BaseViewHolder) vh).itemView;
             if (null != view && view instanceof SwipeLayout) {

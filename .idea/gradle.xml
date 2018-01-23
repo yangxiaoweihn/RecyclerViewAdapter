@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/dev" />
             <option value="$PROJECT_DIR$/recyclerview-adapter-hf" />
           </set>
         </option>

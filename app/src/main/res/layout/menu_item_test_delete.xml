@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sml"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="#d33"
-    >
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#EE2B29">
 
     <TextView
-        android:gravity="center"
-        android:text="删除"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textSize="15sp"
-        />
-
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        tools:text="@string/holder"
+        android:text="删除"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp" />
 
 </FrameLayout>

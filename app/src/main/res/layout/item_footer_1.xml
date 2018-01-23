@@ -3,23 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:background="#3c7"
+    tools:background="#3c7"
+    android:id="@+id/section_root"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
-        android:text="用户Footer"
+        tools:text="用户Footer"
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:textStyle="bold"
         android:textSize="15sp"
         android:gravity="center"
         android:textColor="#752"
         android:padding="16dp"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#f0f0f0"/>
 </LinearLayout>
