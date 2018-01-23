@@ -34,26 +34,20 @@
 </style>
 <table> 
     <tr>
-        <td><img src="./app/screenshots/hf_line.png" /><span class="alt">头部尾部->线性布局</span class="alt"></td>
-        <td><img src="./app/screenshots/hf_grid.png" /><span class="alt">头部尾部->网格布局</span class="alt"></td>
-        <td><img src="./app/screenshots/cross_api.png" /><span class="alt">横跨列API</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_line.png" /><span class="alt">头部尾部->线性布局</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_grid.png" /><span class="alt">头部尾部->网格布局</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/cross_api.png" /><span class="alt">横跨列API</span class="alt"></td>
     </tr>
     <tr>
-        <td><img src="./app/screenshots/decoration.png" /><span class="alt">头部尾部->Decoration</span class="alt"></td>
-        <td><img src="./app/screenshots/sticky_line.png" /><span class="alt">粘性头部->线性布局</span class="alt"></td>
-        <td><img src="./app/screenshots/sticky_grid.png" /><span class="alt">粘性头部->网格布局+菜单</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/decoration.png" /><span class="alt">头部尾部->Decoration</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_line.png" /><span class="alt">粘性头部->线性布局</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_grid.png" /><span class="alt">粘性头部->网格布局+菜单</span class="alt"></td>
     </tr>
     <tr>
-        <td><img src="./app/screenshots/swipe.png" /><span class="alt">菜单</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/swipe.png" /><span class="alt">菜单</span class="alt"></td>
     </tr>
 </table>
 
-
-
-
-![RecyclerViewAdapter](https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/swipe.png)
-
-    
 ## 使用
 -   与系统提供的Adapter使用方式无异（具体api参看demo）
 ```java
