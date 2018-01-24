@@ -14,6 +14,8 @@
             maven {
                 url "https://dl.bintray.com/yangxiaoweihn/maven/"
             }
+        }
+        ...
     }
     dependencies {
         compile 'ws.dyt.view:recyclerview-adapter-hf:2.6.1'
@@ -40,8 +42,8 @@
     </tr>
     <tr>
         <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/decoration.png" /><span class="alt">头部尾部->Decoration</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_line.png" /><span class="alt">粘性头部->线性布局</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_grid.png" /><span class="alt">粘性头部->网格布局+菜单</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_line.png" /><span class="alt">粘性头部->线性布局+菜单</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_grid.png" /><span class="alt">粘性头部->网格布局</span class="alt"></td>
     </tr>
     <tr>
         <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/swipe.png" /><span class="alt">菜单</span class="alt"></td>

@@ -55,11 +55,11 @@ dependencies {
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'recyclerview-adapter-hf-ext'
+    bintrayName = 'recyclerview-adapter-hf'
 
     publishedGroupId = "ws.dyt.view"
     libraryName = 'RecyclerviewAdapterHF'
-    artifact = 'recyclerview-adapter-hf-ext'
+    artifact = 'recyclerview-adapter-hf'
 
     libraryDescription = "An adapter for RecyclerView widget, support single type and multi types, support add header views and footer views, support LinearLayoutManager and GridLayoutManager and StaggeredGridLayoutManager."
     siteUrl = "https://github.com/yangxiaoweihn/RecyclerViewAdapter"
@@ -75,7 +75,7 @@ ext {
     allLicenses = ["Apache-2.0"]
 
 }
-//apply plugin: 'com.github.dcendents.android-maven'
-//apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/install.gradle"
-//apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/bintray.gradle"
+apply plugin: 'com.github.dcendents.android-maven'
+apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/install.gradle"
+apply from: "https://raw.githubusercontent.com/yangxiaoweihn/MavenPushScript/master/scrip/bintray.gradle"
 //apply from: 'bintrary.gradle'

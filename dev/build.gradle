@@ -23,6 +23,11 @@ android {
         }
     }
 
+    repositories {
+        maven {
+            url "https://dl.bintray.com/yangxiaoweihn/maven/"
+        }
+    }
 }
 
 
@@ -37,7 +42,8 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:25.4.0'
 
-    implementation(name: 'recyclerview-adapter-hf-release', ext: 'aar')
+//    implementation(name: 'recyclerview-adapter-hf-release', ext: 'aar')
+    compile 'ws.dyt.view:recyclerview-adapter-hf:2.6.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
