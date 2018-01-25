@@ -1,3 +1,5 @@
+[![Download](https://api.bintray.com/packages/yangxiaoweihn/maven/recyclerview-adapter-hf/images/download.svg) ](https://bintray.com/yangxiaoweihn/maven/recyclerview-adapter-hf/_latestVersion)
+
 ## 控件简介
     RecyclerView的数据适配器，主要拥有以下功能：
     1. 可以添加、删除任意数量的头部、尾部（就像ListView那样）
