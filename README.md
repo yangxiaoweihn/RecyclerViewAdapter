@@ -24,31 +24,19 @@
     }
 ```
 ## 屏幕截图
-<style type="text/css">
-    .alt{
-        display: block;
-        color: #999;
-        align: center;
-        text-align: center;
-        font-size: 0.8em;
-        font-style: italic;
-        padding-top: 20px;
-        padding-bottom: 10px;
-    }
-</style>
 <table> 
     <tr>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_line.png" /><span class="alt">头部尾部->线性布局</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_grid.png" /><span class="alt">头部尾部->网格布局</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/cross_api.png" /><span class="alt">横跨列API</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_line.png" /><div>头部尾部->线性布局</div></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/hf_grid.png" /><div>头部尾部->网格布局</div></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/cross_api.png" /><div>横跨列API</div></td>
     </tr>
     <tr>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/decoration.png" /><span class="alt">头部尾部->Decoration</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_line.png" /><span class="alt">粘性头部->线性布局+菜单</span class="alt"></td>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_grid.png" /><span class="alt">粘性头部->网格布局</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/decoration.png" /><div>头部尾部->Decoration</div></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_line.png" /><div>粘性头部->线性布局+菜单</div></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/sticky_grid.png" /><div>粘性头部->网格布局</div></td>
     </tr>
     <tr>
-        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/swipe.png" /><span class="alt">菜单</span class="alt"></td>
+        <td><img src="https://raw.githubusercontent.com/yangxiaoweihn/RecyclerViewAdapter/master/app/screenshots/swipe.png" /><div>菜单</div></td>
     </tr>
 </table>
 
